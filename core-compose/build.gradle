@@ -1,15 +1,15 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
+    id "maven-publish"
 }
 
 android {
-    namespace 'com.greenlabsfin.design'
-    compileSdk 32
+    namespace 'com.greenlabsfin.design.core'
+    compileSdk rootProject.ext.compileSdkVersion
 
     defaultConfig {
-        minSdk 21
-        targetSdk 32
+        minSdk rootProject.ext.minSdkVersion
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
@@ -28,14 +28,23 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion "1.1.1"
+    }
 }
 
 dependencies {
-
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.7.0'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    implementation "androidx.compose.ui:ui:$composeVersion"
 }
+
+// Set artifact ID and description for each module
+ext {
+    PUBLISH_ARTIFACT_ID = 'core-compose'
+    PUBLISH_DESCRIPTION = 'Greenlabs Financial design core'
+}
+
+//
+apply from: "${rootProject.projectDir}/scripts/publish-module.gradle"
