@@ -1,38 +1,36 @@
 //
-ext["signing.keyId"] = ''
-ext["signing.password"] = ''
-ext["signing.key"] = ''
-ext["ossrhTokenUserName"] = ''
-ext["ossrhTokenUserPassword"] = ''
-
+ext["signing.keyId"] = ""
+ext["signing.password"] = ""
+ext["signing.key"] = ""
+ext["ossrhTokenUserName"] = ""
+ext["ossrhTokenUserPassword"] = ""
 
 // Set variable from 'local,properties' if exists, otherwise get from environment variables
-File secretPropsFile = project.rootProject.file('local.properties')
+File secretPropsFile = project.rootProject.file("local.properties")
 if (secretPropsFile.exists()) {
     Properties p = new Properties()
     new FileInputStream(secretPropsFile).withCloseable { is -> p.load(is) }
     p.each { name, value -> ext[name] = value }
 } else {
-    ext["signing.keyId"] = System.getenv('SIGNING_KEY_ID')
-    ext["signing.password"] = System.getenv('SIGNING_PASSWORD')
-    ext["signing.key"] = System.getenv('SIGNING_KEY')
-    ext["signing.secretKeyRingFile"] = System.getenv('SIGNING_SECRET_KEY_RING_FILE')
-    ext["signing.ossrhTokenUserName"] = System.getenv('OSSRH_TOKEN_USER_NAME')
-    ext["signing.ossrhTokenUserPassword"] = System.getenv('OSSRH_TOKEN_USER_PASSWORD')
+    ext["signing.keyId"] = System.getenv("SIGNING_KEY_ID")
+    ext["signing.password"] = System.getenv("SIGNING_PASSWORD")
+    ext["signing.key"] = System.getenv("SIGNING_KEY")
+    ext["signing.secretKeyRingFile"] = System.getenv("SIGNING_SECRET_KEY_RING_FILE")
+    ext["signing.ossrhTokenUserName"] = System.getenv("OSSRH_TOKEN_USER_NAME")
+    ext["signing.ossrhTokenUserPassword"] = System.getenv("OSSRH_TOKEN_USER_PASSWORD")
 }
-
 
 /* Information for publish */
 ext {
-    PUBLISH_GROUP_ID = 'com.greenlabsfin.design'
-    PUBLISH_VERSION = '0.0.2'
-    PUBLISH_URL = 'https://github.com/greenlabsfin/gf-android-design-system'
-    PUBLISH_LICENSE_NAME = 'Apache License'
-    PUBLISH_LICENSE_URL = 'https://github.com/greenlabsfin/gf-android-design-system/blob/main/LICENSE'
-    PUBLISH_DEVELOPER_ID = 'greenlabsfin'
-    PUBLISH_DEVELOPER_NAME = 'Greenlabs Financial'
-    PUBLISH_DEVELOPER_EMAIL = 'developer@greenlabsfin.com'
-    PUBLISH_SCM_CONNECTION = 'scm:git:github.com/greenlabsfin/gf-android-design-system.git'
-    PUBLISH_SCM_DEVELOPER_CONNECTION = 'scm:git:ssh://github.com/greenlabsfin/gf-android-design-system.git'
-    PUBLISH_SCM_URL = 'https://github.com/greenlabsfin/gf-android-design-system.git'
+    PUBLISH_GROUP_ID = "com.greenlabsfin.design"
+    PUBLISH_VERSION = "0.0.2-SNAPSHOT"
+    PUBLISH_URL = "https://github.com/greenlabsfin/gf-android-design-system"
+    PUBLISH_LICENSE_NAME = "Apache License"
+    PUBLISH_LICENSE_URL = "https://github.com/greenlabsfin/gf-android-design-system/blob/main/LICENSE"
+    PUBLISH_DEVELOPER_ID = "greenlabsfin"
+    PUBLISH_DEVELOPER_NAME = "Greenlabs Financial"
+    PUBLISH_DEVELOPER_EMAIL = "developer@greenlabsfin.com"
+    PUBLISH_SCM_CONNECTION = "scm:git:github.com/greenlabsfin/gf-android-design-system.git"
+    PUBLISH_SCM_DEVELOPER_CONNECTION = "scm:git:ssh://github.com/greenlabsfin/gf-android-design-system.git"
+    PUBLISH_SCM_URL = "https://github.com/greenlabsfin/gf-android-design-system.git"
 }

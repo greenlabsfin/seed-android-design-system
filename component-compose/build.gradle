@@ -1,10 +1,10 @@
 plugins {
-    id 'com.android.library'
-    id 'org.jetbrains.kotlin.android'
+    id "com.android.library"
+    id "org.jetbrains.kotlin.android"
 }
 
 android {
-    namespace 'com.greenlabsfin.design.component'
+    namespace "com.greenlabsfin.design.component"
     compileSdk rootProject.ext.compileSdkVersion
 
     defaultConfig {
@@ -17,7 +17,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
         }
     }
     compileOptions {
@@ -25,7 +25,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = "1.8"
     }
 }
 
@@ -36,8 +36,8 @@ dependencies {
 
 // Set artifact ID and description for each module
 ext {
-    PUBLISH_ARTIFACT_ID = 'component-compose'
-    PUBLISH_DESCRIPTION = 'Greenlabs Financial design components'
+    PUBLISH_ARTIFACT_ID = "component-compose"
+    PUBLISH_DESCRIPTION = "Greenlabs Financial design components"
 }
 
 //
