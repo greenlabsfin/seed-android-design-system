@@ -23,7 +23,6 @@ if (secretPropsFile.exists()) {
 /* Information for publish */
 ext {
     PUBLISH_GROUP_ID = "com.greenlabsfin.design"
-    PUBLISH_VERSION = "0.0.2-SNAPSHOT"
     PUBLISH_URL = "https://github.com/greenlabsfin/gf-android-design-system"
     PUBLISH_LICENSE_NAME = "Apache License"
     PUBLISH_LICENSE_URL = "https://github.com/greenlabsfin/gf-android-design-system/blob/main/LICENSE"

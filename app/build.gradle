@@ -46,20 +46,28 @@ android {
 }
 
 dependencies {
-    def designVersion = "0.0.2-SNAPSHOT"
-    implementation "com.greenlabsfin.design:core-compose:$designVersion"
-    implementation "com.greenlabsfin.design:component-compose:$designVersion"
+    if ("true" == USING_LOCAL_DESIGN_LIBRARY) {
+        implementation project(":core-compose")
+        implementation project(":component-compose")
+    } else {
+        def designLibraryVersion = PUBLISH_VERSION
+        implementation "com.greenlabsfin.design:core-compose:$designLibraryVersion"
+        implementation "com.greenlabsfin.design:component-compose:$designLibraryVersion"
+    }
+
+    // compose
+    implementation platform("androidx.compose:compose-bom:$composeBomVersion")
+    implementation "androidx.compose.ui:ui"
+    implementation "androidx.compose.ui:ui-tooling-preview"
 
     implementation "androidx.core:core-ktx:1.9.0"
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.5.1'
     implementation 'androidx.activity:activity-compose:1.6.1'
-    implementation "androidx.compose.ui:ui:$composeVersion"
-    implementation "androidx.compose.ui:ui-tooling-preview:$composeVersion"
     implementation "androidx.compose.material3:material3:1.1.0-alpha03"
     testImplementation "junit:junit:4.13.2"
     androidTestImplementation "androidx.test.ext:junit:1.1.4"
     androidTestImplementation "androidx.test.espresso:espresso-core:3.5.0"
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$composeVersion"
-    debugImplementation "androidx.compose.ui:ui-tooling:$composeVersion"
-    debugImplementation "androidx.compose.ui:ui-test-manifest:$composeVersion"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4"
+    debugImplementation "androidx.compose.ui:ui-tooling"
+    debugImplementation "androidx.compose.ui:ui-test-manifest"
 }
