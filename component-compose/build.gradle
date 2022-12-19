@@ -30,6 +30,13 @@ android {
 }
 
 dependencies {
+    if ("true" == USING_LOCAL_DESIGN_LIBRARY) {
+        implementation project(":core-compose")
+    } else {
+        def designLibraryVersion = PUBLISH_VERSION
+        implementation "com.greenlabsfin.design:core-compose:$designLibraryVersion"
+    }
+
     implementation platform("androidx.compose:compose-bom:$composeBomVersion")
     implementation "androidx.compose.ui:ui"
     implementation "androidx.compose.ui:ui-tooling"

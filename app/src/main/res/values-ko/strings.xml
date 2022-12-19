@@ -1,0 +1,20 @@
+<resources>
+    <string name="typography_title_headline_xlarge_bold">헤드라인 엑스라지 볼드</string>
+    <string name="typography_title_headline_large_bold">헤드라인 라지 볼드</string>
+    <string name="typography_title_headline_medium_bold">헤드라인 미디엄 볼드</string>
+    <string name="typography_title_headline_small_bold">헤드라인 스몰 볼드</string>
+    <string name="typography_title_headline_small_regular">헤드라인 스몰 레귤러</string>
+    <string name="typography_title_body_xlarge_bold">바디 엑스라지 볼드</string>
+    <string name="typography_title_body_xlarge_regular">바디 엑스라지 레귤러</string>
+    <string name="typography_title_body_large_bold">바디 라지 볼드</string>
+    <string name="typography_title_body_large_regular">바디 라지 레귤러</string>
+    <string name="typography_title_body_medium_bold">바디 미디엄 볼드</string>
+    <string name="typography_title_body_medium_medium">바디 미디엄 미디엄</string>
+    <string name="typography_title_body_medium_regular">바디 미디엄 레귤러</string>
+    <string name="typography_title_body_small_bold">바디 스몰 볼드</string>
+    <string name="typography_title_body_small_medium">바디 스몰 미디엄</string>
+    <string name="typography_title_body_small_regular">바디 스몰 레귤러</string>
+    <string name="typography_title_caption_xsmall_regular">캡션 엑스스몰 레귤러</string>
+    <string name="typography_title_caption_xsmall_bold">캡션 엑스스몰 볼드</string>
+    <string name="typography_title_caption_xsmall_medium">캡션 엑스스몰 미디엄</string>
+</resources>
