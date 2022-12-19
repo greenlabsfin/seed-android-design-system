@@ -108,7 +108,8 @@ private fun GFOutlinedButton(
             contentColor = when (gfButtonStyle) {
                 GFButtonStyle.Primary -> colorScheme.contents.primary
                 else -> colorScheme.contents.neutralSecondary
-            }
+            },
+            disabledContentColor = colorScheme.contents.neutralPrimary
         ),
         border = BorderStroke(1.dp, when (gfButtonStyle) {
             GFButtonStyle.Primary -> colorScheme.container.primary
@@ -165,7 +166,9 @@ private fun GFTintedButton(
                 GFButtonStyle.Primary -> colorScheme.contents.primary
                 GFButtonStyle.Neutral -> colorScheme.contents.neutralPrimary
                 GFButtonStyle.Error -> colorScheme.contents.error
-            }
+            },
+            disabledBackgroundColor = colorScheme.container.neutralSecondary,
+            disabledContentColor = colorScheme.contents.neutralPrimary
         ),
         shape = RoundedCornerShape(radius)
     ) {
@@ -205,7 +208,9 @@ private fun GFContainerButton(
                 GFButtonStyle.Error -> colorScheme.contents.error
                 else -> colorScheme.contents.primary
             },
-            contentColor = colorScheme.contents.onPrimary
+            contentColor = colorScheme.contents.onPrimary,
+            disabledBackgroundColor = colorScheme.container.neutralSecondary,
+            disabledContentColor = colorScheme.contents.neutralPrimary
         ),
         shape = RoundedCornerShape(radius)
     ) {
