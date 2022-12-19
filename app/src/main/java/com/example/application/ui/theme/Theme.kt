@@ -1,6 +1,7 @@
 package com.example.application.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import com.greenlabsfin.design.core.GfTheme
 import com.greenlabsfin.design.core.color.GfColorScheme
@@ -15,6 +16,11 @@ fun GFSampleTheme(
 
     GfTheme(
         colorScheme = colorScheme,
-        content = content
+        content = {
+            Surface(
+                color = colorScheme.container.background,
+                content = content
+            )
+        }
     )
 }

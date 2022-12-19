@@ -1,15 +1,15 @@
 package com.example.application
 
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import com.example.application.ui.HomeScreen
 import com.example.application.ui.theme.GFSampleTheme
+import com.example.application.util.LocaleHelper
 import com.greenlabsfin.design.core.GfTheme
 
 class MainActivity : ComponentActivity() {
@@ -22,22 +22,16 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = GfTheme.colorScheme.container.background
                 ) {
-                    Greeting("Android")
+                    HomeScreen()
                 }
             }
         }
     }
-}
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
 
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    GFSampleTheme {
-        Greeting("Android")
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(
+            LocaleHelper.setLocale(newBase, DesignSampleApplication.language)
+        )
     }
 }

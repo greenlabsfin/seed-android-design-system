@@ -1,3 +1,21 @@
 <resources>
-    <string name="app_name">GFSample</string>
+    <string name="app_name" translatable="false">GFSample</string>
+    <string name="typography_title_headline_xlarge_bold">Headline xL Bold</string>
+    <string name="typography_title_headline_large_bold">Headline L Bold</string>
+    <string name="typography_title_headline_medium_bold">Headline M Bold</string>
+    <string name="typography_title_headline_small_bold">Headline S Bold</string>
+    <string name="typography_title_headline_small_regular">Headline S Regular</string>
+    <string name="typography_title_body_xlarge_bold">Body xL Bold</string>
+    <string name="typography_title_body_xlarge_regular">Body xL Regular</string>
+    <string name="typography_title_body_large_bold">Body L Bold</string>
+    <string name="typography_title_body_large_regular">Body L Regular</string>
+    <string name="typography_title_body_medium_bold">Body M Bold</string>
+    <string name="typography_title_body_medium_medium">Body M Medium</string>
+    <string name="typography_title_body_medium_regular">Body M Regular</string>
+    <string name="typography_title_body_small_bold">Body S Bold</string>
+    <string name="typography_title_body_small_medium">Body S Medium</string>
+    <string name="typography_title_body_small_regular">Body S Regular</string>
+    <string name="typography_title_caption_xsmall_regular">Caption xS Regular</string>
+    <string name="typography_title_caption_xsmall_bold">Caption xS Bold</string>
+    <string name="typography_title_caption_xsmall_medium">Caption xS Medium</string>
 </resources>
