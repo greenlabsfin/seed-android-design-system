@@ -2,12 +2,14 @@ package com.greenlabsfin.design.component
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.graphics.Color
 import com.greenlabsfin.design.core.GfTheme
 import com.greenlabsfin.design.core.color.GfColorScheme
 
+@Stable
 interface GFButtonColor {
     @Composable
     fun backgroundColor(enabled: Boolean): State<Color>
