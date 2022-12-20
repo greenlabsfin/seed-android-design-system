@@ -1,6 +1,5 @@
 package com.greenlabsfin.design.component
 
-import android.graphics.Paint
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -25,16 +24,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.takeOrElse
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.PlaceholderVerticalAlign
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.drawText
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -57,6 +58,7 @@ fun GfText(
     maxLines: Int = Int.MAX_VALUE,
     onTextLayout: (TextLayoutResult) -> Unit = {},
     style: TextStyle = LocalGfTypoScheme.current.body.mediumBold,
+    enabled: Boolean = true,
 ) {
 
     // text color priority color -> style -> local provider
@@ -64,6 +66,9 @@ fun GfText(
         style.color.takeOrElse {
             LocalGfColorScheme.current.contents.neutralPrimary
         }
+    }.let {
+        if (enabled) it
+        else it.copy(alpha = .3f)
     }
 
     // using text and counter
@@ -135,7 +140,7 @@ fun GfText(
                     .width(badgeRadius.times(2).plus(badgeMargin).dp),
                 onDraw = {
                     drawCircle(
-                        color = red60,
+                        color = if (enabled) red60 else red60.copy(alpha = .3f),
                         radius = badgeRadius.dp.toPx(),
                         center = Offset(4.dp.toPx(), 4.dp.toPx())
                     )
@@ -154,7 +159,8 @@ fun GfText(
             placeholderVerticalAlign = PlaceholderVerticalAlign.Center
         )) {
             Counter(
-                count = count
+                count = count,
+                enabled = enabled,
             )
         }
     }
@@ -171,52 +177,40 @@ fun GfText(
     )
 }
 
-// TODO[tae:2022/12/19] 코멘트 친 부분은 Experimental 이라 좀 깨름칙, 이후 정식 버전에 들어가면 native canvas 대신에 쓰자
+@OptIn(ExperimentalTextApi::class)
 @Composable
 internal fun Counter(
     count: Count,
+    enabled: Boolean = true,
 ) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .padding(start = 2.dp)
             .clip(CircleShape)
-            .background(color = count.containerColor),
+            .background(
+                color =
+                if (enabled) count.containerColor
+                else count.containerColor.copy(alpha = .6f)
+            ),
         contentAlignment = Alignment.Center
     ) {
         val text = count.count.toString()
-//        val textMeasurer = rememberTextMeasurer()
-//        val textLayoutResult = textMeasurer.measure(text = AnnotatedString(text))
-//        val textSize = textLayoutResult.size
-
+        val textMeasurer = rememberTextMeasurer()
+        val textLayoutResult = textMeasurer.measure(text = AnnotatedString(text))
+        val textSize = textLayoutResult.size
         Canvas(
             modifier = Modifier.fillMaxSize(),
             onDraw = {
-                val paint = Paint().apply {
-                    this.textSize = count.style.fontSize.toPx()
-                    this.color = count.textColor.toArgb()
-                    this.textAlign = Paint.Align.CENTER
-                }
-                val canvasWidth = size.width
-                val canvasHeight = size.height
-                val yPosition = canvasHeight.div(2) - paint.descent().plus(paint.ascent()).div(2)
-                drawContext.canvas.nativeCanvas.drawText(
-                    text,
-                    canvasWidth.div(2),
-                    yPosition,
-                    paint
+                drawText(
+                    textMeasurer = textMeasurer,
+                    text = text,
+                    topLeft = Offset(
+                        x = size.width.minus(textSize.width).div(2f),
+                        y = size.height.minus(textSize.height).div(2f)
+                    ),
+                    style = count.style.merge(TextStyle(color = count.textColor)),
                 )
-
-                // this is experimental, so...
-//            drawText(
-//                textMeasurer = textMeasurer,
-//                text = text,
-//                topLeft = Offset(
-//                    (canvasWidth - textSize.width) / 2f,
-//                    (canvasHeight - textSize.height) / 2f
-//                ),
-//                style = count.style.merge(TextStyle(color = count.textColor)),
-//            )
             })
     }
 }
@@ -242,9 +236,7 @@ data class Count(
     val style: TextStyle,
 )
 
-@Preview(
-    showBackground = true,
-)
+@Preview(showBackground = true)
 @Composable
 fun GfTextPreview() {
     GfTheme {

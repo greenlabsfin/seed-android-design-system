@@ -199,8 +199,8 @@ private const val JA = "ja"
 
 private val fontFamily = FontFamily(
     Font(R.font.pretendard_bold, FontWeight.Bold),
-    Font(R.font.pretendard_bold, FontWeight.Medium),
-    Font(R.font.pretendard_bold, FontWeight.Normal)
+    Font(R.font.pretendard_medium, FontWeight.Medium),
+    Font(R.font.pretendard_regular, FontWeight.Normal)
 )
 
 val FontWeight.Companion.Regular: FontWeight
