@@ -5,6 +5,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.graphics.Color
+import com.greenlabsfin.design.core.GfTheme
 import com.greenlabsfin.design.core.color.GfColorScheme
 
 interface GFButtonColor {
@@ -20,54 +21,61 @@ interface GFButtonColor {
 
 object GFButton {
     object Style {
-        val containerPrimary: GFButtonColor =
-            GFButtonColors(
-                backgroundColor = GfColorScheme().container.primary,
-                contentColor = GfColorScheme().contents.onPrimary,
+        val containerPrimary: GFButtonColor
+            @Composable
+            get() = GFButtonColors(
+                backgroundColor = GfTheme.colorScheme.container.primary,
+                contentColor = GfTheme.colorScheme.contents.onPrimary,
             )
 
-        val outlinePrimary: GFButtonColor =
-            GFButtonColors(
-                backgroundColor = GfColorScheme().container.neutralPrimary,
-                contentColor = GfColorScheme().container.primary,
-                borderColor = GfColorScheme().container.primary,
-                disabledBorderColor = GfColorScheme().contents.neutralTertiary.copy(
+        val outlinePrimary: GFButtonColor
+            @Composable
+            get() = GFButtonColors(
+                backgroundColor = GfTheme.colorScheme.container.neutralPrimary,
+                contentColor = GfTheme.colorScheme.container.primary,
+                borderColor = GfTheme.colorScheme.container.primary,
+                disabledBorderColor = GfTheme.colorScheme.contents.neutralTertiary.copy(
                     alpha = 0.6f
                 )
             )
 
-        val tintPrimary: GFButtonColor =
-            GFButtonColors(
-                backgroundColor = GfColorScheme().container.secondary,
-                contentColor = GfColorScheme().contents.primary
+        val tintPrimary: GFButtonColor
+            @Composable
+            get() = GFButtonColors(
+                backgroundColor = GfTheme.colorScheme.container.secondary,
+                contentColor = GfTheme.colorScheme.contents.primary
             )
 
-        val outlineNeutral: GFButtonColor =
-            GFButtonColors(
-                backgroundColor = GfColorScheme().container.neutralPrimary,
-                contentColor = GfColorScheme().contents.neutralPrimary,
-                borderColor = GfColorScheme().container.outline,
-                disabledBorderColor = GfColorScheme().contents.neutralTertiary.copy(
+        val outlineNeutral: GFButtonColor
+            @Composable
+            get() = GFButtonColors(
+                backgroundColor = GfTheme.colorScheme.container.neutralPrimary,
+                contentColor = GfTheme.colorScheme.contents.neutralPrimary,
+                borderColor = GfTheme.colorScheme.container.outline,
+                disabledBorderColor = GfTheme.colorScheme.contents.neutralTertiary.copy(
                     alpha = 0.6f
                 )
             )
 
-        val tintNeutral: GFButtonColor =
-            GFButtonColors(
-                backgroundColor = GfColorScheme().container.neutralSecondary,
-                contentColor = GfColorScheme().contents.neutralPrimary
+        val tintNeutral: GFButtonColor
+            @Composable
+            get() = GFButtonColors(
+                backgroundColor = GfTheme.colorScheme.container.neutralSecondary,
+                contentColor = GfTheme.colorScheme.contents.neutralPrimary
             )
 
-        val containerNegative: GFButtonColor =
-            GFButtonColors(
-                backgroundColor = GfColorScheme().contents.error,
-                contentColor = GfColorScheme().contents.onPrimary
+        val containerNegative: GFButtonColor
+            @Composable
+            get() = GFButtonColors(
+                backgroundColor = GfTheme.colorScheme.contents.error,
+                contentColor = GfTheme.colorScheme.contents.onPrimary
             )
 
-        val tintNegative: GFButtonColor =
-            GFButtonColors(
-                backgroundColor = GfColorScheme().container.error,
-                contentColor = GfColorScheme().contents.error
+        val tintNegative: GFButtonColor
+            @Composable
+            get() = GFButtonColors(
+                backgroundColor = GfTheme.colorScheme.container.error,
+                contentColor = GfTheme.colorScheme.contents.error
             )
 
         @Composable
@@ -75,9 +83,9 @@ object GFButton {
             backgroundColor: Color,
             contentColor: Color,
             disabledBackgroundColor: Color =
-                GfColorScheme().container.neutralSecondary.copy(alpha = 0.6f),
+                GfTheme.colorScheme.container.neutralSecondary.copy(alpha = 0.6f),
             disabledContentColor: Color =
-                GfColorScheme().contents.neutralPrimary.copy(alpha = 0.6f),
+                GfTheme.colorScheme.contents.neutralPrimary.copy(alpha = 0.6f),
             borderColor: Color = Color.Transparent,
             disabledBorderColor: Color = Color.Transparent,
         ): GFButtonColor =
@@ -106,9 +114,11 @@ private data class GFButtonColors(
     @Composable
     override fun backgroundColor(enabled: Boolean): State<Color> =
         rememberUpdatedState(if (enabled) backgroundColor else disabledBackgroundColor)
+
     @Composable
     override fun contentColor(enabled: Boolean): State<Color> =
         rememberUpdatedState(if (enabled) contentColor else disabledContentColor)
+
     @Composable
     override fun borderColor(enabled: Boolean): State<Color> =
         rememberUpdatedState(if (enabled) borderColor else disabledBorderColor)
