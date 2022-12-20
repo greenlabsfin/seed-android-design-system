@@ -31,6 +31,20 @@ data class GfTypoScheme(
         Small,
         XSmall
     }
+
+    companion object {
+        fun custom(
+            size: TextUnit,
+            weight: FontWeight,
+            lineHeight: TextUnit = size.times(1.2f),
+        ): TextStyle = TextStyle(
+            fontFamily = fontFamily,
+            fontSize = size,
+            lineHeight = lineHeight,
+            letterSpacing = size.letterSpacing,
+            fontWeight = weight,
+        )
+    }
 }
 
 @Immutable
