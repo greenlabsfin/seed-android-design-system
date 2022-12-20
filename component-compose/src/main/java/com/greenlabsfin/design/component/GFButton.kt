@@ -51,12 +51,12 @@ enum class GFHeight(val displayPixel: Dp) {
 fun GFButton(
     height: GFHeight,
     colors: GFButtonColor,
-    onClick: () -> Unit,
     enabled: Boolean = true,
     text: String? = null,
     leftIcon: ImageVector? = null,
     rightIcon: ImageVector? = null,
-//    count: Int? = null,
+    //    count: Int? = null,
+    onClick: () -> Unit,
 ) {
     val radius = when (height) {
         GFHeight.XLarge, GFHeight.Large -> 12.dp
