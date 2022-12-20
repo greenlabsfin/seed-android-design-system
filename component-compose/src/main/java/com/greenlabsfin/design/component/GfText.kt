@@ -99,10 +99,10 @@ fun GfText(
     )
     val badgePlaceHolder = Placeholder(
         width = with(LocalDensity.current) {
-            badgeRadius.plus(badgeMargin).dp.toSp()
+            badgeRadius.times(2).plus(badgeMargin).dp.toSp()
         },
         height = with(LocalDensity.current) {
-            badgeRadius.dp.toSp()
+            badgeRadius.times(2).dp.toSp()
         },
         placeholderVerticalAlign = PlaceholderVerticalAlign.Top
     )
@@ -228,7 +228,7 @@ private const val countId = "count"
 
 private const val iconSize = 20
 private const val iconMargin = 4
-private const val badgeRadius = 4
+private const val badgeRadius = 2
 private const val badgeMargin = 2
 private const val countSize = 8
 private const val countPadding = 4
