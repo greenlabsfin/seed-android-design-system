@@ -27,6 +27,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion "1.1.1"
+    }
 }
 
 dependencies {
@@ -40,6 +46,8 @@ dependencies {
     implementation platform("androidx.compose:compose-bom:$composeBomVersion")
     implementation "androidx.compose.ui:ui"
     implementation "androidx.compose.ui:ui-tooling"
+    implementation "androidx.compose.material:material"
+    implementation "androidx.compose.ui:ui-tooling-preview"
 }
 
 // Set artifact ID and description for each module
