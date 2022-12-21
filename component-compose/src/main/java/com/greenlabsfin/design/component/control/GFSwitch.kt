@@ -5,9 +5,11 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Surface
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,6 +22,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.greenlabsfin.design.core.GfTheme
@@ -35,11 +38,13 @@ enum class SwitchSize {
 fun GFSwitch(
     checked: Boolean,
     enabled: Boolean = true,
-    onCheckedChange: ((Boolean) -> Unit)? = null,
+    text: String? = null,
+    textStyle: TextStyle = GfTheme.typoScheme.body.mediumRegular,
     switchSize: SwitchSize = SwitchSize.Large,
     checkedTrackColor: Color = GfTheme.colorScheme.container.primary,
     uncheckedTrackColor: Color = gray40,
     thumbColor: Color = GfTheme.colorScheme.contents.onPrimary,
+    onCheckedChange: ((Boolean) -> Unit)? = null,
 ) {
 
     val switchWidth = when (switchSize) {
@@ -63,39 +68,46 @@ fun GFSwitch(
             with(LocalDensity.current) { (thumbRadius + 3.dp).toPx() }
     )
 
-    Canvas(
-        modifier = Modifier
-            .size(width = switchWidth, height = switchHeight)
-            .pointerInput(Unit) {
-                detectTapGestures(
-                    onTap = {
-                        // This is called when the user taps on the canvas
-                        onCheckedChange?.invoke(checked)
-                    }
-                )
-            }
-    ) {
-        // Track
-        drawRoundRect(
-            color = if (enabled) {
-                if (checked) checkedTrackColor else uncheckedTrackColor
-            } else {
-                gray20
-            },
-            cornerRadius = CornerRadius(30.dp.toPx()),
-        )
-
-        // Thumb
-        drawCircle(
-            color = thumbColor,
-            radius = thumbRadius.toPx(),
-            center = Offset(
-                x = animatePosition.value,
-                y = size.height / 2
+    Row {
+        Canvas(
+            modifier = Modifier
+                .size(width = switchWidth, height = switchHeight)
+                .pointerInput(Unit) {
+                    detectTapGestures(
+                        onTap = {
+                            // This is called when the user taps on the canvas
+                            onCheckedChange?.invoke(checked)
+                        }
+                    )
+                }
+        ) {
+            // Track
+            drawRoundRect(
+                color = if (enabled) {
+                    if (checked) checkedTrackColor else uncheckedTrackColor
+                } else {
+                    gray20
+                },
+                cornerRadius = CornerRadius(30.dp.toPx()),
             )
-        )
-    }
 
+            // Thumb
+            drawCircle(
+                color = thumbColor,
+                radius = thumbRadius.toPx(),
+                center = Offset(
+                    x = animatePosition.value,
+                    y = size.height / 2
+                )
+            )
+        }
+        text?.let {
+            Text(
+                text = it,
+                style = textStyle
+            )
+        }
+    }
 }
 
 @Preview("SwitchPreview", widthDp = 100, heightDp = 100)
@@ -122,7 +134,5 @@ fun SwitchPreview() {
                 onCheckedChange = { checked = checked.not() },
                 switchSize = SwitchSize.Small)
         }
-
-
     }
 }
