@@ -1,5 +1,7 @@
 package com.greenlabsfin.design.core.typo
 
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -8,6 +10,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
+import com.greenlabsfin.design.core.LocalGfTextStyle
 import com.greenlabsfin.design.core.R
 
 @Immutable
@@ -234,4 +237,13 @@ fun GfTypoScheme.SizeValue.sizeOf(
     GfTypoScheme.SizeType.Medium -> medium
     GfTypoScheme.SizeType.Small -> small
     GfTypoScheme.SizeType.XSmall -> xSmall
+}
+
+@Composable
+fun ProvideGfTextStyle(
+    value: TextStyle,
+    content: @Composable () -> Unit,
+) {
+    val mergedStyle = LocalGfTextStyle.current.merge(value)
+    CompositionLocalProvider(LocalGfTextStyle provides mergedStyle, content = content)
 }

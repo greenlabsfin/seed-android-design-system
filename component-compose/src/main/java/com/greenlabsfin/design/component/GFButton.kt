@@ -45,6 +45,13 @@ enum class GFHeight(val displayPixel: Dp) {
             Medium -> GfTheme.typoScheme.body.mediumMedium
             else -> GfTheme.typoScheme.body.smallMedium
         }
+
+    val radius: Dp
+        get() = when (this) {
+            XLarge, Large -> 12.dp
+            Medium -> 10.dp
+            Small, XSmall -> 8.dp
+        }
 }
 
 @Composable
@@ -59,12 +66,6 @@ fun GFButton(
     countStyle: GfCountStyle? = null,
     onClick: () -> Unit,
 ) {
-    val radius = when (height) {
-        GFHeight.XLarge, GFHeight.Large -> 12.dp
-        GFHeight.Medium -> 10.dp
-        GFHeight.Small, GFHeight.XSmall -> 8.dp
-    }
-
     Button(
         onClick = onClick,
         modifier = Modifier.height(height.displayPixel),
@@ -74,7 +75,7 @@ fun GFButton(
         ),
         border = BorderStroke(1.dp, colors.borderColor(enabled = enabled).value),
         contentPadding = PaddingValues(horizontal = 12.dp),
-        shape = RoundedCornerShape(radius)
+        shape = RoundedCornerShape(height.radius)
     ) {
         Row(horizontalArrangement = Arrangement.spacedBy(4.dp),
             verticalAlignment = Alignment.CenterVertically) {
