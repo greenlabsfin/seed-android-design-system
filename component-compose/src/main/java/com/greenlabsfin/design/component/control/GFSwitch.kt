@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -68,7 +69,7 @@ fun GFSwitch(
             with(LocalDensity.current) { (thumbRadius + 3.dp).toPx() }
     )
 
-    Row {
+    Row(verticalAlignment = Alignment.CenterVertically) {
         Canvas(
             modifier = Modifier
                 .size(width = switchWidth, height = switchHeight)
@@ -103,6 +104,7 @@ fun GFSwitch(
         }
         text?.let {
             Text(
+                modifier = Modifier.padding(start = 8.dp),
                 text = it,
                 style = textStyle
             )
@@ -110,14 +112,13 @@ fun GFSwitch(
     }
 }
 
-@Preview("SwitchPreview", widthDp = 100, heightDp = 100)
+@Preview("SwitchPreview")
 @Composable
 fun SwitchPreview() {
     var checked by remember {
         mutableStateOf(true)
     }
     Surface(
-        modifier = Modifier.fillMaxSize(),
         color = GfTheme.colorScheme.container.background
     ) {
         Column(
@@ -127,12 +128,15 @@ fun SwitchPreview() {
         ) {
             GFSwitch(
                 checked = checked,
-                onCheckedChange = { checked = checked.not() }
+                onCheckedChange = { checked = checked.not() },
+                text = "레이블 텍스트"
             )
 
             GFSwitch(checked = checked,
                 onCheckedChange = { checked = checked.not() },
-                switchSize = SwitchSize.Small)
+                switchSize = SwitchSize.Small,
+                text = "레이블 텍스트"
+            )
         }
     }
 }
