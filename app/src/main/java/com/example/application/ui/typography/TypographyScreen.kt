@@ -2,16 +2,13 @@ package com.example.application.ui.typography
 
 import android.app.Activity
 import androidx.annotation.StringRes
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Card
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,10 +18,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.intl.Locale
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.application.R
+import com.example.application.ui.theme.GFSampleTheme
 import com.example.application.util.LocaleHelper
+import com.example.application.util.ThemedPreview
+import com.greenlabsfin.design.component.GFButton
+import com.greenlabsfin.design.component.GFHeight
+import com.greenlabsfin.design.component.GfText
 import com.greenlabsfin.design.core.GfTheme
 
 @Composable
@@ -38,17 +39,16 @@ fun TypographyScreen() {
     var isExpanded by remember { mutableStateOf(false) }
     val context = LocalContext.current
     val currentLocale = Locale.current
-    Column {
+    Column(
+        modifier = Modifier.padding(16.dp)
+    ) {
         Column {
-            Card(
-                content = {
-                    Text(
-                        modifier = Modifier
-                            .padding(vertical = 10.dp, horizontal = 20.dp)
-                            .clickable { isExpanded = !isExpanded },
-                        text = currentLocale.language,
-                        style = GfTheme.typoScheme.body.mediumRegular,
-                    )
+            GFButton(
+                height = GFHeight.Medium,
+                colors = GFButton.Style.containerPrimary,
+                text = currentLocale.language,
+                onClick = {
+                    isExpanded = !isExpanded
                 }
             )
             DropdownMenu(
@@ -62,7 +62,7 @@ fun TypographyScreen() {
                             (context as? Activity)?.recreate()
                         },
                         text = {
-                            Text(
+                            GfText(
                                 text = locale.language,
                                 style = GfTheme.typoScheme.body.mediumRegular,
                                 color =
@@ -170,8 +170,10 @@ enum class TypographyCategories(
         }
 }
 
-@Preview
+@ThemedPreview
 @Composable
 fun TypographyScreenPreview() {
-    TypographyScreen()
+    GFSampleTheme {
+        TypographyScreen()
+    }
 }
