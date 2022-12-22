@@ -20,6 +20,7 @@ import com.example.application.R
 import com.example.application.ui.EmptyScreen
 import com.example.application.ui.button.ContainerButtonScreen
 import com.example.application.ui.button.TextButtonScreen
+import com.example.application.ui.control.ControlScreen
 import com.example.application.ui.textfield.TextFieldScreen
 import com.example.application.ui.theme.GFSampleTheme
 import com.example.application.ui.typography.TypographyScreen
@@ -67,6 +68,7 @@ fun HomeScreen() {
                             is DrawerMenu.TextField -> TextFieldScreen()
                             is DrawerMenu.ContainerButton -> ContainerButtonScreen()
                             is DrawerMenu.TextButton -> TextButtonScreen()
+                            is DrawerMenu.Control -> ControlScreen()
                             else -> EmptyScreen()
                         }
                     }
