@@ -35,7 +35,7 @@ import com.greenlabsfin.design.core.color.red60
 @Composable
 fun GfText(
     modifier: Modifier = Modifier,
-    text: String? = null,
+    text: String,
     leftIcon: ImageVector? = null,
     rightIcon: ImageVector? = null,
     count: Int? = null,

@@ -30,7 +30,7 @@ import com.greenlabsfin.design.core.LocalGfTypoScheme
 @Composable
 fun GfTextButton(
     modifier: Modifier = Modifier,
-    text: String? = null,
+    text: String,
     leftIcon: ImageVector? = null,
     rightIcon: ImageVector? = null,
     count: Int? = null,
