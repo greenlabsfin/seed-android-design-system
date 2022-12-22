@@ -3,6 +3,7 @@ package com.greenlabsfin.design.component.control
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,9 +24,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.greenlabsfin.design.component.GfText
+import com.greenlabsfin.design.component.util.GfPreview
 import com.greenlabsfin.design.core.GfTheme
+import com.greenlabsfin.design.core.color.GfColorScheme
 import com.greenlabsfin.design.core.color.gray20
 import com.greenlabsfin.design.core.color.gray40
 
@@ -103,7 +105,7 @@ fun GFSwitch(
             )
         }
         text?.let {
-            Text(
+            GfText(
                 modifier = Modifier.padding(start = 8.dp),
                 text = it,
                 style = textStyle
@@ -112,31 +114,35 @@ fun GFSwitch(
     }
 }
 
-@Preview("SwitchPreview")
+@GfPreview("SwitchPreview")
 @Composable
 fun SwitchPreview() {
     var checked by remember {
         mutableStateOf(true)
     }
-    Surface(
-        color = GfTheme.colorScheme.container.background
+    GfTheme(
+        colorScheme = GfColorScheme.default(isSystemInDarkTheme())
     ) {
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+        Surface(
+            color = GfTheme.colorScheme.container.background
         ) {
-            GFSwitch(
-                checked = checked,
-                onCheckedChange = { checked = checked.not() },
-                text = "레이블 텍스트"
-            )
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                GFSwitch(
+                    checked = checked,
+                    onCheckedChange = { checked = checked.not() },
+                    text = "레이블 텍스트"
+                )
 
-            GFSwitch(checked = checked,
-                onCheckedChange = { checked = checked.not() },
-                switchSize = SwitchSize.Small,
-                text = "레이블 텍스트"
-            )
+                GFSwitch(checked = checked,
+                    onCheckedChange = { checked = checked.not() },
+                    switchSize = SwitchSize.Small,
+                    text = "레이블 텍스트"
+                )
+            }
         }
     }
 }
