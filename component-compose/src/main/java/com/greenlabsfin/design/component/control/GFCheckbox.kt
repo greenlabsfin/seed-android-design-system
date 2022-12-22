@@ -12,15 +12,11 @@ import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.greenlabsfin.design.component.GfIcon
 import com.greenlabsfin.design.component.GfText
@@ -35,7 +31,7 @@ fun GFCheckbox(
     enabled: Boolean = true,
     text: String? = null,
     textStyle: TextStyle = GfTheme.typoScheme.body.mediumRegular,
-    colors: ControlColors = GFControl.Colors.radioPrimary,
+    colors: ControlColors = GFControl.Colors.checkboxPrimary,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     onCheckedChange: (Boolean) -> Unit,
 ) {
@@ -44,7 +40,8 @@ fun GFCheckbox(
         animateColorAsState(
             targetValue = colors.controlColor(
                 enabled = enabled,
-                selected = checked).value
+                selected = checked
+            ).value
         )
     val iconAnimation =
         animateColorAsState(
@@ -107,17 +104,6 @@ fun GFCheckbox(
             )
         }
     }
-}
-
-@Preview
-@Composable
-fun CheckboxPreview() {
-    var checked by remember { mutableStateOf(true) }
-    GFCheckbox(
-        checked = checked ,
-        onCheckedChange = { checked = it },
-        text = "컨트롤 레이블"
-    )
 }
 
 private val checkBoxRadius = 6.dp
