@@ -21,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
@@ -30,8 +29,6 @@ import com.greenlabsfin.design.component.GfText
 import com.greenlabsfin.design.component.util.GfPreview
 import com.greenlabsfin.design.core.GfTheme
 import com.greenlabsfin.design.core.color.GfColorScheme
-import com.greenlabsfin.design.core.color.gray20
-import com.greenlabsfin.design.core.color.gray40
 
 enum class SwitchSize {
     Large,
@@ -45,9 +42,7 @@ fun GFSwitch(
     text: String? = null,
     textStyle: TextStyle = GfTheme.typoScheme.body.mediumRegular,
     switchSize: SwitchSize = SwitchSize.Large,
-    checkedTrackColor: Color = GfTheme.colorScheme.container.primary,
-    uncheckedTrackColor: Color = gray40,
-    thumbColor: Color = GfTheme.colorScheme.contents.onPrimary,
+    colors: ControlColors = GFControl.Colors.switchPrimary,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     onCheckedChange: (Boolean) -> Unit,
 ) {
@@ -63,6 +58,9 @@ fun GFSwitch(
     }
 
     val thumbRadius = (switchHeight / 2) - 3.dp
+
+    val trackColor = colors.controlColor(enabled = enabled, selected = checked).value
+    val thumbColor = colors.controlDotColor(enabled = true, selected = true).value
 
 
     // To move thumb, we need to calculate the position (along x axis)
@@ -90,11 +88,7 @@ fun GFSwitch(
         ) {
             // Track
             drawRoundRect(
-                color = if (enabled) {
-                    if (checked) checkedTrackColor else uncheckedTrackColor
-                } else {
-                    gray20
-                },
+                color = trackColor,
                 cornerRadius = CornerRadius(30.dp.toPx()),
             )
 

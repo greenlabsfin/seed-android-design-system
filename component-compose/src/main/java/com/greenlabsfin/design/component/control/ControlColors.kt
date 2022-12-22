@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.Color
 import com.greenlabsfin.design.core.GfTheme
 import com.greenlabsfin.design.core.color.GfColorScheme
 import com.greenlabsfin.design.core.color.gray30
+import com.greenlabsfin.design.core.color.gray40
 import com.greenlabsfin.design.core.color.white
 
 @Stable
@@ -22,10 +23,17 @@ interface ControlColors {
 
 object GFControl {
     object Colors {
-        val primary: ControlColors
+        val radioPrimary: ControlColors
             @Composable
             get() = GFControlColors(
                 checkedBackgroundColor = GfTheme.colorScheme.contents.primary
+            )
+
+        val switchPrimary: ControlColors
+            @Composable
+            get() = GFControlColors(
+                checkedBackgroundColor = GfTheme.colorScheme.contents.primary,
+                unCheckedBackgroundColor = gray40
             )
 
         @Composable
@@ -54,6 +62,7 @@ private data class GFControlColors(
     private val unCheckedBackgroundColor: Color = white,
     private val checkedInnerItemColor: Color = white,
     private val uncheckedInnerItemColor: Color = gray30,
+    private val disabledUncheckedBackgroundColor: Color = unCheckedBackgroundColor.copy(alpha = 0.3f),
     private val disabledCheckedBackgroundColor: Color = checkedBackgroundColor.copy(alpha = 0.3f),
     private val disabledUncheckedInnerItemColor: Color = uncheckedInnerItemColor.copy(0.3f),
 ) : ControlColors {
@@ -63,7 +72,7 @@ private data class GFControlColors(
             if (enabled) {
                 if (selected) checkedBackgroundColor else unCheckedBackgroundColor
             } else {
-                if (selected) disabledCheckedBackgroundColor else unCheckedBackgroundColor
+                if (selected) disabledCheckedBackgroundColor else disabledUncheckedBackgroundColor
             }
         )
 

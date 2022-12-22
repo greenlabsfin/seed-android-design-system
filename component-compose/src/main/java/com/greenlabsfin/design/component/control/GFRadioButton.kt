@@ -30,7 +30,7 @@ fun GFRadioButton(
     enabled: Boolean = true,
     text: String? = null,
     textStyle: TextStyle = GfTheme.typoScheme.body.mediumRegular,
-    colors: ControlColors = GFControl.Colors.primary,
+    colors: ControlColors = GFControl.Colors.radioPrimary,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     onClick: () -> Unit,
 ) {

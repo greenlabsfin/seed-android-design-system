@@ -46,6 +46,20 @@ private fun SwitchComponents() {
             switchSize = SwitchSize.Small,
             text = "Small Switch"
         )
+
+        GFSwitch(
+            checked = true,
+            onCheckedChange = {},
+            enabled = false,
+            text = "Disabled Checked Switch"
+        )
+
+        GFSwitch(
+            checked = false,
+            onCheckedChange = {},
+            enabled = false,
+            text = "Disabled Unchecked Switch"
+        )
     }
 }
 
