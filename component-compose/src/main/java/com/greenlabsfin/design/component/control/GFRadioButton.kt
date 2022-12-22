@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -35,9 +34,6 @@ fun GFRadioButton(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     onClick: () -> Unit,
 ) {
-    val size = 24.dp
-    val dotSize = 8.dp
-    val radius = 12.dp
 
     val backgroundAnimation =
         animateColorAsState(
@@ -73,7 +69,7 @@ fun GFRadioButton(
                 .then(
                     paddingModifier
                 )
-                .size(size)
+                .size(radioBackgroundSize)
                 .selectable(
                     selected = selected,
                     enabled = enabled,
@@ -87,7 +83,7 @@ fun GFRadioButton(
                 )
                 .background(
                     color = backgroundAnimation.value,
-                    shape = RoundedCornerShape(radius)
+                    shape = CircleShape
                 )
                 .then(
                     selectedBorderModifier
@@ -96,10 +92,10 @@ fun GFRadioButton(
         ) {
             Spacer(
                 modifier = Modifier
-                    .size(dotSize)
+                    .size(radioDotSize)
                     .background(
                         color = dotAnimation.value,
-                        shape = RoundedCornerShape(4.dp)
+                        shape = CircleShape
                     )
             )
         }
@@ -112,3 +108,6 @@ fun GFRadioButton(
         }
     }
 }
+
+private val radioBackgroundSize = 24.dp
+private val radioDotSize = 8.dp
