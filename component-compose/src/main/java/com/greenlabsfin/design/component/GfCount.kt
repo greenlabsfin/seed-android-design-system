@@ -1,7 +1,10 @@
 package com.greenlabsfin.design.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -20,11 +23,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.greenlabsfin.design.component.util.GfPreview
 import com.greenlabsfin.design.core.GfTheme
+import com.greenlabsfin.design.core.color.GfColorScheme
 import com.greenlabsfin.design.core.typo.GfTypoScheme
 
 @Stable
-interface GfCountStyle {
+interface GfCountColors {
     @Composable
     fun backgroundColor(enabled: Boolean): State<Color>
 
@@ -35,72 +40,72 @@ interface GfCountStyle {
     fun textStyle(textStyle: TextStyle, enabled: Boolean): State<TextStyle>
 }
 
-object GfCount {
-    object Style {
-        val primary: GfCountStyle
+object GfCountDefaults {
+    object Colors {
+        val primary: GfCountColors
             @Composable
-            get() = GfCounts(
+            get() = DefaultGfCountColors(
                 textColor = GfTheme.colorScheme.contents.onPrimary,
                 backgroundColor = GfTheme.colorScheme.contents.primary,
             )
 
-        val secondary: GfCountStyle
+        val secondary: GfCountColors
             @Composable
-            get() = GfCounts(
+            get() = DefaultGfCountColors(
                 textColor = GfTheme.colorScheme.contents.primary,
                 backgroundColor = GfTheme.colorScheme.container.secondary,
             )
 
-        val neutral: GfCountStyle
+        val neutral: GfCountColors
             @Composable
-            get() = GfCounts(
-                textColor = GfTheme.colorScheme.contents.onPrimary,
-                backgroundColor = GfTheme.colorScheme.contents.neutralPrimary,
+            get() = DefaultGfCountColors(
+                textColor = GfTheme.colorScheme.contents.onInverse,
+                backgroundColor = GfTheme.colorScheme.container.inverse,
             )
 
-        val errorPrimary: GfCountStyle
+        val errorPrimary: GfCountColors
             @Composable
-            get() = GfCounts(
+            get() = DefaultGfCountColors(
                 textColor = GfTheme.colorScheme.contents.error,
                 backgroundColor = GfTheme.colorScheme.contents.onPrimary,
             )
 
-        val errorSecondary: GfCountStyle
+        val errorSecondary: GfCountColors
             @Composable
-            get() = GfCounts(
+            get() = DefaultGfCountColors(
                 textColor = GfTheme.colorScheme.contents.onPrimary,
                 backgroundColor = GfTheme.colorScheme.contents.error,
             )
-
-        @Composable
-        fun custom(
-            textColor: Color,
-            backgroundColor: Color,
-        ): GfCountStyle = GfCounts(
-            textColor = textColor,
-            backgroundColor = backgroundColor,
-        )
-
-        @Composable
-        fun getDefault(buttonColor: GFButtonColor): GfCountStyle =
-            when (buttonColor) {
-                GFButton.Style.containerPrimary -> secondary
-                GFButton.Style.outlinePrimary -> primary
-                GFButton.Style.tintPrimary -> primary
-                GFButton.Style.outlineNeutral -> neutral
-                GFButton.Style.tintNeutral -> neutral
-                GFButton.Style.containerNegative -> errorPrimary
-                GFButton.Style.tintNegative -> errorSecondary
-                else -> primary
-            }
     }
+
+    @Composable
+    fun getByButtonColor(buttonColor: GFButtonColor): GfCountColors =
+        when (buttonColor) {
+            GFButton.Style.containerPrimary -> Colors.secondary
+            GFButton.Style.outlinePrimary -> Colors.primary
+            GFButton.Style.tintPrimary -> Colors.primary
+            GFButton.Style.outlineNeutral -> Colors.neutral
+            GFButton.Style.tintNeutral -> Colors.neutral
+            GFButton.Style.containerNegative -> Colors.errorPrimary
+            GFButton.Style.tintNegative -> Colors.errorSecondary
+            else -> Colors.primary
+        }
+
+    @Composable
+    fun chipColors(
+        textColor: Color = Color.Unspecified,
+        backgroundColor: Color = Color.Unspecified,
+    ): GfCountColors = DefaultGfCountColors(
+        textColor = textColor,
+        backgroundColor = backgroundColor,
+    )
 }
 
 @Immutable
-private data class GfCounts(
+private data class DefaultGfCountColors(
     val textColor: Color,
     val backgroundColor: Color,
-) : GfCountStyle {
+) : GfCountColors {
     @Composable
     override fun backgroundColor(enabled: Boolean): State<Color> =
         rememberUpdatedState(if (enabled) backgroundColor else backgroundColor.copy(alpha = .6f))
@@ -123,13 +128,13 @@ private data class GfCounts(
 
 @Composable
 internal fun GfCount(
-    modifier: Modifier = Modifier,
     count: Int,
-    style: GfCountStyle,
+    colors: GfCountColors,
+    modifier: Modifier = Modifier,
     enabled: Boolean = true,
 ) {
-    val backgroundColor by style.backgroundColor(enabled = enabled)
-    val textColor by style.textColor(enabled = enabled)
+    val backgroundColor by colors.backgroundColor(enabled = enabled)
+    val textColor by colors.textColor(enabled = enabled)
     val text = count.toString()
     val size = 16.dp
 
@@ -154,3 +159,17 @@ private val counterTextStyle = GfTypoScheme.custom(
     size = 12.sp,
     weight = FontWeight.Medium
 )
+
+@GfPreview
+@Composable
+fun GfCountPreview() {
+    GfTheme(colorScheme = GfColorScheme.default(isSystemInDarkTheme())) {
+        Column(modifier = Modifier, verticalArrangement = Arrangement.spacedBy(4.dp)) {
+            GfCount(count = 3, colors = GfCountDefaults.Colors.primary)
+            GfCount(count = 33, colors = GfCountDefaults.Colors.secondary)
+            GfCount(count = 3, colors = GfCountDefaults.Colors.neutral)
+            GfCount(count = 333, colors = GfCountDefaults.Colors.errorPrimary)
+            GfCount(count = 3, colors = GfCountDefaults.Colors.errorSecondary)
+        }
+    }
+}
