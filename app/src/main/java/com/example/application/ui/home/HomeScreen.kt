@@ -20,6 +20,7 @@ import com.example.application.R
 import com.example.application.ui.EmptyScreen
 import com.example.application.ui.button.ContainerButtonScreen
 import com.example.application.ui.button.TextButtonScreen
+import com.example.application.ui.control.ControlScreen
 import com.example.application.ui.textfield.TextFieldScreen
 import com.example.application.ui.theme.GFSampleTheme
 import com.example.application.ui.typography.TypographyScreen
@@ -36,7 +37,8 @@ fun HomeScreen() {
         DrawerMenu.ContainerButton,
         DrawerMenu.TextButton,
         DrawerMenu.TextField,
-        DrawerMenu.Chip
+        DrawerMenu.Chip,
+        DrawerMenu.Control
     )
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val selectedItem = remember { mutableStateOf(menuItems[0]) }
@@ -66,6 +68,7 @@ fun HomeScreen() {
                             is DrawerMenu.TextField -> TextFieldScreen()
                             is DrawerMenu.ContainerButton -> ContainerButtonScreen()
                             is DrawerMenu.TextButton -> TextButtonScreen()
+                            is DrawerMenu.Control -> ControlScreen()
                             else -> EmptyScreen()
                         }
                     }
@@ -116,6 +119,14 @@ sealed interface DrawerMenu : NavDrawerItem {
             get() = null
         override val title: String
             get() = "TextField"
+    }
+
+    object Control: DrawerMenu {
+        override val icon: ImageVector?
+            get() = null
+        override val title: String
+            get() = "Controls"
+
     }
 }
 

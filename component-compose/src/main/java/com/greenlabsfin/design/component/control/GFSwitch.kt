@@ -2,7 +2,7 @@ package com.greenlabsfin.design.component.control
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,17 +21,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.greenlabsfin.design.component.GfText
 import com.greenlabsfin.design.component.util.GfPreview
 import com.greenlabsfin.design.core.GfTheme
 import com.greenlabsfin.design.core.color.GfColorScheme
-import com.greenlabsfin.design.core.color.gray20
-import com.greenlabsfin.design.core.color.gray40
 
 enum class SwitchSize {
     Large,
@@ -44,10 +42,9 @@ fun GFSwitch(
     text: String? = null,
     textStyle: TextStyle = GfTheme.typoScheme.body.mediumRegular,
     switchSize: SwitchSize = SwitchSize.Large,
-    checkedTrackColor: Color = GfTheme.colorScheme.container.primary,
-    uncheckedTrackColor: Color = gray40,
-    thumbColor: Color = GfTheme.colorScheme.contents.onPrimary,
-    onCheckedChange: ((Boolean) -> Unit)? = null,
+    colors: ControlColors = GFControl.Colors.switchPrimary,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    onCheckedChange: (Boolean) -> Unit,
 ) {
 
     val switchWidth = when (switchSize) {
@@ -62,6 +59,9 @@ fun GFSwitch(
 
     val thumbRadius = (switchHeight / 2) - 3.dp
 
+    val trackColor = colors.controlColor(enabled = enabled, selected = checked).value
+    val thumbColor = colors.controlDotColor(enabled = true, selected = true).value
+
 
     // To move thumb, we need to calculate the position (along x axis)
     val animatePosition = animateFloatAsState(
@@ -75,22 +75,20 @@ fun GFSwitch(
         Canvas(
             modifier = Modifier
                 .size(width = switchWidth, height = switchHeight)
-                .pointerInput(Unit) {
-                    detectTapGestures(
-                        onTap = {
-                            // This is called when the user taps on the canvas
-                            onCheckedChange?.invoke(checked)
-                        }
-                    )
-                }
+                .selectable(
+                    selected = checked,
+                    enabled = enabled,
+                    role = Role.Switch,
+                    interactionSource = interactionSource,
+                    indication = null,
+                    onClick = {
+                        onCheckedChange(checked)
+                    }
+                )
         ) {
             // Track
             drawRoundRect(
-                color = if (enabled) {
-                    if (checked) checkedTrackColor else uncheckedTrackColor
-                } else {
-                    gray20
-                },
+                color = trackColor,
                 cornerRadius = CornerRadius(30.dp.toPx()),
             )
 
