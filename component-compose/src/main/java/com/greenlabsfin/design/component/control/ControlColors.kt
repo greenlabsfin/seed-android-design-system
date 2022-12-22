@@ -32,18 +32,18 @@ object GFControl {
         fun custom(
             checkedBackgroundColor: Color = GfColorScheme().container.primary,
             unCheckedBackgroundColor: Color = white,
-            checkedDotColor: Color = white,
-            uncheckedDotColor: Color = gray30,
+            checkedInnerItemColor: Color = white,
+            uncheckedInnerItemColor: Color = gray30,
             disabledCheckedBackgroundColor: Color = checkedBackgroundColor.copy(alpha = 0.3f),
-            disabledUncheckedDotColor: Color = uncheckedDotColor.copy(0.3f),
+            disabledUncheckedInnerItemColor: Color = uncheckedInnerItemColor.copy(0.3f),
         ): ControlColors =
             GFControlColors(
                 checkedBackgroundColor,
                 unCheckedBackgroundColor,
-                checkedDotColor,
-                uncheckedDotColor,
+                checkedInnerItemColor,
+                uncheckedInnerItemColor,
                 disabledCheckedBackgroundColor,
-                disabledUncheckedDotColor
+                disabledUncheckedInnerItemColor
             )
     }
 }
@@ -52,10 +52,10 @@ object GFControl {
 private data class GFControlColors(
     private val checkedBackgroundColor: Color = GfColorScheme().container.primary,
     private val unCheckedBackgroundColor: Color = white,
-    private val checkedDotColor: Color = white,
-    private val uncheckedDotColor: Color = gray30,
+    private val checkedInnerItemColor: Color = white,
+    private val uncheckedInnerItemColor: Color = gray30,
     private val disabledCheckedBackgroundColor: Color = checkedBackgroundColor.copy(alpha = 0.3f),
-    private val disabledUncheckedDotColor: Color = uncheckedDotColor.copy(0.3f),
+    private val disabledUncheckedInnerItemColor: Color = uncheckedInnerItemColor.copy(0.3f),
 ) : ControlColors {
     @Composable
     override fun controlColor(enabled: Boolean, selected: Boolean): State<Color> =
@@ -71,9 +71,9 @@ private data class GFControlColors(
     override fun controlDotColor(enabled: Boolean, selected: Boolean): State<Color> =
         rememberUpdatedState(
             if (enabled) {
-                if (selected) checkedDotColor else uncheckedDotColor
+                if (selected) checkedInnerItemColor else uncheckedInnerItemColor
             } else {
-                if (selected) checkedDotColor else disabledUncheckedDotColor
+                if (selected) checkedInnerItemColor else disabledUncheckedInnerItemColor
             }
         )
 

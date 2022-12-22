@@ -62,8 +62,7 @@ fun GFRadioButton(
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
-
-        ) {
+    ) {
         Box(
             modifier = Modifier
                 .then(
