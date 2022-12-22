@@ -55,7 +55,6 @@ internal fun GfBoxTextField(
     prefix: @Composable (() -> Unit)? = null,
     suffix: @Composable (() -> Unit)? = null,
     suffixTextStyle: TextStyle? = null,
-    onValueChange: (String) -> Unit = {},
     enabled: Boolean = true,
     readOnly: Boolean = false,
     isError: Boolean = false,
@@ -67,6 +66,7 @@ internal fun GfBoxTextField(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     maxLines: Int = Int.MAX_VALUE,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    onValueChange: (String) -> Unit,
 ) {
     val isFocused = interactionSource.collectIsFocusedAsState()
     val labelColor = colors.labelColor(

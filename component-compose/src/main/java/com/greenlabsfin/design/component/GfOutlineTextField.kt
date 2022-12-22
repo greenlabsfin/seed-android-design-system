@@ -3,6 +3,7 @@ package com.greenlabsfin.design.component
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -22,7 +23,6 @@ fun GfOutlineTextField(
     prefix: @Composable (() -> Unit)? = null,
     suffix: @Composable (() -> Unit)? = null,
     suffixTextStyle: TextStyle? = GfTheme.typoScheme.body.smallRegular.merge(TextStyle(color = GfTheme.colorScheme.contents.neutralTertiary)),
-    onValueChange: (String) -> Unit = {},
     colors: GfTextFieldColors = GfTextFieldDefaults.outlineTextFieldColors(),
     enabled: Boolean = true,
     readOnly: Boolean = false,
@@ -35,6 +35,7 @@ fun GfOutlineTextField(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     maxLines: Int = Int.MAX_VALUE,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    onValueChange: (String) -> Unit,
 ) {
     GfBoxTextField(
         modifier = modifier,
@@ -49,7 +50,6 @@ fun GfOutlineTextField(
         prefix = prefix,
         suffix = suffix,
         suffixTextStyle = suffixTextStyle,
-        onValueChange = onValueChange,
         enabled = enabled,
         readOnly = readOnly,
         isError = isError,
@@ -60,6 +60,7 @@ fun GfOutlineTextField(
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,
         maxLines = maxLines,
-        interactionSource = interactionSource
+        interactionSource = interactionSource,
+        onValueChange = onValueChange,
     )
 }

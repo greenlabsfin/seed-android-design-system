@@ -35,9 +35,8 @@ import com.greenlabsfin.design.core.GfTheme
 
 @Composable
 fun GfLineTextField(
-    modifier: Modifier,
     value: String,
-    onValueChange: (String) -> Unit,
+    modifier: Modifier = Modifier,
     colors: GfTextFieldColors = GfTextFieldDefaults.lineTextFieldColors(),
     label: String? = null,
     textStyle: TextStyle = GfTheme.typoScheme.body.mediumRegular,
@@ -56,6 +55,7 @@ fun GfLineTextField(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     maxLines: Int = Int.MAX_VALUE,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    onValueChange: (String) -> Unit,
 ) {
     val isFocused = interactionSource.collectIsFocusedAsState()
     val labelColor = colors.labelColor(

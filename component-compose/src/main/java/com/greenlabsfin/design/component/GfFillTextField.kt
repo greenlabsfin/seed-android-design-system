@@ -22,7 +22,6 @@ fun GfFillTextField(
     prefix: @Composable (() -> Unit)? = null,
     suffix: @Composable (() -> Unit)? = null,
     suffixTextStyle: TextStyle? = GfTheme.typoScheme.body.smallRegular.merge(TextStyle(color = GfTheme.colorScheme.contents.neutralTertiary)),
-    onValueChange: (String) -> Unit = {},
     colors: GfTextFieldColors = GfTextFieldDefaults.fillTextFieldColors(),
     enabled: Boolean = true,
     isError: Boolean = false,
@@ -34,6 +33,7 @@ fun GfFillTextField(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     maxLines: Int = Int.MAX_VALUE,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    onValueChange: (String) -> Unit,
 ) {
     GfBoxTextField(
         modifier = modifier,
@@ -48,7 +48,6 @@ fun GfFillTextField(
         prefix = prefix,
         suffix = suffix,
         suffixTextStyle = suffixTextStyle,
-        onValueChange = onValueChange,
         enabled = enabled,
         isError = isError,
         errorText = errorText,
@@ -58,6 +57,7 @@ fun GfFillTextField(
         keyboardOptions = keyboardOptions,
         keyboardActions = keyboardActions,
         maxLines = maxLines,
-        interactionSource = interactionSource
+        interactionSource = interactionSource,
+        onValueChange = onValueChange,
     )
 }
