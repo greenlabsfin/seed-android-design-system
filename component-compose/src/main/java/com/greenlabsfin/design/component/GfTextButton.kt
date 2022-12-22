@@ -5,14 +5,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsHoveredAsState
 import androidx.compose.foundation.interaction.collectIsPressedAsState
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -22,7 +16,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.greenlabsfin.design.core.GfTheme
 import com.greenlabsfin.design.core.LocalGfTypoScheme
@@ -108,65 +101,5 @@ object GfTextButton {
         val Medium: TextStyle
             @Composable
             get() = GfTheme.typoScheme.body.mediumMedium
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GfTextButtonPreview() {
-    GfTheme {
-        Surface(
-            color = GfTheme.colorScheme.container.background
-        ) {
-            Column(
-                modifier = Modifier.padding(20.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                GfTextButton(
-                    text = "활성화 XS 버튼",
-                    color = GfTheme.colorScheme.contents.primary,
-                    rightIcon = Icons.Filled.ArrowDropDown,
-                    style = GfTextButton.Style.XSmall,
-                ) {}
-
-                GfTextButton(
-                    text = "비활성화 XS 버튼",
-                    color = GfTheme.colorScheme.contents.primary,
-                    rightIcon = Icons.Filled.ArrowDropDown,
-                    style = GfTextButton.Style.XSmall,
-                    enabled = false
-                ) {}
-
-                GfTextButton(
-                    text = "활성화 SM 버튼",
-                    color = GfTheme.colorScheme.contents.neutralSecondary,
-                    rightIcon = Icons.Filled.KeyboardArrowRight,
-                    style = GfTextButton.Style.Small,
-                ) {}
-
-                GfTextButton(
-                    text = "비활성화 SM 버튼",
-                    color = GfTheme.colorScheme.contents.neutralSecondary,
-                    rightIcon = Icons.Filled.KeyboardArrowRight,
-                    style = GfTextButton.Style.Small,
-                    enabled = false
-                ) {}
-
-                GfTextButton(
-                    text = "활성화 MD 버튼",
-                    color = GfTheme.colorScheme.contents.primary,
-                    rightIcon = Icons.Filled.ArrowDropDown,
-                    style = GfTextButton.Style.Medium,
-                ) {}
-
-                GfTextButton(
-                    text = "비활성화 MD 버튼",
-                    color = GfTheme.colorScheme.contents.primary,
-                    rightIcon = Icons.Filled.ArrowDropDown,
-                    style = GfTextButton.Style.Medium,
-                    enabled = false
-                ) {}
-            }
-        }
     }
 }
