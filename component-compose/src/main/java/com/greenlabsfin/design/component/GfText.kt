@@ -39,7 +39,7 @@ fun GfText(
     leftIcon: ImageVector? = null,
     rightIcon: ImageVector? = null,
     count: Int? = null,
-    counterStyle: GfCountStyle? = null,
+    countColors: GfCountColors? = null,
     badge: Boolean = false,
     color: Color = Color.Unspecified,
     overflow: TextOverflow = TextOverflow.Clip,
@@ -97,10 +97,10 @@ fun GfText(
             }
         )
         count?.let {
-            counterStyle?.let { counterStyle ->
+            countColors?.let {
                 GfCount(
                     count = count,
-                    style = counterStyle,
+                    colors = countColors,
                     enabled = enabled,
                 )
             }
@@ -131,7 +131,7 @@ fun GfTextPreview() {
                     badge = true,
                     count = 3,
                     style = GfTheme.typoScheme.headline.largeBold,
-                    counterStyle = GfCount.Style.neutral,
+                    countColors = GfCountDefaults.Colors.neutral,
                     rightIcon = Icons.Filled.ArrowDropDown
                 )
 
@@ -140,7 +140,7 @@ fun GfTextPreview() {
                     text = "텍스트",
                     count = 3,
                     style = GfTheme.typoScheme.headline.largeBold,
-                    counterStyle = GfCount.Style.neutral,
+                    countColors = GfCountDefaults.Colors.neutral,
                     rightIcon = Icons.Filled.ArrowDropDown
                 )
 
@@ -150,7 +150,7 @@ fun GfTextPreview() {
                     badge = true,
                     count = 3,
                     style = GfTheme.typoScheme.body.smallMedium,
-                    counterStyle = GfCount.Style.neutral,
+                    countColors = GfCountDefaults.Colors.neutral,
                     rightIcon = Icons.Filled.ArrowDropDown
                 )
             }

@@ -20,6 +20,7 @@ import com.example.application.R
 import com.example.application.ui.EmptyScreen
 import com.example.application.ui.button.ContainerButtonScreen
 import com.example.application.ui.button.TextButtonScreen
+import com.example.application.ui.chip.ChipScreen
 import com.example.application.ui.control.ControlScreen
 import com.example.application.ui.textfield.TextFieldScreen
 import com.example.application.ui.theme.GFSampleTheme
@@ -69,6 +70,7 @@ fun HomeScreen() {
                             is DrawerMenu.ContainerButton -> ContainerButtonScreen()
                             is DrawerMenu.TextButton -> TextButtonScreen()
                             is DrawerMenu.Control -> ControlScreen()
+                            is DrawerMenu.Chip -> ChipScreen()
                             else -> EmptyScreen()
                         }
                     }
@@ -78,55 +80,35 @@ fun HomeScreen() {
     )
 }
 
-sealed interface DrawerMenu : NavDrawerItem {
-    object Typography : DrawerMenu {
-        override val icon: ImageVector?
-            get() = null
-        override val title: String
-            get() = "Typography"
+sealed class DrawerMenu : NavDrawerItem {
+    override val icon: ImageVector? = null
+
+    object Typography : DrawerMenu() {
+        override val title: String = "Typography"
     }
 
-    object Color : DrawerMenu {
-        override val icon: ImageVector?
-            get() = null
-        override val title: String
-            get() = "Color"
+    object Color : DrawerMenu() {
+        override val title: String = "Color"
     }
 
-    object ContainerButton : DrawerMenu {
-        override val icon: ImageVector?
-            get() = null
-        override val title: String
-            get() = "ContainerButton"
+    object ContainerButton : DrawerMenu() {
+        override val title: String = "ContainerButton"
     }
 
-    object TextButton : DrawerMenu {
-        override val icon: ImageVector?
-            get() = null
-        override val title: String
-            get() = "TextButton"
+    object TextButton : DrawerMenu() {
+        override val title: String = "TextButton"
     }
 
-    object Chip : DrawerMenu {
-        override val icon: ImageVector?
-            get() = null
-        override val title: String
-            get() = "Chip"
+    object Chip : DrawerMenu() {
+        override val title: String = "Chip"
     }
 
-    object TextField : DrawerMenu {
-        override val icon: ImageVector?
-            get() = null
-        override val title: String
-            get() = "TextField"
+    object TextField : DrawerMenu() {
+        override val title: String = "TextField"
     }
 
-    object Control: DrawerMenu {
-        override val icon: ImageVector?
-            get() = null
-        override val title: String
-            get() = "Controls"
-
+    object Control : DrawerMenu() {
+        override val title: String = "Controls"
     }
 }
 

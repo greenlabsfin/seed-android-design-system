@@ -17,7 +17,7 @@ import com.example.application.ui.theme.GFSampleTheme
 import com.example.application.util.ThemedPreview
 import com.greenlabsfin.design.component.GFButton
 import com.greenlabsfin.design.component.GFHeight
-import com.greenlabsfin.design.component.GfCount
+import com.greenlabsfin.design.component.GfCountDefaults
 import com.greenlabsfin.design.component.GfText
 import com.greenlabsfin.design.core.GfTheme
 import com.greenlabsfin.design.core.color.gray60
@@ -36,7 +36,7 @@ fun ContainerButtonScreen() {
             text = "버튼 레이블",
             rightIcon = Icons.Filled.ArrowForward,
             count = 2,
-            countStyle = GfCount.Style.getDefault(buttonColor = GFButton.Style.containerPrimary)
+            countColors = GfCountDefaults.getByButtonColor(buttonColor = GFButton.Style.containerPrimary)
         )
         GFButton(
             height = GFHeight.Small,
@@ -46,7 +46,7 @@ fun ContainerButtonScreen() {
             text = "버튼 레이블",
             rightIcon = Icons.Filled.ArrowForward,
             count = 2,
-            countStyle = GfCount.Style.getDefault(buttonColor = GFButton.Style.outlinePrimary)
+            countColors = GfCountDefaults.getByButtonColor(buttonColor = GFButton.Style.outlinePrimary)
         )
         GFButton(
             height = GFHeight.Small,
@@ -56,7 +56,7 @@ fun ContainerButtonScreen() {
             text = "버튼 레이블",
             rightIcon = Icons.Filled.ArrowForward,
             count = 22,
-            countStyle = GfCount.Style.getDefault(buttonColor = GFButton.Style.tintPrimary)
+            countColors = GfCountDefaults.getByButtonColor(buttonColor = GFButton.Style.tintPrimary)
         )
         Spacer(modifier = Modifier.height(10.dp))
         GfText(text = "Neutral", style = GfTheme.typoScheme.headline.largeBold)
