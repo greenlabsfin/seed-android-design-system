@@ -36,7 +36,8 @@ fun HomeScreen() {
         DrawerMenu.ContainerButton,
         DrawerMenu.TextButton,
         DrawerMenu.TextField,
-        DrawerMenu.Chip
+        DrawerMenu.Chip,
+        DrawerMenu.Control
     )
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val selectedItem = remember { mutableStateOf(menuItems[0]) }
@@ -116,6 +117,14 @@ sealed interface DrawerMenu : NavDrawerItem {
             get() = null
         override val title: String
             get() = "TextField"
+    }
+
+    object Control: DrawerMenu {
+        override val icon: ImageVector?
+            get() = null
+        override val title: String
+            get() = "Controls"
+
     }
 }
 
