@@ -65,9 +65,9 @@ fun GfLineTextField(
     )
     val visibleClear = rememberUpdatedState(
         when {
-            !showClear -> false
+            showClear.not() -> false
             readOnly -> false
-            !enabled -> false
+            enabled.not() -> false
             isFocused.value && value.isNotEmpty() -> true
             else -> false
         }

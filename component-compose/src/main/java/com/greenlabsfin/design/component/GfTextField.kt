@@ -224,7 +224,7 @@ private data class GfDefaultTextFieldColors(
     override fun leadingIconColor(enabled: Boolean, isError: Boolean): State<Color> {
         return rememberUpdatedState(
             when {
-                !enabled -> disabledLeadingIconColor
+                enabled.not() -> disabledLeadingIconColor
                 isError -> errorLeadingIconColor
                 else -> leadingIconColor
             }
@@ -235,7 +235,7 @@ private data class GfDefaultTextFieldColors(
     override fun trailingIconColor(enabled: Boolean, isError: Boolean): State<Color> {
         return rememberUpdatedState(
             when {
-                !enabled -> disabledTrailingIconColor
+                enabled.not() -> disabledTrailingIconColor
                 isError -> errorTrailingIconColor
                 else -> trailingIconColor
             }
@@ -251,7 +251,7 @@ private data class GfDefaultTextFieldColors(
         val focused by interactionSource.collectIsFocusedAsState()
 
         val targetValue = when {
-            !enabled -> disabledIndicatorColor
+            enabled.not() -> disabledIndicatorColor
             isError -> errorIndicatorColor
             focused -> focusedIndicatorColor
             else -> unfocusedIndicatorColor
@@ -273,7 +273,7 @@ private data class GfDefaultTextFieldColors(
         val focused by interactionSource.collectIsFocusedAsState()
 
         val targetValue = when {
-            !enabled -> disabledIndicatorColor
+            enabled.not() -> disabledIndicatorColor
             isError -> errorIndicatorColor
             readOnly -> readOnlyIndicatorColor
             focused -> focusedIndicatorColor
@@ -295,7 +295,7 @@ private data class GfDefaultTextFieldColors(
     override fun backgroundColor(enabled: Boolean, readOnly: Boolean): State<Color> {
         return rememberUpdatedState(
             when {
-                !enabled -> disabledBackgroundColor
+                enabled.not() -> disabledBackgroundColor
                 readOnly -> readOnlyBackgroundColor
                 else -> backgroundColor
             }
@@ -316,7 +316,7 @@ private data class GfDefaultTextFieldColors(
         val focused by interactionSource.collectIsFocusedAsState()
 
         val targetValue = when {
-            !enabled -> disabledLabelColor
+            enabled.not() -> disabledLabelColor
             error -> errorLabelColor
             focused -> focusedLabelColor
             else -> unfocusedLabelColor
@@ -345,7 +345,8 @@ internal fun Decoration(
     val colorAndEmphasis: @Composable () -> Unit = @Composable {
         CompositionLocalProvider(LocalGfContentColor provides contentColor, content = content)
     }
-    if (typography != null) ProvideGfTextStyle(typography, colorAndEmphasis) else colorAndEmphasis()
+
+    typography?.let { ProvideGfTextStyle(it, colorAndEmphasis) } ?: colorAndEmphasis()
 }
 
 

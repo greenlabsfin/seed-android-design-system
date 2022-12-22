@@ -64,14 +64,12 @@ fun GfIcon(
 ) {
     val colorFilter = if (tint == Color.Unspecified) null else ColorFilter.tint(tint)
     val semantics =
-        if (contentDescription != null) {
+        contentDescription?.let {
             Modifier.semantics {
-                this.contentDescription = contentDescription
+                this.contentDescription = it
                 this.role = Role.Image
             }
-        } else {
-            Modifier
-        }
+        } ?: Modifier
     Box(
         modifier
             .toolingGraphicsLayer()
