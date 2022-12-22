@@ -52,7 +52,7 @@ fun GFButton(
     leftIcon: ImageVector? = null,
     rightIcon: ImageVector? = null,
     count: Int? = null,
-    countStyle: GfCountStyle? = null,
+    countColors: GfCountColors? = null,
     onClick: () -> Unit,
 ) {
     Button(
@@ -75,10 +75,10 @@ fun GFButton(
                 Text(text = it, style = height.typography)
             }
             count?.let {
-                countStyle?.let {
+                countColors?.let {
                     GfCount(
                         count = count,
-                        style = countStyle,
+                        colors = countColors,
                         enabled = enabled,
                     )
                 }
