@@ -1,7 +1,7 @@
 package com.example.application.ui.home
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
@@ -16,11 +16,15 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.application.R
 import com.example.application.ui.EmptyScreen
+import com.example.application.ui.button.ContainerButtonScreen
+import com.example.application.ui.button.TextButtonScreen
+import com.example.application.ui.textfield.TextFieldScreen
 import com.example.application.ui.theme.GFSampleTheme
 import com.example.application.ui.typography.TypographyScreen
+import com.example.application.util.ThemedPreview
+import com.greenlabsfin.design.core.GfTheme
 import kotlinx.coroutines.launch
 
 @ExperimentalMaterial3Api
@@ -31,16 +35,18 @@ fun HomeScreen() {
         DrawerMenu.Color,
         DrawerMenu.ContainerButton,
         DrawerMenu.TextButton,
+        DrawerMenu.TextField,
         DrawerMenu.Chip
     )
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val selectedItem = remember { mutableStateOf(menuItems[0]) }
     val scope = rememberCoroutineScope()
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
         content = { paddingValues ->
             NavDrawer(
-                modifier = Modifier.padding(paddingValues),
+                modifier = Modifier
+                    .background(GfTheme.colorScheme.container.background)
+                    .padding(paddingValues),
                 drawerState = drawerState,
                 items = menuItems,
                 selectedItem = selectedItem.value,
@@ -57,12 +63,14 @@ fun HomeScreen() {
                         )
                         when (selectedItem.value) {
                             is DrawerMenu.Typography -> TypographyScreen()
+                            is DrawerMenu.TextField -> TextFieldScreen()
+                            is DrawerMenu.ContainerButton -> ContainerButtonScreen()
+                            is DrawerMenu.TextButton -> TextButtonScreen()
                             else -> EmptyScreen()
                         }
                     }
                 }
             )
-
         }
     )
 }
@@ -102,10 +110,17 @@ sealed interface DrawerMenu : NavDrawerItem {
         override val title: String
             get() = "Chip"
     }
+
+    object TextField : DrawerMenu {
+        override val icon: ImageVector?
+            get() = null
+        override val title: String
+            get() = "TextField"
+    }
 }
 
 
-@Preview
+@ThemedPreview
 @Composable
 @ExperimentalMaterial3Api
 fun HomeScreenPreview() {

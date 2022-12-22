@@ -29,7 +29,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.greenlabsfin.design.core.GfTheme
 import com.greenlabsfin.design.core.LocalGfColorScheme
-import com.greenlabsfin.design.core.LocalGfTypoScheme
+import com.greenlabsfin.design.core.LocalGfTextStyle
 import com.greenlabsfin.design.core.color.red60
 
 @Composable
@@ -46,7 +46,7 @@ fun GfText(
     softWrap: Boolean = true,
     maxLines: Int = Int.MAX_VALUE,
     onTextLayout: (TextLayoutResult) -> Unit = {},
-    style: TextStyle = LocalGfTypoScheme.current.body.mediumBold,
+    style: TextStyle = LocalGfTextStyle.current,
     enabled: Boolean = true,
 ) {
     // text color priority color -> style -> local provider
@@ -113,7 +113,6 @@ fun GfText(
             )
         }
     }
-
 }
 
 @Preview(showBackground = true)
