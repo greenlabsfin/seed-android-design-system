@@ -55,7 +55,8 @@ fun GFButton(
     text: String? = null,
     leftIcon: ImageVector? = null,
     rightIcon: ImageVector? = null,
-    //    count: Int? = null,
+    count: Int? = null,
+    countStyle: GfCountStyle? = null,
     onClick: () -> Unit,
 ) {
     val radius = when (height) {
@@ -83,7 +84,15 @@ fun GFButton(
             text?.let {
                 Text(text = it, style = height.typography)
             }
-            // Counter
+            count?.let {
+                countStyle?.let {
+                    GfCount(
+                        count = count,
+                        style = countStyle,
+                        enabled = enabled,
+                    )
+                }
+            }
             rightIcon?.let {
                 Icon(imageVector = it, contentDescription = "GFButton RightIcon")
             }
@@ -104,7 +113,9 @@ fun PrimaryButtonPreview() {
                 onClick = {},
                 leftIcon = Icons.Outlined.Notifications,
                 text = "버튼 레이블",
-                rightIcon = Icons.Filled.ArrowForward
+                rightIcon = Icons.Filled.ArrowForward,
+                count = 2,
+                countStyle = GfCount.Style.getDefault(buttonColor = GFButton.Style.containerPrimary)
             )
             GFButton(
                 height = GFHeight.Small,
@@ -112,7 +123,9 @@ fun PrimaryButtonPreview() {
                 onClick = {},
                 leftIcon = Icons.Outlined.Notifications,
                 text = "버튼 레이블",
-                rightIcon = Icons.Filled.ArrowForward
+                rightIcon = Icons.Filled.ArrowForward,
+                count = 2,
+                countStyle = GfCount.Style.getDefault(buttonColor = GFButton.Style.outlinePrimary)
             )
             GFButton(
                 height = GFHeight.Small,
@@ -120,7 +133,9 @@ fun PrimaryButtonPreview() {
                 onClick = {},
                 leftIcon = Icons.Outlined.Notifications,
                 text = "버튼 레이블",
-                rightIcon = Icons.Filled.ArrowForward
+                rightIcon = Icons.Filled.ArrowForward,
+                count = 22,
+                countStyle = GfCount.Style.getDefault(buttonColor = GFButton.Style.tintPrimary)
             )
         }
     }

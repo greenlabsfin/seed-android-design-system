@@ -31,6 +31,20 @@ data class GfTypoScheme(
         Small,
         XSmall
     }
+
+    companion object {
+        fun custom(
+            size: TextUnit,
+            weight: FontWeight,
+            lineHeight: TextUnit = size.times(1.2f),
+        ): TextStyle = TextStyle(
+            fontFamily = fontFamily,
+            fontSize = size,
+            lineHeight = lineHeight,
+            letterSpacing = size.letterSpacing,
+            fontWeight = weight,
+        )
+    }
 }
 
 @Immutable
@@ -199,8 +213,8 @@ private const val JA = "ja"
 
 private val fontFamily = FontFamily(
     Font(R.font.pretendard_bold, FontWeight.Bold),
-    Font(R.font.pretendard_bold, FontWeight.Medium),
-    Font(R.font.pretendard_bold, FontWeight.Normal)
+    Font(R.font.pretendard_medium, FontWeight.Medium),
+    Font(R.font.pretendard_regular, FontWeight.Normal)
 )
 
 val FontWeight.Companion.Regular: FontWeight
