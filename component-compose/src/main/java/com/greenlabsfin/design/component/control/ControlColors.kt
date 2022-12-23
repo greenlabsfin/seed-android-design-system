@@ -10,6 +10,7 @@ import com.greenlabsfin.design.core.GfTheme
 import com.greenlabsfin.design.core.color.GfColorScheme
 import com.greenlabsfin.design.core.color.gray30
 import com.greenlabsfin.design.core.color.gray40
+import com.greenlabsfin.design.core.color.green20
 import com.greenlabsfin.design.core.color.white
 
 @Stable
@@ -34,6 +35,17 @@ object GFControl {
             get() = GFControlColors(
                 checkedBackgroundColor = GfTheme.colorScheme.contents.primary,
                 unCheckedBackgroundColor = gray40
+            )
+
+        val checkboxPrimary: ControlColors
+            @Composable
+            get() = GFControlColors(
+                checkedBackgroundColor = GfTheme.colorScheme.contents.primary,
+                disabledCheckedBackgroundColor = green20,
+                unCheckedBackgroundColor = white,
+                disabledUncheckedBackgroundColor = white,
+                checkedInnerItemColor = white,
+                uncheckedInnerItemColor = gray30,
             )
 
         @Composable
