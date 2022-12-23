@@ -11,6 +11,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.greenlabsfin.design.component.GfText
+import com.greenlabsfin.design.component.control.GFCheckbox
 import com.greenlabsfin.design.component.control.GFRadioButton
 import com.greenlabsfin.design.component.control.GFSwitch
 import com.greenlabsfin.design.component.control.SwitchSize
@@ -24,6 +25,7 @@ fun ControlScreen() {
     ) {
         SwitchComponents()
         RadioComponents()
+        CheckboxComponents()
     }
 }
 
@@ -82,5 +84,34 @@ private fun RadioComponents() {
         ) {
             boldRadioItem = boldRadioItem.not()
         }
+    }
+}
+
+@Composable
+private fun CheckboxComponents() {
+    var checkboxItem by remember { mutableStateOf(false) }
+    var boldCheckboxItem by remember { mutableStateOf(false) }
+    
+    Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        GfText(text = "Checkbox", style = GfTheme.typoScheme.headline.largeBold)
+        GFCheckbox(
+            checked = checkboxItem,
+            onCheckedChange = { checkboxItem = it},
+            text = "Default Checkbox"
+        )
+
+        GFCheckbox(
+            checked = boldCheckboxItem,
+            onCheckedChange = { boldCheckboxItem = it},
+            text = "Bold Default Checkbox",
+            textStyle = GfTheme.typoScheme.body.mediumBold
+        )
+
+        GFCheckbox(
+            checked = true,
+            onCheckedChange = {},
+            text = "Disabled Checkbox",
+            enabled = false
+        )
     }
 }
