@@ -28,7 +28,7 @@ android {
         jvmTarget = "1.8"
         freeCompilerArgs = [
                 "-opt-in=kotlin.RequiresOptIn",
-                "-opt-in=androidx.compose.ui.text.ExperimentalTextApi"
+                "-opt-in=androidx.compose.material.ExperimentalMaterialApi"
         ]
     }
     buildFeatures {
