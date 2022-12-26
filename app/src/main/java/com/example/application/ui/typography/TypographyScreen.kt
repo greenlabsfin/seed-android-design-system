@@ -2,11 +2,10 @@ package com.example.application.ui.typography
 
 import android.app.Activity
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.runtime.Composable
@@ -14,8 +13,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
@@ -25,11 +24,14 @@ import com.example.application.util.LocaleHelper
 import com.example.application.util.ThemedPreview
 import com.greenlabsfin.design.component.GFButton
 import com.greenlabsfin.design.component.GFHeight
+import com.greenlabsfin.design.component.GfScrollableTopBarLayout
 import com.greenlabsfin.design.component.GfText
 import com.greenlabsfin.design.core.GfTheme
 
 @Composable
-fun TypographyScreen() {
+fun TypographyScreen(
+    onNavigationClick: () -> Unit = {},
+) {
     val allowLocales = listOf(
         java.util.Locale.US,
         java.util.Locale.KOREA,
@@ -39,44 +41,46 @@ fun TypographyScreen() {
     var isExpanded by remember { mutableStateOf(false) }
     val context = LocalContext.current
     val currentLocale = Locale.current
-    Column(
-        modifier = Modifier.padding(16.dp)
-    ) {
-        Column {
-            GFButton(
-                height = GFHeight.Medium,
-                colors = GFButton.Style.containerPrimary,
-                text = currentLocale.language,
-                onClick = {
-                    isExpanded = !isExpanded
-                }
-            )
-            DropdownMenu(
-                expanded = isExpanded,
-                onDismissRequest = { isExpanded = false }) {
-                allowLocales.forEach { locale ->
-                    DropdownMenuItem(
-                        onClick = {
-                            isExpanded = false
-                            LocaleHelper.setLocale(context, locale.language)
-                            (context as? Activity)?.recreate()
-                        },
-                        text = {
-                            GfText(
-                                text = locale.language,
-                                style = GfTheme.typoScheme.body.mediumRegular,
-                                color =
-                                if (locale.language == currentLocale.language) GfTheme.colorScheme.contents.primary
-                                else GfTheme.colorScheme.contents.neutralPrimary
-                            )
-                        }
-                    )
+
+    GfScrollableTopBarLayout(
+        title = stringResource(id = R.string.app_name),
+        navigationIcon = Icons.Filled.Menu,
+        contentPadding = PaddingValues(horizontal = 20.dp),
+        onNavigationClick = onNavigationClick,
+        hideWhileScrollUp = true,
+        content = {
+            item {
+                GFButton(
+                    height = GFHeight.Medium,
+                    colors = GFButton.Style.containerPrimary,
+                    text = currentLocale.language,
+                    onClick = {
+                        isExpanded = !isExpanded
+                    }
+                )
+                DropdownMenu(
+                    expanded = isExpanded,
+                    onDismissRequest = { isExpanded = false }) {
+                    allowLocales.forEach { locale ->
+                        DropdownMenuItem(
+                            onClick = {
+                                isExpanded = false
+                                LocaleHelper.setLocale(context, locale.language)
+                                (context as? Activity)?.recreate()
+                            },
+                            text = {
+                                GfText(
+                                    text = locale.language,
+                                    style = GfTheme.typoScheme.body.mediumRegular,
+                                    color =
+                                    if (locale.language == currentLocale.language) GfTheme.colorScheme.contents.primary
+                                    else GfTheme.colorScheme.contents.neutralPrimary
+                                )
+                            }
+                        )
+                    }
                 }
             }
-        }
-        LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
             items(items) { item ->
                 TypographyCard(
                     resId = item.titleResId,
@@ -84,7 +88,7 @@ fun TypographyScreen() {
                 )
             }
         }
-    }
+    )
 }
 
 enum class TypographyCategories(
