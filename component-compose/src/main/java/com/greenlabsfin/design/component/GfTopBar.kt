@@ -36,6 +36,7 @@ import com.greenlabsfin.design.core.GfTheme
 object GfTopBarDefaults {
     val height = 56.dp
     val horizontalPadding = 4.dp
+    val scrollThreshold = 30
 
     fun paddingOf(
         start: Dp = 0.dp,
@@ -81,9 +82,19 @@ fun GfTopBar(
             .collect {
                 val index = it.first
                 val offset = it.second
-                isUpScrolling = index >= firstVisibleItemIndex && offset > scrollOffset
+                if (index != firstVisibleItemIndex) {
+                    scrollOffset = offset
+                }
                 firstVisibleItemIndex = index
-                scrollOffset = offset
+                val offsetDelta = offset.minus(scrollOffset)
+                if (offsetDelta == 0) return@collect
+                val isDown = offsetDelta < GfTopBarDefaults.scrollThreshold.unaryMinus()
+                val isUp = offsetDelta > GfTopBarDefaults.scrollThreshold
+                isUpScrolling = if (isUpScrolling) {
+                    isDown.not()
+                } else {
+                    isUp
+                }
             }
     }
     val topBarHeightPixel = with(LocalDensity.current) { GfTopBarDefaults.height.toPx() }
