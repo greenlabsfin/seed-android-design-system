@@ -74,8 +74,8 @@ fun GfTextButton(
                 onClick = onClick
             ),
             text = text,
-            leftIcon = leftIcon,
-            rightIcon = rightIcon,
+            leadingIcon = leftIcon,
+            trailingIcon = rightIcon,
             count = count,
             countColors = countColors,
             badge = badge,

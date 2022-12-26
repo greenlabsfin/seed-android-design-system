@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import com.example.application.R
 import com.example.application.ui.EmptyScreen
+import com.example.application.ui.bottomsheet.BottomSheetScreen
 import com.example.application.ui.button.ContainerButtonScreen
 import com.example.application.ui.button.TextButtonScreen
 import com.example.application.ui.chip.ChipScreen
@@ -39,7 +40,8 @@ fun HomeScreen() {
         DrawerMenu.TextButton,
         DrawerMenu.TextField,
         DrawerMenu.Chip,
-        DrawerMenu.Control
+        DrawerMenu.Control,
+        DrawerMenu.BottomSheet,
     )
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val selectedItem = remember { mutableStateOf(menuItems[0]) }
@@ -71,6 +73,7 @@ fun HomeScreen() {
                             is DrawerMenu.TextButton -> TextButtonScreen()
                             is DrawerMenu.Control -> ControlScreen()
                             is DrawerMenu.Chip -> ChipScreen()
+                            is DrawerMenu.BottomSheet -> BottomSheetScreen()
                             else -> EmptyScreen()
                         }
                     }
@@ -109,6 +112,11 @@ sealed class DrawerMenu : NavDrawerItem {
 
     object Control : DrawerMenu() {
         override val title: String = "Controls"
+    }
+
+    object BottomSheet : DrawerMenu() {
+        override val title: String
+            get() = "BottomSheet"
     }
 }
 
