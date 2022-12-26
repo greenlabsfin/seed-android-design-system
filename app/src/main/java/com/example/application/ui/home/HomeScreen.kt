@@ -23,6 +23,7 @@ import com.example.application.ui.button.ContainerButtonScreen
 import com.example.application.ui.button.TextButtonScreen
 import com.example.application.ui.chip.ChipScreen
 import com.example.application.ui.control.ControlScreen
+import com.example.application.ui.dialog.DialogScreen
 import com.example.application.ui.textfield.TextFieldScreen
 import com.example.application.ui.theme.GFSampleTheme
 import com.example.application.ui.typography.TypographyScreen
@@ -42,6 +43,7 @@ fun HomeScreen() {
         DrawerMenu.Chip,
         DrawerMenu.Control,
         DrawerMenu.BottomSheet,
+        DrawerMenu.Dialog
     )
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val selectedItem = remember { mutableStateOf(menuItems[0]) }
@@ -74,6 +76,7 @@ fun HomeScreen() {
                             is DrawerMenu.Control -> ControlScreen()
                             is DrawerMenu.Chip -> ChipScreen()
                             is DrawerMenu.BottomSheet -> BottomSheetScreen()
+                            is DrawerMenu.Dialog -> DialogScreen()
                             else -> EmptyScreen()
                         }
                     }
@@ -117,6 +120,12 @@ sealed class DrawerMenu : NavDrawerItem {
     object BottomSheet : DrawerMenu() {
         override val title: String
             get() = "BottomSheet"
+    }
+
+    object Dialog: DrawerMenu() {
+        override val title: String
+            get() = "Dialog"
+
     }
 }
 
