@@ -70,12 +70,9 @@ fun GfTopBar(
     hideWhileScrollUp: Boolean = false,
     forceShowDivider: Boolean = false,
 ) {
-
     var isUpScrolling by remember { mutableStateOf(false) }
     var firstVisibleItemIndex by remember { mutableStateOf(0) }
     var scrollOffset by remember { mutableStateOf(0) }
-
-
 
     LaunchedEffect(listState) {
         snapshotFlow { listState.firstVisibleItemIndex to listState.firstVisibleItemScrollOffset }
