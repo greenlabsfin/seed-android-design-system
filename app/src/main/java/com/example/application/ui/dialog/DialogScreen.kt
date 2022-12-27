@@ -15,13 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.greenlabsfin.design.component.GFButton
 import com.greenlabsfin.design.component.GFDialog
+import com.greenlabsfin.design.component.GFDialogDefaults
 import com.greenlabsfin.design.component.GFHeight
 
 @Composable
 fun DialogScreen() {
     var defaultDialogVisibility by remember { mutableStateOf(false) }
     var negativeDialogVisibility by remember { mutableStateOf(false) }
-    var negativeEvenDialogVisibility by remember { mutableStateOf(false) }
     Row(
         modifier = Modifier.fillMaxSize(),
         verticalAlignment = Alignment.CenterVertically
@@ -46,14 +46,6 @@ fun DialogScreen() {
             ) {
                 negativeDialogVisibility = negativeDialogVisibility.not()
             }
-
-            GFButton(
-                height = GFHeight.Medium,
-                colors = GFButton.Style.containerPrimary,
-                text = "네거티브 균등 다이얼로그"
-            ) {
-                negativeEvenDialogVisibility = negativeEvenDialogVisibility.not()
-            }
         }
     }
 
@@ -62,82 +54,23 @@ fun DialogScreen() {
         onDismissRequest = {
             defaultDialogVisibility = defaultDialogVisibility.not()
         },
-        title = "타이틀",
-        message = "메시지"
-    ) {
-        GFButton(
-            modifier = Modifier.fillMaxWidth(),
-            text = "Primary",
-            height = GFHeight.Medium,
-            colors = GFButton.Style.containerPrimary
-        ) {
-            defaultDialogVisibility = defaultDialogVisibility.not()
+        content = {
+            GFDialogDefaults.Contents.DefaultText(title = "기본 타이틀", message = "기본 메시지")
         }
-    }
+    )
 
     GFDialog(
         itemVisible = negativeDialogVisibility,
         onDismissRequest = {
             negativeDialogVisibility = negativeDialogVisibility.not()
         },
-        title = "타이틀",
-        message = "메시지"
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            GFButton(
-                modifier = Modifier.weight(1f),
-                text = "Secondary",
-                height = GFHeight.Medium,
-                colors = GFButton.Style.tintNeutral
-            ) {
-                negativeDialogVisibility = negativeDialogVisibility.not()
-            }
-
-            GFButton(
-                modifier = Modifier.weight(2f),
-                text = "Primary",
-                height = GFHeight.Medium,
-                colors = GFButton.Style.containerPrimary
-            ) {
-                negativeDialogVisibility = negativeDialogVisibility.not()
-            }
-        }
-    }
-
-
-    GFDialog(
-        itemVisible = negativeEvenDialogVisibility,
-        onDismissRequest = {
-            negativeEvenDialogVisibility = negativeEvenDialogVisibility.not()
+        content = {
+            GFDialogDefaults.Contents.OnlyTitle(title = "버튼 타이틀")
         },
-        title = "타이틀",
-        message = "메시지"
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            GFButton(
-                modifier = Modifier.weight(1f),
-                text = "Secondary",
-                height = GFHeight.Medium,
-                colors = GFButton.Style.tintNeutral
-            ) {
-                negativeEvenDialogVisibility = negativeEvenDialogVisibility.not()
+        buttonContent = {
+            GFDialogDefaults.Buttons.SinglePrimary {
+                negativeDialogVisibility = false
             }
-            GFButton(
-                modifier = Modifier.weight(1f),
-                text = "Primary",
-                height = GFHeight.Medium,
-                colors = GFButton.Style.containerPrimary
-            ) {
-                negativeEvenDialogVisibility = negativeEvenDialogVisibility.not()
-            }
-
-
         }
-    }
+    )
 }
