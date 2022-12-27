@@ -27,6 +27,7 @@ import com.greenlabsfin.design.core.color.gray40
 
 @Composable
 fun GFCheckbox(
+    modifier: Modifier = Modifier,
     checked: Boolean,
     enabled: Boolean = true,
     text: String? = null,
@@ -65,7 +66,7 @@ fun GFCheckbox(
 
     Row(verticalAlignment = Alignment.CenterVertically) {
         Box(
-            modifier = Modifier
+            modifier = modifier
                 .then(
                     paddingModifier
                 )
