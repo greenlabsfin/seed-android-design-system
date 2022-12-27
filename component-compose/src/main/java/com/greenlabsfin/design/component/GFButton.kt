@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.greenlabsfin.design.core.GfTheme
@@ -45,6 +46,7 @@ enum class GFHeight(val displayPixel: Dp) {
 
 @Composable
 fun GFButton(
+    modifier: Modifier = Modifier,
     height: GFHeight,
     colors: GFButtonColor,
     enabled: Boolean = true,
@@ -57,7 +59,7 @@ fun GFButton(
 ) {
     Button(
         onClick = onClick,
-        modifier = Modifier.height(height.displayPixel),
+        modifier = modifier.height(height.displayPixel),
         colors = ButtonDefaults.buttonColors(
             backgroundColor = colors.backgroundColor(enabled = enabled).value,
             contentColor = colors.contentColor(enabled = enabled).value
@@ -72,7 +74,7 @@ fun GFButton(
                 Icon(imageVector = it, contentDescription = "GFButton LeftIcon")
             }
             text?.let {
-                Text(text = it, style = height.typography)
+                Text(text = it, style = height.typography, overflow = TextOverflow.Ellipsis)
             }
             count?.let {
                 countColors?.let {
