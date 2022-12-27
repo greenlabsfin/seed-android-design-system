@@ -21,7 +21,8 @@ import com.greenlabsfin.design.component.GFHeight
 @Composable
 fun DialogScreen() {
     var defaultDialogVisibility by remember { mutableStateOf(false) }
-    var negativeDialogVisibility by remember { mutableStateOf(false) }
+    var buttonDialogVisibility by remember { mutableStateOf(false) }
+    var negativeVisibility by remember { mutableStateOf(false) }
     Row(
         modifier = Modifier.fillMaxSize(),
         verticalAlignment = Alignment.CenterVertically
@@ -42,9 +43,17 @@ fun DialogScreen() {
             GFButton(
                 height = GFHeight.Medium,
                 colors = GFButton.Style.containerPrimary,
-                text = "네거티브 다이얼로그"
+                text = "기본 버튼 다이얼로그"
             ) {
-                negativeDialogVisibility = negativeDialogVisibility.not()
+                buttonDialogVisibility = buttonDialogVisibility.not()
+            }
+
+            GFButton(
+                height = GFHeight.Medium,
+                colors = GFButton.Style.containerPrimary,
+                text = "기본 버튼 다이얼로그 with Negative"
+            ) {
+                negativeVisibility = negativeVisibility.not()
             }
         }
     }
@@ -60,17 +69,38 @@ fun DialogScreen() {
     )
 
     GFDialog(
-        itemVisible = negativeDialogVisibility,
+        itemVisible = buttonDialogVisibility,
         onDismissRequest = {
-            negativeDialogVisibility = negativeDialogVisibility.not()
+            buttonDialogVisibility = buttonDialogVisibility.not()
         },
         content = {
             GFDialogDefaults.Contents.OnlyTitle(title = "버튼 타이틀")
         },
         buttonContent = {
             GFDialogDefaults.Buttons.SinglePrimary {
-                negativeDialogVisibility = false
+                buttonDialogVisibility = false
             }
+        }
+    )
+
+    GFDialog(
+        itemVisible = negativeVisibility,
+        onDismissRequest = {
+            negativeVisibility = negativeVisibility.not()
+        },
+        content = {
+            GFDialogDefaults.Contents.DefaultText(title = "버튼 타이틀", message = "Negative")
+        },
+        buttonContent = {
+            GFDialogDefaults.Buttons.DoubleHorizontalPrimary(
+                onNegativeButtonClicked = {
+                    negativeVisibility = false
+                },
+                onPositiveButtonClicked = {
+                    negativeVisibility = false
+                }
+            )
+
         }
     )
 }

@@ -33,7 +33,9 @@ object GFDialogDefaults {
 
     object Buttons {
         @Composable
-        fun SinglePrimary(onPositiveButtonClicked: () -> Unit) {
+        fun SinglePrimary(
+            buttonText: String = "Primary",
+            onPositiveButtonClicked: () -> Unit) {
             GFButton(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -42,7 +44,7 @@ object GFDialogDefaults {
                     ),
                 height = GFHeight.Medium,
                 colors = GFButton.Style.containerPrimary,
-                text = "Primary",
+                text = buttonText,
                 onClick = onPositiveButtonClicked
             )
         }
@@ -60,7 +62,7 @@ object GFDialogDefaults {
                     .then(
                         buttonPaddingModifier
                     ),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 GFButton(
                     modifier = Modifier.weight(1f),
@@ -93,7 +95,7 @@ object GFDialogDefaults {
                     .then(
                         buttonPaddingModifier
                     ),
-                horizontalArrangement = Arrangement.SpaceBetween
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 GFButton(
                     modifier = Modifier.weight(1f),
