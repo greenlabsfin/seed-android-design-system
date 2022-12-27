@@ -1,10 +1,7 @@
 package com.example.application.ui.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -14,9 +11,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
-import com.example.application.R
+import androidx.navigation.NavGraphBuilder
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.application.ui.EmptyScreen
 import com.example.application.ui.bottomsheet.BottomSheetScreen
 import com.example.application.ui.button.ContainerButtonScreen
@@ -35,19 +33,19 @@ import kotlinx.coroutines.launch
 @Composable
 fun HomeScreen() {
     val menuItems = listOf(
-        DrawerMenu.Typography,
-        DrawerMenu.Color,
-        DrawerMenu.ContainerButton,
-        DrawerMenu.TextButton,
-        DrawerMenu.TextField,
-        DrawerMenu.Chip,
-        DrawerMenu.Control,
-        DrawerMenu.BottomSheet,
-        DrawerMenu.Dialog
+        DrawerScreens.Typography,
+        DrawerScreens.Color,
+        DrawerScreens.ContainerButton,
+        DrawerScreens.TextButton,
+        DrawerScreens.TextField,
+        DrawerScreens.Chip,
+        DrawerScreens.Control,
+        DrawerScreens.BottomSheet,
     )
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val selectedItem = remember { mutableStateOf(menuItems[0]) }
     val scope = rememberCoroutineScope()
+    val navController = rememberNavController()
     Scaffold(
         content = { paddingValues ->
             NavDrawer(
@@ -58,26 +56,20 @@ fun HomeScreen() {
                 items = menuItems,
                 selectedItem = selectedItem.value,
                 scope = scope,
-                onItemSelected = { selectedItem.value = it },
+                onItemSelected = {
+                    selectedItem.value = it
+                    navController.navigate(it.route)
+                },
                 content = {
-                    Column {
-                        TopBar(
-                            title = stringResource(id = R.string.app_name),
-                            navigationIcon = Icons.Filled.Menu,
-                            onIconClick = {
-                                scope.launch { drawerState.open() }
-                            }
-                        )
-                        when (selectedItem.value) {
-                            is DrawerMenu.Typography -> TypographyScreen()
-                            is DrawerMenu.TextField -> TextFieldScreen()
-                            is DrawerMenu.ContainerButton -> ContainerButtonScreen()
-                            is DrawerMenu.TextButton -> TextButtonScreen()
-                            is DrawerMenu.Control -> ControlScreen()
-                            is DrawerMenu.Chip -> ChipScreen()
-                            is DrawerMenu.BottomSheet -> BottomSheetScreen()
-                            is DrawerMenu.Dialog -> DialogScreen()
-                            else -> EmptyScreen()
+                    NavHost(
+                        navController = navController,
+                        startDestination = menuItems.first().route
+                    ) {
+                        menuItems.forEach { menu ->
+                            menu.composable(
+                                navGraphBuilder = this,
+                                onNavigationClick = { scope.launch { drawerState.open() } }
+                            )
                         }
                     }
                 }
@@ -86,45 +78,86 @@ fun HomeScreen() {
     )
 }
 
-sealed class DrawerMenu : NavDrawerItem {
-    override val icon: ImageVector? = null
+@ExperimentalMaterial3Api
+sealed class DrawerScreens(
+    override val title: String,
+    val route: String,
+) : NavDrawerItem {
+    abstract fun composable(
+        navGraphBuilder: NavGraphBuilder,
+        onNavigationClick: () -> Unit = {},
+    )
 
-    object Typography : DrawerMenu() {
-        override val title: String = "Typography"
+    object Typography : DrawerScreens(title = "Typography", route = "Typography") {
+        override fun composable(navGraphBuilder: NavGraphBuilder, onNavigationClick: () -> Unit) {
+            navGraphBuilder.composable(route) {
+                TypographyScreen(onNavigationClick = onNavigationClick)
+            }
+        }
     }
 
-    object Color : DrawerMenu() {
-        override val title: String = "Color"
+    object Color : DrawerScreens(title = "Color", route = "Color") {
+        override fun composable(navGraphBuilder: NavGraphBuilder, onNavigationClick: () -> Unit) {
+            navGraphBuilder.composable(route) {
+                EmptyScreen(onNavigationClick = onNavigationClick)
+            }
+        }
     }
 
-    object ContainerButton : DrawerMenu() {
-        override val title: String = "ContainerButton"
+    object ContainerButton : DrawerScreens(title = "ContainerButton", route = "ContainerButton") {
+        override fun composable(navGraphBuilder: NavGraphBuilder, onNavigationClick: () -> Unit) {
+            navGraphBuilder.composable(route) {
+                ContainerButtonScreen(onNavigationClick = onNavigationClick)
+            }
+        }
     }
 
-    object TextButton : DrawerMenu() {
-        override val title: String = "TextButton"
+    object TextButton : DrawerScreens(title = "TextButton", route = "TextButton") {
+        override fun composable(navGraphBuilder: NavGraphBuilder, onNavigationClick: () -> Unit) {
+            navGraphBuilder.composable(route) {
+                TextButtonScreen(onNavigationClick = onNavigationClick)
+            }
+        }
     }
 
-    object Chip : DrawerMenu() {
-        override val title: String = "Chip"
+    object Chip : DrawerScreens(title = "Chip", route = "Chip") {
+        override fun composable(navGraphBuilder: NavGraphBuilder, onNavigationClick: () -> Unit) {
+            navGraphBuilder.composable(route) {
+                ChipScreen(onNavigationClick = onNavigationClick)
+            }
+        }
     }
 
-    object TextField : DrawerMenu() {
-        override val title: String = "TextField"
+    object TextField : DrawerScreens(title = "TextField", route = "TextField") {
+        override fun composable(navGraphBuilder: NavGraphBuilder, onNavigationClick: () -> Unit) {
+            navGraphBuilder.composable(route) {
+                TextFieldScreen(onNavigationClick = onNavigationClick)
+            }
+        }
     }
 
-    object Control : DrawerMenu() {
-        override val title: String = "Controls"
+    object Control : DrawerScreens(title = "Control", route = "Control") {
+        override fun composable(navGraphBuilder: NavGraphBuilder, onNavigationClick: () -> Unit) {
+            navGraphBuilder.composable(route) {
+                ControlScreen(onNavigationClick = onNavigationClick)
+            }
+        }
     }
 
-    object BottomSheet : DrawerMenu() {
-        override val title: String
-            get() = "BottomSheet"
+    object BottomSheet : DrawerScreens(title = "BottomSheet", route = "BottomSheet") {
+        override fun composable(navGraphBuilder: NavGraphBuilder, onNavigationClick: () -> Unit) {
+            navGraphBuilder.composable(route) {
+                BottomSheetScreen(onNavigationClick = onNavigationClick)
+            }
+        }
     }
 
-    object Dialog: DrawerMenu() {
-        override val title: String
-            get() = "Dialog"
+    object Dialog: DrawerScreens(title = "Dialog", route = "Dialog") {
+        override fun composable(navGraphBuilder: NavGraphBuilder, onNavigationClick: () -> Unit) {
+            navGraphBuilder.composable(route) {
+                DialogScreen(onNavigationClick = onNavigationClick)
+            }
+        }
 
     }
 }
