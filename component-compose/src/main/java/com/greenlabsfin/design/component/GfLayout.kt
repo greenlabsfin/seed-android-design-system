@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.calculateEndPadding
 import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,6 +22,7 @@ import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.greenlabsfin.design.core.GfTheme
+import com.greenlabsfin.design.core.LocalGfBackgroundColor
 
 @Composable
 fun GfScrollableTopBarLayout(
@@ -35,8 +38,9 @@ fun GfScrollableTopBarLayout(
     navigationIcon: ImageVector? = null,
     onNavigationClick: () -> Unit = {},
     topBarPadding: PaddingValues = PaddingValues(),
-    color: Color = GfTheme.colorScheme.container.background,
+    color: Color = LocalGfBackgroundColor.current,
     hideWhileScrollUp: Boolean = false,
+    bottomBar: @Composable ((listState: LazyListState) -> Unit)? = null,
     content: LazyListScope.() -> Unit,
 ) {
     val listState = rememberLazyListState()
@@ -44,7 +48,13 @@ fun GfScrollableTopBarLayout(
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(
             modifier = modifier.fillMaxSize(),
-            contentPadding = contentPadding.merge(other = PaddingValues(top = GfTopBarDefaults.height)),
+            contentPadding = contentPadding
+                .merge(
+                    PaddingValues(
+                        top = GfTopBarDefaults.height,
+                        bottom = bottomBar?.let { GfBottomNavigationDefaults.height } ?: 0.dp
+                    )
+                ),
             state = listState,
             content = content,
             verticalArrangement = verticalArrangement
@@ -64,6 +74,13 @@ fun GfScrollableTopBarLayout(
             listState = listState,
             hideWhileScrollUp = hideWhileScrollUp,
         )
+        bottomBar?.let {
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .align(Alignment.BottomStart)) {
+                bottomBar(listState)
+            }
+        }
     }
 }
 
@@ -79,8 +96,9 @@ fun GfTopBarLayout(
     navigationIcon: ImageVector? = null,
     onNavigationClick: () -> Unit = {},
     topBarPadding: PaddingValues = PaddingValues(),
-    color: Color = GfTheme.colorScheme.container.background,
+    color: Color = LocalGfBackgroundColor.current,
     showDivider: Boolean = false,
+    bottomBar: @Composable (() -> Unit)? = null,
     content: @Composable () -> Unit,
 ) {
     Column(modifier = modifier.fillMaxSize()) {
@@ -98,7 +116,19 @@ fun GfTopBarLayout(
             color = color,
             forceShowDivider = showDivider,
         )
-        content()
+        Box(modifier = Modifier
+            .fillMaxWidth()
+            .weight(1f, true)) {
+            content()
+        }
+        bottomBar?.let {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
+                bottomBar()
+            }
+        }
     }
 }
 
@@ -114,10 +144,11 @@ fun GfBottomSheetTopBarLayout(
     navigationIcon: ImageVector? = null,
     topBarPadding: PaddingValues = PaddingValues(),
     onNavigationClick: () -> Unit = {},
-    color: Color = GfTheme.colorScheme.container.background,
+    color: Color = LocalGfBackgroundColor.current,
     showDivider: Boolean = false,
     sheetState: GfBottomSheetState = rememberGfBottomSheetState(initialValue = GfBottomSheetValue.Hidden),
     isFixed: Boolean = true,
+    bottomBar: @Composable () -> Unit = {},
     sheetContent: @Composable ColumnScope.() -> Unit,
     content: @Composable () -> Unit,
 ) {
@@ -139,6 +170,7 @@ fun GfBottomSheetTopBarLayout(
             topBarPadding = topBarPadding,
             color = color,
             showDivider = showDivider,
+            bottomBar = bottomBar,
             content = content
         )
     }

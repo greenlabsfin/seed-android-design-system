@@ -32,6 +32,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.greenlabsfin.design.core.GfTheme
+import com.greenlabsfin.design.core.LocalGfBackgroundColor
 
 object GfTopBarDefaults {
     val height = 56.dp
@@ -65,7 +66,7 @@ fun GfTopBar(
     navigationIcon: ImageVector? = null,
     onNavigationClick: () -> Unit = {},
     topBarPadding: PaddingValues = PaddingValues(),
-    color: Color = GfTheme.colorScheme.container.background,
+    color: Color = LocalGfBackgroundColor.current,
     listState: LazyListState = rememberLazyListState(),
     hideWhileScrollUp: Boolean = false,
     forceShowDivider: Boolean = false,
@@ -102,6 +103,7 @@ fun GfTopBar(
 
     Surface(
         modifier = Modifier.graphicsLayer { translationY = yPosition },
+        color = color,
     ) {
         Column(
             modifier = modifier
