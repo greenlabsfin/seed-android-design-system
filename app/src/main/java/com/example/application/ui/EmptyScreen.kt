@@ -19,6 +19,7 @@ import com.greenlabsfin.design.core.typo.GfTypoScheme
 @Composable
 fun EmptyScreen(
     modifier: Modifier = Modifier,
+    title: String = "EmptyScreen",
     typoScheme: GfTypoScheme = GfTheme.typoScheme,
     onNavigationClick: () -> Unit = {},
 ) {
@@ -32,7 +33,7 @@ fun EmptyScreen(
     Box(modifier = modifier.fillMaxSize()) {
         Text(
             modifier = Modifier.align(Alignment.Center),
-            text = "EmptyScreen",
+            text = title,
             style = typoScheme.headline.xLargeBold,
         )
     }

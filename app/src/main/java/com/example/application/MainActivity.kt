@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import com.example.application.ui.home.HomeScreen
 import com.example.application.ui.theme.GFSampleTheme
 import com.example.application.util.LocaleHelper
-import com.greenlabsfin.design.core.GfTheme
+import com.greenlabsfin.design.core.LocalGfBackgroundColor
 
 @ExperimentalMaterial3Api
 class MainActivity : ComponentActivity() {
@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = GfTheme.colorScheme.container.background
+                    color = LocalGfBackgroundColor.current
                 ) {
                     HomeScreen()
                 }
