@@ -2,7 +2,6 @@ package com.greenlabsfin.design.component
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
-import androidx.compose.material.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -31,7 +30,7 @@ fun GfIcon(
     modifier: Modifier = Modifier,
     tint: Color = LocalGfContentColor.current,
 ) {
-    Icon(
+    GfIcon(
         painter = rememberVectorPainter(imageVector),
         contentDescription = contentDescription,
         modifier = modifier,
@@ -47,7 +46,7 @@ fun GfIcon(
     tint: Color = LocalGfContentColor.current,
 ) {
     val painter = remember(bitmap) { BitmapPainter(bitmap) }
-    Icon(
+    GfIcon(
         painter = painter,
         contentDescription = contentDescription,
         modifier = modifier,
@@ -78,6 +77,9 @@ fun GfIcon(
             .then(semantics)
     )
 }
+
+@Composable
+fun ImageVector.toPainter() = rememberVectorPainter(this)
 
 private fun Modifier.defaultSizeFor(painter: Painter) =
     this.then(

@@ -1,5 +1,6 @@
 package com.greenlabsfin.design.component
 
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -9,19 +10,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Divider
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,7 +32,6 @@ import com.greenlabsfin.design.core.LocalGfBackgroundColor
 object GfTopBarDefaults {
     val height = 56.dp
     val horizontalPadding = 4.dp
-    val scrollThreshold = 30
 
     fun paddingOf(
         start: Dp = 0.dp,
@@ -67,48 +61,42 @@ fun GfTopBar(
     onNavigationClick: () -> Unit = {},
     topBarPadding: PaddingValues = PaddingValues(),
     color: Color = LocalGfBackgroundColor.current,
-    listState: LazyListState = rememberLazyListState(),
+    state: GfBarState = rememberGfBarState(),
     hideWhileScrollUp: Boolean = false,
     forceShowDivider: Boolean = false,
 ) {
-    var isUpScrolling by remember { mutableStateOf(false) }
-    var firstVisibleItemIndex by remember { mutableStateOf(0) }
-    var scrollOffset by remember { mutableStateOf(0) }
+    val heightPixel = with(LocalDensity.current) { GfTopBarDefaults.height.toPx() }
 
-    LaunchedEffect(listState) {
-        snapshotFlow { listState.firstVisibleItemIndex to listState.firstVisibleItemScrollOffset }
-            .collect {
-                val index = it.first
-                val offset = it.second
-                if (index != firstVisibleItemIndex) {
-                    scrollOffset = offset
-                }
-                firstVisibleItemIndex = index
-                val offsetDelta = offset.minus(scrollOffset)
-                if (offsetDelta == 0) return@collect
-                val isDown = offsetDelta < GfTopBarDefaults.scrollThreshold.unaryMinus()
-                val isUp = offsetDelta > GfTopBarDefaults.scrollThreshold
-                isUpScrolling = if (isUpScrolling) {
-                    isDown.not()
-                } else {
-                    isUp
-                }
-            }
-    }
-    val topBarHeightPixel = with(LocalDensity.current) { GfTopBarDefaults.height.toPx() }
     val yPosition by animateFloatAsState(
-        if (isUpScrolling && hideWhileScrollUp) topBarHeightPixel.unaryMinus()
-        else 0f
+        if (state.visible.not() && hideWhileScrollUp) heightPixel.unaryMinus() else 0f,
+        animationSpec = defaultBarVisibilityAnimationSpec(),
+    )
+    val animatedHeight by animateDpAsState(
+        targetValue = if (state.visible) GfTopBarDefaults.height else 0.dp,
+        animationSpec = defaultBarVisibilityAnimationSpec()
     )
 
     Surface(
-        modifier = Modifier.graphicsLayer { translationY = yPosition },
+        modifier = Modifier.then(
+            if (state.animated) Modifier.graphicsLayer { translationY = yPosition }
+            else Modifier.offset(
+                y = if (state.visible.not() && hideWhileScrollUp) GfTopBarDefaults.height.unaryMinus()
+                else 0.dp
+            )
+        ),
         color = color,
     ) {
         Column(
             modifier = modifier
                 .fillMaxWidth()
-                .height(GfTopBarDefaults.height)
+                .then(
+                    when {
+                        state.visible || hideWhileScrollUp.not() ->
+                            Modifier.height(GfTopBarDefaults.height)
+                        state.animated -> Modifier.height(animatedHeight)
+                        else -> Modifier.height(GfTopBarDefaults.height)
+                    }
+                )
                 .background(color)
         ) {
             Box(
@@ -156,7 +144,7 @@ fun GfTopBar(
                 }
             }
 
-            if (forceShowDivider || (isUpScrolling && hideWhileScrollUp.not())) {
+            if (forceShowDivider || (state.visible.not() && hideWhileScrollUp.not())) {
                 Divider(color = GfTheme.colorScheme.container.divider)
             }
         }

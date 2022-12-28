@@ -18,7 +18,6 @@ fun DecorateBackground(
     CompositionLocalProvider(
         LocalGfBackgroundColor provides color,
         content = {
-            ChangeStatusBarColor(color)
             Surface(
                 color = color,
                 content = content,

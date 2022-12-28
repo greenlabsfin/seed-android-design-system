@@ -3,19 +3,14 @@ package com.example.application.ui.control
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.example.application.R
 import com.greenlabsfin.design.component.GfText
-import com.greenlabsfin.design.component.GfTopBarLayout
 import com.greenlabsfin.design.component.control.GFCheckbox
 import com.greenlabsfin.design.component.control.GFRadioButton
 import com.greenlabsfin.design.component.control.GFSwitch
@@ -23,22 +18,14 @@ import com.greenlabsfin.design.component.control.SwitchSize
 import com.greenlabsfin.design.core.GfTheme
 
 @Composable
-fun ControlScreen(
-    onNavigationClick: () -> Unit = {},
-) {
-    GfTopBarLayout(
-        title = stringResource(id = R.string.app_name),
-        navigationIcon = Icons.Filled.Menu,
-        onNavigationClick = onNavigationClick,
+fun ControlScreen() {
+    Column(
+        modifier = Modifier.padding(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            SwitchComponents()
-            RadioComponents()
-            CheckboxComponents()
-        }
+        SwitchComponents()
+        RadioComponents()
+        CheckboxComponents()
     }
 }
 

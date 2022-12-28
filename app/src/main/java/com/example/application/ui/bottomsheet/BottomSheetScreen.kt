@@ -36,23 +36,18 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import com.example.application.R
-import com.example.application.ui.BottomNavigation
 import com.example.application.ui.theme.GFSampleTheme
 import com.example.application.util.ThemedPreview
 import com.greenlabsfin.design.component.GFButton
 import com.greenlabsfin.design.component.GFHeight
 import com.greenlabsfin.design.component.GfBottomSheetState
-import com.greenlabsfin.design.component.GfBottomSheetTopBarLayout
 import com.greenlabsfin.design.component.GfBottomSheetValue
 import com.greenlabsfin.design.component.GfIcon
 import com.greenlabsfin.design.component.GfText
 import com.greenlabsfin.design.component.GfTextButton
-import com.greenlabsfin.design.component.GfTopBarDefaults
 import com.greenlabsfin.design.component.control.GFCheckbox
 import com.greenlabsfin.design.component.rememberGfBottomSheetState
 import com.greenlabsfin.design.component.util.DecorateBackground
@@ -63,8 +58,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun BottomSheetScreen(
-    onNavigationClick: () -> Unit = {},
-    navController: NavController? = null,
+    onShowBottomSheet: (content: @Composable () -> Unit, isFixed: Boolean) -> Unit,
 ) {
     DecorateBackground(
         GfTheme.colorScheme.container.neutralTertiary
@@ -72,69 +66,55 @@ fun BottomSheetScreen(
         val bottomSheetState =
             rememberGfBottomSheetState(initialValue = GfBottomSheetValue.Hidden)
         val scope = rememberCoroutineScope()
-        var isFixed by remember { mutableStateOf(false) }
 
-        GfBottomSheetTopBarLayout(
-            topBarPadding = GfTopBarDefaults.paddingOf(horizontal = 20.dp),
-            title = stringResource(id = R.string.app_name),
-            titleAlignment = Alignment.CenterStart,
-            onNavigationClick = onNavigationClick,
-            sheetState = bottomSheetState,
-            bottomBar = { BottomNavigation(navController = navController) },
-            isFixed = isFixed,
-            sheetContent = {
-//            PlccBannerContent(
-//                bottomSheetState = bottomSheetState,
-//                scope = scope
-//            )
-                SelectMonthContentLayout()
-            }
+        Column(
+            modifier = Modifier.padding(20.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp)
         ) {
-            Column(
-                modifier = Modifier.padding(20.dp),
-                verticalArrangement = Arrangement.spacedBy(10.dp)
+
+            Spacer(modifier = Modifier.height(50.dp))
+
+            Surface(
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(12.dp),
+                color = Color(0xFF2B2C32)
             ) {
-
-                Spacer(modifier = Modifier.height(50.dp))
-
-                Surface(
-                    modifier = Modifier.fillMaxWidth(),
-                    shape = RoundedCornerShape(12.dp),
-                    color = Color(0xFF2B2C32)
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .padding(horizontal = 10.dp, vertical = 10.dp)
-                            .clickable(
-                                interactionSource = MutableInteractionSource(),
-                                indication = null
-                            ) {
-                                scope.launch {
-                                    bottomSheetState.show()
-                                }
-                            }
-                    ) {
-                        Image(
-                            modifier = Modifier.size(50.dp),
-                            painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                            contentDescription = "launcher"
-                        )
-                        Spacer(modifier = Modifier.width(10.dp))
-                        Column(
-
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp, vertical = 10.dp)
+                        .clickable(
+                            interactionSource = MutableInteractionSource(),
+                            indication = null
                         ) {
-                            GfText(
-                                text = "Marketing Title",
-                                style = GfTheme.typoScheme.body.smallBold,
-                                color = GfTheme.colorScheme.contents.onPrimary
+                            onShowBottomSheet(
+                                { SelectMonthContentLayout() },
+                                false
                             )
-                            GfText(
-                                text = "Marketing description, description",
-                                style = GfTheme.typoScheme.caption.xSmallRegular,
-                                color = GfTheme.colorScheme.contents.onPrimary
-                            )
+                            scope.launch {
+                                bottomSheetState.show()
+                            }
                         }
+                ) {
+                    Image(
+                        modifier = Modifier.size(50.dp),
+                        painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                        contentDescription = "launcher"
+                    )
+                    Spacer(modifier = Modifier.width(10.dp))
+                    Column(
+
+                    ) {
+                        GfText(
+                            text = "Marketing Title",
+                            style = GfTheme.typoScheme.body.smallBold,
+                            color = GfTheme.colorScheme.contents.onPrimary
+                        )
+                        GfText(
+                            text = "Marketing description, description",
+                            style = GfTheme.typoScheme.caption.xSmallRegular,
+                            color = GfTheme.colorScheme.contents.onPrimary
+                        )
                     }
                 }
             }

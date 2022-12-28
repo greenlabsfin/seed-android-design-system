@@ -1,6 +1,7 @@
 package com.greenlabsfin.design.component
 
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -17,24 +18,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
@@ -76,50 +71,44 @@ fun GfBottomNavigation(
     modifier: Modifier = Modifier,
     backgroundColor: Color = LocalGfBackgroundColor.current,
     elevation: Dp = GfBottomNavigationDefaults.elevation,
-    listState: LazyListState = rememberLazyListState(),
+    state: GfBarState = rememberGfBarState(false),
     hideWhileScrollUp: Boolean = false,
     content: @Composable RowScope.() -> Unit,
 ) {
-    var isUpScrolling by remember { mutableStateOf(false) }
-    var firstVisibleItemIndex by remember { mutableStateOf(0) }
-    var scrollOffset by remember { mutableStateOf(0) }
-    LaunchedEffect(listState) {
-        snapshotFlow { listState.firstVisibleItemIndex to listState.firstVisibleItemScrollOffset }
-            .collect {
-                val index = it.first
-                val offset = it.second
-                if (index != firstVisibleItemIndex) {
-                    scrollOffset = offset
-                }
-                firstVisibleItemIndex = index
-                val offsetDelta = offset.minus(scrollOffset)
-                if (offsetDelta == 0) return@collect
-                val isDown = offsetDelta < GfTopBarDefaults.scrollThreshold.unaryMinus()
-                val isUp = offsetDelta > GfTopBarDefaults.scrollThreshold
-                isUpScrolling = if (isUpScrolling) {
-                    isDown.not()
-                } else {
-                    isUp
-                }
-            }
-    }
 
     val heightPixel = with(LocalDensity.current) { GfBottomNavigationDefaults.height.toPx() }
     val yPosition by animateFloatAsState(
-        if (isUpScrolling && hideWhileScrollUp) heightPixel
-        else 0f
+        if (state.visible.not() && hideWhileScrollUp) heightPixel else 0f,
+        animationSpec = defaultBarVisibilityAnimationSpec(),
+    )
+    val animatedHeight by animateDpAsState(
+        targetValue = if (state.visible) GfBottomNavigationDefaults.height else 0.dp,
+        animationSpec = defaultBarVisibilityAnimationSpec()
     )
 
     Surface(
         color = backgroundColor,
         elevation = elevation,
-        modifier = modifier.graphicsLayer { translationY = yPosition },
+        modifier = modifier.then(
+            if (state.animated) Modifier.graphicsLayer { translationY = yPosition }
+            else Modifier.offset(
+                y = if (state.visible.not() && hideWhileScrollUp) GfBottomNavigationDefaults.height
+                else 0.dp
+            )
+        ),
         shape = RoundedCornerShape(topEnd = 12.dp, topStart = 12.dp)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(GfBottomNavigationDefaults.height)
+                .then(
+                    when {
+                        state.visible || hideWhileScrollUp.not() ->
+                            Modifier.height(GfBottomNavigationDefaults.height)
+                        state.animated -> Modifier.height(animatedHeight)
+                        else -> Modifier.height(GfBottomNavigationDefaults.height)
+                    }
+                )
                 .selectableGroup(),
             horizontalArrangement = Arrangement.SpaceBetween,
             content = content,
@@ -131,10 +120,10 @@ fun GfBottomNavigation(
 fun RowScope.GfBottomNavigationItem(
     selected: Boolean,
     onClick: () -> Unit,
-    selectedIcon: ImageVector,
-    unselectedIcon: ImageVector,
+    selectedIcon: Painter,
     contentDescription: String?,
     modifier: Modifier = Modifier,
+    unselectedIcon: Painter = selectedIcon,
     selectedContentColor: Color = GfTheme.colorScheme.contents.neutralPrimary,
     unselectedContentColor: Color = GfTheme.colorScheme.contents.neutralSecondary,
     enabled: Boolean = true,
@@ -211,8 +200,8 @@ fun RowScope.GfBottomNavigationItem(
 private fun BoxScope.GfBottomNavigationIcon(
     iconSize: GfBottomNavigation.IconSize,
     selected: Boolean,
-    selectedIcon: ImageVector,
-    unselectedIcon: ImageVector,
+    selectedIcon: Painter,
+    unselectedIcon: Painter = selectedIcon,
     contentDescription: String?,
     selectedContentColor: Color,
     unselectedContentColor: Color,
@@ -225,7 +214,7 @@ private fun BoxScope.GfBottomNavigationIcon(
             modifier = Modifier
                 .size(iconSize.size)
                 .align(Alignment.Center),
-            imageVector = if (it) selectedIcon else unselectedIcon,
+            painter = if (it) selectedIcon else unselectedIcon,
             contentDescription = contentDescription,
             tint = if (it) selectedContentColor else unselectedContentColor,
         )

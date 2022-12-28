@@ -88,7 +88,8 @@ private fun Modifier.bottomSheetFixedSwipeable(
     sheetHeightState: State<Float?>,
 ): Modifier {
     val sheetHeight = sheetHeightState.value
-    val modifier = if (sheetHeight != null) {
+    // TODO sheetHeight > 0f <- 요놈 ModalBottomSheetLayout 에 적용 안되어 있음, ModalBottomSheet 도 따로 맹글어야 할수도..
+    val modifier = if (sheetHeight != null && sheetHeight > 0f) {
         val anchors = mapOf(
             fullHeight to GfBottomSheetValue.Hidden,
             fullHeight - sheetHeight to GfBottomSheetValue.Expanded
