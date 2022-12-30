@@ -1,20 +1,26 @@
 package com.example.application.ui.home
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.application.R
+import com.example.application.ui.BottomNavigation
 import com.example.application.ui.EmptyScreen
 import com.example.application.ui.bottomsheet.BottomSheetScreen
 import com.example.application.ui.button.ContainerButtonScreen
@@ -26,7 +32,12 @@ import com.example.application.ui.textfield.TextFieldScreen
 import com.example.application.ui.theme.GFSampleTheme
 import com.example.application.ui.typography.TypographyScreen
 import com.example.application.util.ThemedPreview
-import com.greenlabsfin.design.core.GfTheme
+import com.greenlabsfin.design.component.GfBottomSheetScaffold
+import com.greenlabsfin.design.component.GfBottomSheetValue
+import com.greenlabsfin.design.component.GfTopBar
+import com.greenlabsfin.design.component.GfTopBarDefaults
+import com.greenlabsfin.design.component.rememberGfBarState
+import com.greenlabsfin.design.component.rememberGfBottomSheetState
 import kotlinx.coroutines.launch
 
 @ExperimentalMaterial3Api
@@ -34,46 +45,95 @@ import kotlinx.coroutines.launch
 fun HomeScreen() {
     val menuItems = listOf(
         DrawerScreens.Typography,
-        DrawerScreens.Color,
+        DrawerScreens.ColorScreen,
         DrawerScreens.ContainerButton,
         DrawerScreens.TextButton,
         DrawerScreens.TextField,
         DrawerScreens.Chip,
         DrawerScreens.Control,
         DrawerScreens.BottomSheet,
+        DrawerScreens.Dialog,
     )
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val selectedItem = remember { mutableStateOf(menuItems[0]) }
     val scope = rememberCoroutineScope()
     val navController = rememberNavController()
-    Scaffold(
-        content = { paddingValues ->
-            NavDrawer(
-                modifier = Modifier
-                    .background(GfTheme.colorScheme.container.background)
-                    .padding(paddingValues),
-                drawerState = drawerState,
-                items = menuItems,
-                selectedItem = selectedItem.value,
-                scope = scope,
-                onItemSelected = {
-                    selectedItem.value = it
-                    navController.navigate(it.route)
+
+    NavDrawer(
+        drawerState = drawerState,
+        items = menuItems,
+        selectedItem = selectedItem.value,
+        scope = scope,
+        onItemSelected = {
+            selectedItem.value = it
+            navController.navigate(it.route)
+        },
+        content = {
+            var bottomSheetContent by remember {
+                mutableStateOf<@Composable () -> Unit>({
+                    Box(Modifier.size(1.dp))
+                })
+            }
+            val bottomSheetState = rememberGfBottomSheetState(GfBottomSheetValue.Hidden)
+            var isFixedBottomSheet by remember { mutableStateOf(false) }
+            val topBarState = rememberGfBarState()
+            val bottomBarState = rememberGfBarState()
+
+            GfBottomSheetScaffold(
+                topBar = {
+                    GfTopBar(
+                        title = stringResource(id = R.string.app_name),
+                        titleAlignment = Alignment.CenterStart,
+                        onNavigationClick = { scope.launch { drawerState.open() } },
+                        hideWhileScrollUp = true,
+                        topBarPadding = GfTopBarDefaults.paddingOf(horizontal = 20.dp),
+                        state = topBarState,
+                    )
                 },
-                content = {
-                    NavHost(
+                bottomBar = {
+                    BottomNavigation(
                         navController = navController,
-                        startDestination = menuItems.first().route
-                    ) {
-                        menuItems.forEach { menu ->
-                            menu.composable(
-                                navGraphBuilder = this,
-                                onNavigationClick = { scope.launch { drawerState.open() } }
-                            )
-                        }
+                        state = bottomBarState,
+                        hideWhileScrollUp = true,
+                    )
+                },
+                sheetContent = { bottomSheetContent() },
+                sheetState = bottomSheetState,
+                isFixed = isFixedBottomSheet,
+            ) {
+                NavHost(
+                    navController = navController,
+                    startDestination = menuItems.first().route
+                ) {
+                    menuItems.forEach { menu ->
+                        menu.composable(
+                            navGraphBuilder = this,
+                            onScrollChange = { isScrollUp ->
+                                if (isScrollUp) {
+                                    topBarState.hide(true)
+                                    bottomBarState.hide(true)
+                                } else {
+                                    topBarState.show(true)
+                                    bottomBarState.show(true)
+                                }
+                            },
+                            onShowBottomSheet = { content, isFixed ->
+                                bottomSheetContent = content
+                                isFixedBottomSheet = isFixed
+                                scope.launch {
+                                    bottomSheetState.show()
+                                }
+                            }
+                        )
+                    }
+                    composable("cart") {
+                        EmptyScreen(title = "Cart")
+                    }
+                    composable("delete") {
+                        EmptyScreen(title = "Delete")
                     }
                 }
-            )
+            }
         }
     )
 }
@@ -85,77 +145,120 @@ sealed class DrawerScreens(
 ) : NavDrawerItem {
     abstract fun composable(
         navGraphBuilder: NavGraphBuilder,
-        onNavigationClick: () -> Unit = {},
+        onScrollChange: ((isScrollUp: Boolean) -> Unit)? = null,
+        onShowBottomSheet: ((content: @Composable () -> Unit, isFixed: Boolean) -> Unit)? = null,
     )
 
     object Typography : DrawerScreens(title = "Typography", route = "Typography") {
-        override fun composable(navGraphBuilder: NavGraphBuilder, onNavigationClick: () -> Unit) {
+        override fun composable(
+            navGraphBuilder: NavGraphBuilder,
+            onScrollChange: ((isScrollUp: Boolean) -> Unit)?,
+            onShowBottomSheet: ((content: @Composable () -> Unit, isFixed: Boolean) -> Unit)?,
+        ) {
             navGraphBuilder.composable(route) {
-                TypographyScreen(onNavigationClick = onNavigationClick)
+                TypographyScreen { isScrollUp ->
+                    onScrollChange?.invoke(isScrollUp)
+                }
             }
         }
     }
 
-    object Color : DrawerScreens(title = "Color", route = "Color") {
-        override fun composable(navGraphBuilder: NavGraphBuilder, onNavigationClick: () -> Unit) {
+    object ColorScreen : DrawerScreens(title = "Color", route = "Color") {
+        override fun composable(
+            navGraphBuilder: NavGraphBuilder,
+            onScrollChange: ((isScrollUp: Boolean) -> Unit)?,
+            onShowBottomSheet: ((content: @Composable () -> Unit, isFixed: Boolean) -> Unit)?,
+        ) {
             navGraphBuilder.composable(route) {
-                EmptyScreen(onNavigationClick = onNavigationClick)
+                EmptyScreen()
             }
         }
     }
 
     object ContainerButton : DrawerScreens(title = "ContainerButton", route = "ContainerButton") {
-        override fun composable(navGraphBuilder: NavGraphBuilder, onNavigationClick: () -> Unit) {
+        override fun composable(
+            navGraphBuilder: NavGraphBuilder,
+            onScrollChange: ((isScrollUp: Boolean) -> Unit)?,
+            onShowBottomSheet: ((content: @Composable () -> Unit, isFixed: Boolean) -> Unit)?,
+        ) {
             navGraphBuilder.composable(route) {
-                ContainerButtonScreen(onNavigationClick = onNavigationClick)
+                ContainerButtonScreen()
             }
         }
     }
 
     object TextButton : DrawerScreens(title = "TextButton", route = "TextButton") {
-        override fun composable(navGraphBuilder: NavGraphBuilder, onNavigationClick: () -> Unit) {
+        override fun composable(
+            navGraphBuilder: NavGraphBuilder,
+            onScrollChange: ((isScrollUp: Boolean) -> Unit)?,
+            onShowBottomSheet: ((content: @Composable () -> Unit, isFixed: Boolean) -> Unit)?,
+        ) {
             navGraphBuilder.composable(route) {
-                TextButtonScreen(onNavigationClick = onNavigationClick)
+                TextButtonScreen()
             }
         }
     }
 
     object Chip : DrawerScreens(title = "Chip", route = "Chip") {
-        override fun composable(navGraphBuilder: NavGraphBuilder, onNavigationClick: () -> Unit) {
+        override fun composable(
+            navGraphBuilder: NavGraphBuilder,
+            onScrollChange: ((isScrollUp: Boolean) -> Unit)?,
+            onShowBottomSheet: ((content: @Composable () -> Unit, isFixed: Boolean) -> Unit)?,
+        ) {
             navGraphBuilder.composable(route) {
-                ChipScreen(onNavigationClick = onNavigationClick)
+                ChipScreen()
             }
         }
     }
 
     object TextField : DrawerScreens(title = "TextField", route = "TextField") {
-        override fun composable(navGraphBuilder: NavGraphBuilder, onNavigationClick: () -> Unit) {
+        override fun composable(
+            navGraphBuilder: NavGraphBuilder,
+            onScrollChange: ((isScrollUp: Boolean) -> Unit)?,
+            onShowBottomSheet: ((content: @Composable () -> Unit, isFixed: Boolean) -> Unit)?,
+        ) {
             navGraphBuilder.composable(route) {
-                TextFieldScreen(onNavigationClick = onNavigationClick)
+                TextFieldScreen()
             }
         }
     }
 
     object Control : DrawerScreens(title = "Control", route = "Control") {
-        override fun composable(navGraphBuilder: NavGraphBuilder, onNavigationClick: () -> Unit) {
+        override fun composable(
+            navGraphBuilder: NavGraphBuilder,
+            onScrollChange: ((isScrollUp: Boolean) -> Unit)?,
+            onShowBottomSheet: ((content: @Composable () -> Unit, isFixed: Boolean) -> Unit)?,
+        ) {
             navGraphBuilder.composable(route) {
-                ControlScreen(onNavigationClick = onNavigationClick)
+                ControlScreen()
             }
         }
     }
 
     object BottomSheet : DrawerScreens(title = "BottomSheet", route = "BottomSheet") {
-        override fun composable(navGraphBuilder: NavGraphBuilder, onNavigationClick: () -> Unit) {
+        override fun composable(
+            navGraphBuilder: NavGraphBuilder,
+            onScrollChange: ((isScrollUp: Boolean) -> Unit)?,
+            onShowBottomSheet: ((content: @Composable () -> Unit, isFixed: Boolean) -> Unit)?,
+        ) {
             navGraphBuilder.composable(route) {
-                BottomSheetScreen(onNavigationClick = onNavigationClick)
+                BottomSheetScreen(
+                    onShowBottomSheet = { content, isFixed ->
+                        onShowBottomSheet?.invoke(content, isFixed)
+                    }
+                )
             }
         }
     }
 
-    object Dialog: DrawerScreens(title = "Dialog", route = "Dialog") {
-        override fun composable(navGraphBuilder: NavGraphBuilder, onNavigationClick: () -> Unit) {
+    object Dialog : DrawerScreens(title = "Dialog", route = "Dialog") {
+        override fun composable(
+            navGraphBuilder: NavGraphBuilder,
+            onScrollChange: ((isScrollUp: Boolean) -> Unit)?,
+            onShowBottomSheet: ((content: @Composable () -> Unit, isFixed: Boolean) -> Unit)?,
+        ) {
             navGraphBuilder.composable(route) {
-                DialogScreen(onNavigationClick = onNavigationClick)
+                DialogScreen()
             }
         }
 

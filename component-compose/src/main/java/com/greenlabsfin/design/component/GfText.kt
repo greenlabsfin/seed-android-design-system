@@ -54,6 +54,7 @@ fun GfText(
     onTextLayout: (TextLayoutResult) -> Unit = {},
     style: TextStyle = LocalGfTextStyle.current,
     enabled: Boolean = true,
+    fillText: Boolean = false,
 ) {
     // text color priority color -> style -> local provider
     val takenTextColor = color.takeOrElse {
@@ -97,7 +98,7 @@ fun GfText(
             )
         }
         Row(
-            modifier = modifier.weight(8f, false),
+            modifier = Modifier.weight(8f, fillText),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
         ) {

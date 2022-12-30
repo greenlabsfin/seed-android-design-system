@@ -1,11 +1,13 @@
 package com.example.application.ui.bottomsheet
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
@@ -29,9 +31,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.application.R
@@ -40,42 +44,29 @@ import com.example.application.util.ThemedPreview
 import com.greenlabsfin.design.component.GFButton
 import com.greenlabsfin.design.component.GFHeight
 import com.greenlabsfin.design.component.GfBottomSheetState
-import com.greenlabsfin.design.component.GfBottomSheetTopBarLayout
 import com.greenlabsfin.design.component.GfBottomSheetValue
 import com.greenlabsfin.design.component.GfIcon
 import com.greenlabsfin.design.component.GfText
 import com.greenlabsfin.design.component.GfTextButton
-import com.greenlabsfin.design.component.GfTopBarDefaults
 import com.greenlabsfin.design.component.control.GFCheckbox
 import com.greenlabsfin.design.component.rememberGfBottomSheetState
+import com.greenlabsfin.design.component.util.DecorateBackground
 import com.greenlabsfin.design.core.GfTheme
+import com.greenlabsfin.design.core.color.gray30
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
 fun BottomSheetScreen(
-    onNavigationClick: () -> Unit = {},
+    onShowBottomSheet: (content: @Composable () -> Unit, isFixed: Boolean) -> Unit,
 ) {
-    val bottomSheetState =
-        rememberGfBottomSheetState(initialValue = GfBottomSheetValue.Hidden)
-    val scope = rememberCoroutineScope()
-    var isFixed by remember { mutableStateOf(true) }
-
-    GfBottomSheetTopBarLayout(
-        topBarPadding = GfTopBarDefaults.paddingOf(horizontal = 20.dp),
-        title = stringResource(id = R.string.app_name),
-        titleAlignment = Alignment.CenterStart,
-//        navigationIcon = Icons.Filled.Menu,
-        onNavigationClick = onNavigationClick,
-        sheetState = bottomSheetState,
-        isFixed = isFixed,
-        sheetContent = {
-            PlccBannerContent(
-                bottomSheetState = bottomSheetState,
-                scope = scope
-            )
-        }
+    DecorateBackground(
+        GfTheme.colorScheme.container.neutralTertiary
     ) {
+        val bottomSheetState =
+            rememberGfBottomSheetState(initialValue = GfBottomSheetValue.Hidden)
+        val scope = rememberCoroutineScope()
+
         Column(
             modifier = Modifier.padding(20.dp),
             verticalArrangement = Arrangement.spacedBy(10.dp)
@@ -96,6 +87,10 @@ fun BottomSheetScreen(
                             interactionSource = MutableInteractionSource(),
                             indication = null
                         ) {
+                            onShowBottomSheet(
+                                { SelectMonthContentLayout() },
+                                false
+                            )
                             scope.launch {
                                 bottomSheetState.show()
                             }
@@ -121,6 +116,61 @@ fun BottomSheetScreen(
                             color = GfTheme.colorScheme.contents.onPrimary
                         )
                     }
+                }
+            }
+        }
+    }
+}
+
+
+@Composable
+fun SelectMonthContentLayout() {
+    val density = LocalDensity.current
+    Column {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(32.dp),
+            contentAlignment = Alignment.Center
+        ) {
+            Canvas(modifier = Modifier.size(width = 40.dp, height = 4.dp), onDraw = {
+                drawRoundRect(
+                    color = gray30,
+                    size = Size(
+                        width = with(density) { 40.dp.toPx() },
+                        height = with(density) { 4.dp.toPx() }
+                    ),
+                    cornerRadius = CornerRadius(with(density) { 2.dp.toPx() })
+                )
+            })
+        }
+        GfText(
+            modifier = Modifier
+                .height(58.dp)
+                .padding(horizontal = 20.dp),
+            text = "월 선택하기",
+            style = GfTheme.typoScheme.body.largeBold
+        )
+        LazyColumn(
+            contentPadding = PaddingValues(horizontal = 20.dp)
+        ) {
+            val year = 2022
+            val month = 11
+            for (i in 0 until 33) {
+                var targetMonth = month.minus(i)
+                var targetYear = year
+                while (targetMonth < 1) {
+                    targetYear--
+                    targetMonth += 12
+                }
+                item {
+                    GfText(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(58.dp),
+                        text = "${targetYear}년 ${targetMonth}월",
+                        style = GfTheme.typoScheme.body.mediumRegular
+                    )
                 }
             }
         }
@@ -232,7 +282,7 @@ fun PlccBannerContent(
             }
 
             GFButton(
-//                modifier = Modifier.weight(.2f, true),
+                modifier = Modifier.weight(.2f, true),
                 height = GFHeight.Large,
                 colors = GFButton.Style.tintNeutral,
                 text = "알아보기",
