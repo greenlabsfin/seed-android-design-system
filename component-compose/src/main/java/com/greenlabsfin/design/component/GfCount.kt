@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -21,6 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.greenlabsfin.design.component.util.GfPreview
@@ -92,7 +94,7 @@ object GfCountDefaults {
         }
 
     @Composable
-    fun chipColors(
+    fun countColors(
         textColor: Color = Color.Unspecified,
         backgroundColor: Color = Color.Unspecified,
     ): GfCountColors = DefaultGfCountColors(
@@ -125,6 +127,31 @@ private data class DefaultGfCountColors(
         )
 }
 
+object GfCount {
+    enum class Size(val value: Dp) {
+        Large(16.dp),
+        Medium(14.dp),
+        Small(12.dp),
+        ;
+
+        val fontStyle: TextStyle
+            get() = when (this) {
+                Large -> GfTypoScheme.custom(
+                    size = 12.sp,
+                    weight = FontWeight.Medium
+                )
+                Medium -> GfTypoScheme.custom(
+                    size = 10.sp,
+                    weight = FontWeight.Medium
+                )
+                Small -> GfTypoScheme.custom(
+                    size = 8.sp,
+                    weight = FontWeight.Medium
+                )
+            }
+    }
+}
+
 
 @Composable
 internal fun GfCount(
@@ -132,24 +159,23 @@ internal fun GfCount(
     colors: GfCountColors,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
+    size: GfCount.Size = GfCount.Size.Large,
 ) {
     val backgroundColor by colors.backgroundColor(enabled = enabled)
     val textColor by colors.textColor(enabled = enabled)
     val text = count.toString()
-    val size = 16.dp
 
     Box(
         modifier = modifier
-            .defaultMinSize(minWidth = size, minHeight = size)
+            .defaultMinSize(minWidth = size.value, minHeight = size.value)
             .clip(CircleShape)
             .background(color = backgroundColor),
         contentAlignment = Alignment.Center
     ) {
-
         Text(
             modifier = Modifier.padding(horizontal = 4.dp),
             text = text,
-            style = counterTextStyle,
+            style = size.fontStyle,
             color = textColor,
         )
     }
@@ -164,12 +190,24 @@ private val counterTextStyle = GfTypoScheme.custom(
 @Composable
 fun GfCountPreview() {
     GfTheme(colorScheme = GfColorScheme.default(isSystemInDarkTheme())) {
-        Column(modifier = Modifier, verticalArrangement = Arrangement.spacedBy(4.dp)) {
-            GfCount(count = 3, colors = GfCountDefaults.Colors.primary)
-            GfCount(count = 33, colors = GfCountDefaults.Colors.secondary)
-            GfCount(count = 3, colors = GfCountDefaults.Colors.neutral)
-            GfCount(count = 333, colors = GfCountDefaults.Colors.errorPrimary)
-            GfCount(count = 3, colors = GfCountDefaults.Colors.errorSecondary)
+        Surface(color = GfTheme.colorScheme.container.background) {
+            Column(modifier = Modifier, verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                GfCount(count = 3, colors = GfCountDefaults.Colors.primary)
+                GfCount(count = 33, colors = GfCountDefaults.Colors.secondary)
+                GfCount(
+                    size = GfCount.Size.Small,
+                    count = 3,
+                    colors = GfCountDefaults.Colors.neutral)
+                GfCount(
+                    size = GfCount.Size.Small,
+                    count = 333,
+                    colors = GfCountDefaults.Colors.errorPrimary)
+                GfCount(
+                    size = GfCount.Size.Medium,
+                    count = 3,
+                    colors = GfCountDefaults.Colors.errorSecondary,
+                )
+            }
         }
     }
 }

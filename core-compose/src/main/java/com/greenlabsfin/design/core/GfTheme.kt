@@ -5,6 +5,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.runtime.structuralEqualityPolicy
+import androidx.compose.ui.graphics.Color
 import com.greenlabsfin.design.core.color.GfColorScheme
 import com.greenlabsfin.design.core.color.gray90
 import com.greenlabsfin.design.core.typo.GfTypoScheme
@@ -35,6 +36,7 @@ import com.greenlabsfin.design.core.typo.GfTypoScheme
 fun GfTheme(
     colorScheme: GfColorScheme = GfColorScheme(),
     typoScheme: GfTypoScheme = GfTypoScheme(),
+    backgroundColor: Color = GfColorScheme().container.background,
     content: @Composable () -> Unit,
 ) {
     CompositionLocalProvider(
@@ -42,6 +44,7 @@ fun GfTheme(
         LocalGfTypoScheme provides typoScheme,
         LocalGfContentColor provides colorScheme.contents.neutralPrimary,
         LocalGfTextStyle provides typoScheme.body.mediumRegular,
+        LocalGfBackgroundColor provides backgroundColor,
         content = content
     )
 }
@@ -68,3 +71,5 @@ val LocalGfContentColor = staticCompositionLocalOf { gray90 }
 
 val LocalGfTextStyle =
     compositionLocalOf(structuralEqualityPolicy()) { GfTypoScheme().body.mediumRegular }
+
+val LocalGfBackgroundColor = compositionLocalOf { GfColorScheme().container.background }
