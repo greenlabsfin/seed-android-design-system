@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.example.application.seed.SeedMain
+import com.example.application.ui.home.HomeScreen
 import com.example.application.ui.theme.GFSampleTheme
 import com.example.application.util.LocaleHelper
 import com.greenlabsfin.design.core.LocalGfBackgroundColor
@@ -26,8 +26,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = LocalGfBackgroundColor.current
                 ) {
-                    SeedMain()
-//                    HomeScreen()
+//                    SeedMain()
+                    HomeScreen()
                 }
             }
         }
