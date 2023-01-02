@@ -17,18 +17,21 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Popup
-import com.greenlabsfin.design.core.color.red60
+import androidx.compose.ui.window.PopupProperties
+import com.greenlabsfin.design.core.color.white
 
 @Composable
 fun GfDropDown(
     modifier: Modifier = Modifier,
     isExpanded: Boolean,
+    alignment: DropdownAlignment = DropdownAlignment.Start,
     placeholder: @Composable () -> Unit,
     items: @Composable ColumnScope.() -> Unit,
-    fillPlaceholderWidth: Boolean = true,
+    fillPlaceholderWidth: Boolean = false,
     onDismiss: () -> Unit = {},
 ) {
     val density = LocalDensity.current
@@ -51,7 +54,12 @@ fun GfDropDown(
             Popup(
                 onDismissRequest = {
                     onDismiss()
-                }
+                },
+                offset = IntOffset(when (alignment) {
+                    DropdownAlignment.Start -> 0
+                    DropdownAlignment.End -> offsetX
+                }, 0),
+                properties = PopupProperties()
             ) {
                 Column {
                     with(density) {
@@ -70,9 +78,9 @@ fun GfDropDown(
                                 else Modifier
                             )
                             .onGloballyPositioned {
-                                offsetX = placeholderWidth - it.size.width
+                                offsetX = it.size.width.unaryMinus()
                             },
-                        color = red60,
+                        color = white,
                         elevation = 2.dp,
                         shape = RoundedCornerShape(24.dp)) {
                         Column(modifier = Modifier.padding(10.dp)) {
@@ -83,4 +91,8 @@ fun GfDropDown(
             }
         }
     }
+}
+
+enum class DropdownAlignment {
+    Start, End
 }
