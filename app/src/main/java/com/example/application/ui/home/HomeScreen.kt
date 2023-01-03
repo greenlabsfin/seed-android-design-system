@@ -28,6 +28,7 @@ import com.example.application.ui.button.TextButtonScreen
 import com.example.application.ui.chip.ChipScreen
 import com.example.application.ui.control.ControlScreen
 import com.example.application.ui.dialog.DialogScreen
+import com.example.application.ui.dropdown.DropdownScreen
 import com.example.application.ui.textfield.TextFieldScreen
 import com.example.application.ui.theme.GFSampleTheme
 import com.example.application.ui.typography.TypographyScreen
@@ -53,6 +54,7 @@ fun HomeScreen() {
         DrawerScreens.Control,
         DrawerScreens.BottomSheet,
         DrawerScreens.Dialog,
+        DrawerScreens.Dropdown
     )
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val selectedItem = remember { mutableStateOf(menuItems[0]) }
@@ -262,6 +264,18 @@ sealed class DrawerScreens(
             }
         }
 
+    }
+
+    object Dropdown : DrawerScreens(title = "Dropdown", route = "Dropdown") {
+        override fun composable(
+            navGraphBuilder: NavGraphBuilder,
+            onScrollChange: ((isScrollUp: Boolean) -> Unit)?,
+            onShowBottomSheet: ((content: () -> Unit, isFixed: Boolean) -> Unit)?,
+        ) {
+            navGraphBuilder.composable(route) {
+                DropdownScreen()
+            }
+        }
     }
 }
 
