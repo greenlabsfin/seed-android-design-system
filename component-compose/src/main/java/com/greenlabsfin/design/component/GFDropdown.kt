@@ -31,22 +31,18 @@ fun GfDropDown(
     alignment: DropdownAlignment = DropdownAlignment.Start,
     placeholder: @Composable () -> Unit,
     items: @Composable ColumnScope.() -> Unit,
-    fillPlaceholderWidth: Boolean = false,
+    fitPlaceholderWidth: Boolean = false,
     onDismiss: () -> Unit = {},
 ) {
     val density = LocalDensity.current
     var contentSize by remember { mutableStateOf(IntSize(0, 0)) }
-    var offset by remember { mutableStateOf(0) }
     val widthDp = with(density) { contentSize.width.toDp() }
-    var placeholderWidth by remember { mutableStateOf(0) }
     var offsetX by remember { mutableStateOf(0) }
 
     Box(modifier = modifier) {
         Box(modifier = Modifier
             .onGloballyPositioned {
                 contentSize = it.size
-                offset = it.size.height + with(density) { 4.dp.roundToPx() }
-                placeholderWidth = it.size.width
             }) {
             placeholder()
         }
@@ -74,7 +70,7 @@ fun GfDropDown(
                     Surface(
                         modifier = Modifier
                             .then(
-                                if (fillPlaceholderWidth) Modifier.width(widthDp)
+                                if (fitPlaceholderWidth) Modifier.width(widthDp)
                                 else Modifier
                             )
                             .onGloballyPositioned {
