@@ -23,14 +23,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.greenlabsfin.design.component.DropdownAlignment
-import com.greenlabsfin.design.component.GFButton
-import com.greenlabsfin.design.component.GFHeight
-import com.greenlabsfin.design.component.GfDropDown
-import com.greenlabsfin.design.component.GfIcon
-import com.greenlabsfin.design.component.GfText
-import com.greenlabsfin.design.component.GfTextButton
-import com.greenlabsfin.design.core.GfTheme
+import com.greenlabsfin.design.component.SeedButton
+import com.greenlabsfin.design.component.SeedButtonDefaults
+import com.greenlabsfin.design.component.SeedDropdown
+import com.greenlabsfin.design.component.SeedIcon
+import com.greenlabsfin.design.component.SeedText
+import com.greenlabsfin.design.component.SeedTextButton
+import com.greenlabsfin.design.core.SeedTheme
 
 @Composable
 fun DropdownScreen() {
@@ -52,14 +51,14 @@ fun DropdownScreen() {
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
 
-        Text(text = "Filled Dropdown", style = GfTheme.typoScheme.headline.largeBold)
-        GfDropDown(modifier = Modifier.fillMaxWidth(),
+        Text(text = "Filled Dropdown", style = SeedTheme.typoScheme.headline.largeBold)
+        SeedDropdown(modifier = Modifier.fillMaxWidth(),
             isExpanded = dropdownExpanded,
             placeholder = {
-                GFButton(
+                SeedButton(
                     modifier = Modifier.fillMaxWidth(),
-                    height = GFHeight.Large,
-                    colors = GFButton.Style.outlineNeutral,
+                    height = SeedButton.Height.Large,
+                    colors = SeedButtonDefaults.Colors.outlineNeutral(),
                     rightIcon = Icons.Filled.ArrowDropDown,
                     text = selectedDropdownItem
                 ) {
@@ -76,12 +75,12 @@ fun DropdownScreen() {
             }
         )
 
-        Text(text = "Text Dropdown", style = GfTheme.typoScheme.headline.largeBold)
+        Text(text = "Text Dropdown", style = SeedTheme.typoScheme.headline.largeBold)
 
-        GfDropDown(
+        SeedDropdown(
             isExpanded = textExpanded,
             placeholder = {
-                GfTextButton(text = selectedTextDropdownItem,
+                SeedTextButton(text = selectedTextDropdownItem,
                     rightIcon = if (textExpanded) Icons.Filled.ArrowDropDown else Icons.Filled.ThumbUp) {
                     textExpanded = textExpanded.not()
                 }
@@ -96,13 +95,13 @@ fun DropdownScreen() {
             }
         )
 
-        Text(text = "Icon Dropdown", style = GfTheme.typoScheme.headline.largeBold)
+        Text(text = "Icon Dropdown", style = SeedTheme.typoScheme.headline.largeBold)
 
         Box(
             modifier = Modifier.fillMaxWidth(),
             contentAlignment = Alignment.Center
         ) {
-            GfDropDown(
+            SeedDropdown(
                 isExpanded = iconExpanded,
                 placeholder = {
                     Icon(imageVector = Icons.Filled.Menu,
@@ -117,7 +116,7 @@ fun DropdownScreen() {
                 onDismiss = {
                     iconExpanded = false
                 },
-                alignment = DropdownAlignment.End
+                alignment = SeedDropdown.Alignment.End
             )
         }
     }
@@ -151,8 +150,8 @@ fun ListComponent(
             },
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        GfIcon(imageVector = Icons.Filled.Face, contentDescription = "Face Icon")
-        GfText(text = title, style = GfTheme.typoScheme.body.mediumRegular)
+        SeedIcon(imageVector = Icons.Filled.Face, contentDescription = "Face Icon")
+        SeedText(text = title, style = SeedTheme.typoScheme.body.mediumRegular)
     }
 }
 

@@ -8,7 +8,7 @@ import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
-import com.greenlabsfin.design.core.LocalGfBackgroundColor
+import com.greenlabsfin.design.core.LocalSeedBackgroundColor
 
 @Composable
 fun DecorateBackground(
@@ -16,7 +16,7 @@ fun DecorateBackground(
     content: @Composable () -> Unit,
 ) {
     CompositionLocalProvider(
-        LocalGfBackgroundColor provides color,
+        LocalSeedBackgroundColor provides color,
         content = {
             Surface(
                 color = color,

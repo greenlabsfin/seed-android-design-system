@@ -9,38 +9,38 @@ import androidx.navigation.NavController
 import com.example.application.ui.icons.SampleIcons
 import com.example.application.ui.icons.filled.Cart
 import com.example.application.ui.icons.regular.Cart
-import com.greenlabsfin.design.component.GfBarState
-import com.greenlabsfin.design.component.GfBottomNavigation
-import com.greenlabsfin.design.component.GfBottomNavigationItem
-import com.greenlabsfin.design.component.GfText
+import com.greenlabsfin.design.component.SeedBarState
+import com.greenlabsfin.design.component.SeedBottomNavigation
+import com.greenlabsfin.design.component.SeedBottomNavigationItem
+import com.greenlabsfin.design.component.SeedText
 import com.greenlabsfin.design.component.icons.Icons
 import com.greenlabsfin.design.component.icons.filled.Delete
 import com.greenlabsfin.design.component.icons.regular.Delete
-import com.greenlabsfin.design.component.rememberGfBarState
+import com.greenlabsfin.design.component.rememberSeedBarState
 import com.greenlabsfin.design.component.toPainter
 
 @Composable
 fun BottomNavigation(
     hideWhileScrollUp: Boolean = false,
-    state: GfBarState = rememberGfBarState(false),
+    state: SeedBarState = rememberSeedBarState(false),
     navController: NavController?,
 ) {
-    GfBottomNavigation(
+    SeedBottomNavigation(
         state = state,
         hideWhileScrollUp = hideWhileScrollUp,
 
         ) {
         var selected by remember { mutableStateOf(0) }
-        GfBottomNavigationItem(
+        SeedBottomNavigationItem(
             selected = selected == 0,
             onClick = { selected = 0 },
             selectedIcon = Icons.Filled.Delete.toPainter(),
             unselectedIcon = Icons.OutlinedRegular.Delete.toPainter(),
             contentDescription = "",
             badge = true,
-            label = { GfText(text = "First") },
+            label = { SeedText(text = "First") },
         )
-        GfBottomNavigationItem(
+        SeedBottomNavigationItem(
             selected = selected == 1,
             onClick = {
                 selected = 1
@@ -49,9 +49,9 @@ fun BottomNavigation(
             selectedIcon = Icons.Filled.Delete.toPainter(),
             unselectedIcon = Icons.OutlinedRegular.Delete.toPainter(),
             contentDescription = "",
-            label = { GfText(text = "Delete") },
+            label = { SeedText(text = "Delete") },
         )
-        GfBottomNavigationItem(
+        SeedBottomNavigationItem(
             selected = selected == 2,
             onClick = {
                 selected = 2
@@ -61,7 +61,7 @@ fun BottomNavigation(
             unselectedIcon = SampleIcons.OutlinedRegular.Cart.toPainter(),
             contentDescription = "",
             count = 2,
-            label = { GfText(text = "Cart") },
+            label = { SeedText(text = "Cart") },
         )
     }
 }

@@ -33,12 +33,12 @@ import com.example.application.ui.textfield.TextFieldScreen
 import com.example.application.ui.theme.GFSampleTheme
 import com.example.application.ui.typography.TypographyScreen
 import com.example.application.util.ThemedPreview
-import com.greenlabsfin.design.component.GfBottomSheetScaffold
-import com.greenlabsfin.design.component.GfBottomSheetValue
-import com.greenlabsfin.design.component.GfTopBar
-import com.greenlabsfin.design.component.GfTopBarDefaults
-import com.greenlabsfin.design.component.rememberGfBarState
-import com.greenlabsfin.design.component.rememberGfBottomSheetState
+import com.greenlabsfin.design.component.SeedBottomSheetScaffold
+import com.greenlabsfin.design.component.SeedBottomSheetValue
+import com.greenlabsfin.design.component.SeedTopBar
+import com.greenlabsfin.design.component.SeedTopBarDefaults
+import com.greenlabsfin.design.component.rememberSeedBarState
+import com.greenlabsfin.design.component.rememberSeedBottomSheetState
 import kotlinx.coroutines.launch
 
 @ExperimentalMaterial3Api
@@ -76,19 +76,19 @@ fun HomeScreen() {
                     Box(Modifier.size(1.dp))
                 })
             }
-            val bottomSheetState = rememberGfBottomSheetState(GfBottomSheetValue.Hidden)
+            val bottomSheetState = rememberSeedBottomSheetState(SeedBottomSheetValue.Hidden)
             var isFixedBottomSheet by remember { mutableStateOf(false) }
-            val topBarState = rememberGfBarState()
-            val bottomBarState = rememberGfBarState()
+            val topBarState = rememberSeedBarState()
+            val bottomBarState = rememberSeedBarState()
 
-            GfBottomSheetScaffold(
+            SeedBottomSheetScaffold(
                 topBar = {
-                    GfTopBar(
+                    SeedTopBar(
                         title = stringResource(id = R.string.app_name),
                         titleAlignment = Alignment.CenterStart,
                         onNavigationClick = { scope.launch { drawerState.open() } },
                         hideWhileScrollUp = true,
-                        topBarPadding = GfTopBarDefaults.paddingOf(horizontal = 20.dp),
+                        topBarPadding = SeedTopBarDefaults.paddingOf(horizontal = 20.dp),
                         state = topBarState,
                     )
                 },

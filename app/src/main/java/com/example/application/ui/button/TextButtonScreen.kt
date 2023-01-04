@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.application.ui.theme.GFSampleTheme
 import com.example.application.util.ThemedPreview
-import com.greenlabsfin.design.component.GfTextButton
-import com.greenlabsfin.design.core.GfTheme
+import com.greenlabsfin.design.component.SeedTextButton
+import com.greenlabsfin.design.core.SeedTheme
 
 @Composable
 fun TextButtonScreen() {
@@ -20,48 +20,48 @@ fun TextButtonScreen() {
         modifier = Modifier.padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        GfTextButton(
+        SeedTextButton(
             text = "활성화 XS 버튼",
-            color = GfTheme.colorScheme.contents.primary,
+            color = SeedTheme.colorScheme.contents.primary,
             rightIcon = Icons.Filled.ArrowDropDown,
-            style = GfTextButton.Style.XSmall,
+            style = SeedTextButton.Style.XSmall,
         ) {}
 
-        GfTextButton(
+        SeedTextButton(
             text = "비활성화 XS 버튼",
-            color = GfTheme.colorScheme.contents.primary,
+            color = SeedTheme.colorScheme.contents.primary,
             rightIcon = Icons.Filled.ArrowDropDown,
-            style = GfTextButton.Style.XSmall,
+            style = SeedTextButton.Style.XSmall,
             enabled = false
         ) {}
 
-        GfTextButton(
+        SeedTextButton(
             text = "활성화 SM 버튼",
-            color = GfTheme.colorScheme.contents.neutralSecondary,
+            color = SeedTheme.colorScheme.contents.neutralSecondary,
             rightIcon = Icons.Filled.KeyboardArrowRight,
-            style = GfTextButton.Style.Small,
+            style = SeedTextButton.Style.Small,
         ) {}
 
-        GfTextButton(
+        SeedTextButton(
             text = "비활성화 SM 버튼",
-            color = GfTheme.colorScheme.contents.neutralSecondary,
+            color = SeedTheme.colorScheme.contents.neutralSecondary,
             rightIcon = Icons.Filled.KeyboardArrowRight,
-            style = GfTextButton.Style.Small,
+            style = SeedTextButton.Style.Small,
             enabled = false
         ) {}
 
-        GfTextButton(
+        SeedTextButton(
             text = "활성화 MD 버튼",
-            color = GfTheme.colorScheme.contents.primary,
+            color = SeedTheme.colorScheme.contents.primary,
             rightIcon = Icons.Filled.ArrowDropDown,
-            style = GfTextButton.Style.Medium,
+            style = SeedTextButton.Style.Medium,
         ) {}
 
-        GfTextButton(
+        SeedTextButton(
             text = "비활성화 MD 버튼",
-            color = GfTheme.colorScheme.contents.primary,
+            color = SeedTheme.colorScheme.contents.primary,
             rightIcon = Icons.Filled.ArrowDropDown,
-            style = GfTextButton.Style.Medium,
+            style = SeedTextButton.Style.Medium,
             enabled = false
         ) {}
     }

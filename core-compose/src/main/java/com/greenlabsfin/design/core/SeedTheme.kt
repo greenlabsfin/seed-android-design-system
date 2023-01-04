@@ -6,9 +6,9 @@ import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.runtime.structuralEqualityPolicy
 import androidx.compose.ui.graphics.Color
-import com.greenlabsfin.design.core.color.GfColorScheme
+import com.greenlabsfin.design.core.color.SeedColorScheme
 import com.greenlabsfin.design.core.color.gray90
-import com.greenlabsfin.design.core.typo.GfTypoScheme
+import com.greenlabsfin.design.core.typo.SeedTypoScheme
 
 /**
  * Greenlabs Financial Theming refers to the customization of Greenlabs Financial app to better
@@ -33,43 +33,43 @@ import com.greenlabsfin.design.core.typo.GfTypoScheme
  *
  */
 @Composable
-fun GfTheme(
-    colorScheme: GfColorScheme = GfColorScheme(),
-    typoScheme: GfTypoScheme = GfTypoScheme(),
-    backgroundColor: Color = GfColorScheme().container.background,
+fun SeedTheme(
+    colorScheme: SeedColorScheme = SeedColorScheme(),
+    typoScheme: SeedTypoScheme = SeedTypoScheme(),
+    backgroundColor: Color = SeedColorScheme().container.background,
     content: @Composable () -> Unit,
 ) {
     CompositionLocalProvider(
-        LocalGfColorScheme provides colorScheme,
-        LocalGfTypoScheme provides typoScheme,
-        LocalGfContentColor provides colorScheme.contents.neutralPrimary,
-        LocalGfTextStyle provides typoScheme.body.mediumRegular,
-        LocalGfBackgroundColor provides backgroundColor,
+        LocalSeedColorScheme provides colorScheme,
+        LocalSeedTypoScheme provides typoScheme,
+        LocalSeedContainerColor provides colorScheme.contents.neutralPrimary,
+        LocalSeedTextStyle provides typoScheme.body.mediumRegular,
+        LocalSeedBackgroundColor provides backgroundColor,
         content = content
     )
 }
 
-object GfTheme {
-    val colorScheme: GfColorScheme
+object SeedTheme {
+    val colorScheme: SeedColorScheme
         @Composable
-        get() = LocalGfColorScheme.current
+        get() = LocalSeedColorScheme.current
 
-    val typoScheme: GfTypoScheme
+    val typoScheme: SeedTypoScheme
         @Composable
-        get() = LocalGfTypoScheme.current
+        get() = LocalSeedTypoScheme.current
 }
 
-val LocalGfColorScheme = staticCompositionLocalOf {
-    GfColorScheme()
+val LocalSeedColorScheme = staticCompositionLocalOf {
+    SeedColorScheme()
 }
 
-val LocalGfTypoScheme = staticCompositionLocalOf {
-    GfTypoScheme()
+val LocalSeedTypoScheme = staticCompositionLocalOf {
+    SeedTypoScheme()
 }
 
-val LocalGfContentColor = staticCompositionLocalOf { gray90 }
+val LocalSeedContainerColor = staticCompositionLocalOf { gray90 }
 
-val LocalGfTextStyle =
-    compositionLocalOf(structuralEqualityPolicy()) { GfTypoScheme().body.mediumRegular }
+val LocalSeedTextStyle =
+    compositionLocalOf(structuralEqualityPolicy()) { SeedTypoScheme().body.mediumRegular }
 
-val LocalGfBackgroundColor = compositionLocalOf { GfColorScheme().container.background }
+val LocalSeedBackgroundColor = compositionLocalOf { SeedColorScheme().container.background }

@@ -9,7 +9,7 @@ import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 
-class GfBarState(
+class SeedBarState(
     initialVisibility: Boolean,
 ) {
     var visible: Boolean by mutableStateOf(initialVisibility)
@@ -28,17 +28,17 @@ class GfBarState(
     }
 
     companion object {
-        val Saver: Saver<GfBarState, *> = Saver(
+        val Saver: Saver<SeedBarState, *> = Saver(
             save = { it.visible },
-            restore = { GfBarState(it) }
+            restore = { SeedBarState(it) }
         )
     }
 }
 
 @Composable
-fun rememberGfBarState(initialVisibility: Boolean = true): GfBarState {
-    return rememberSaveable(saver = GfBarState.Saver) {
-        GfBarState(initialVisibility)
+fun rememberSeedBarState(initialVisibility: Boolean = true): SeedBarState {
+    return rememberSaveable(saver = SeedBarState.Saver) {
+        SeedBarState(initialVisibility)
     }
 }
 

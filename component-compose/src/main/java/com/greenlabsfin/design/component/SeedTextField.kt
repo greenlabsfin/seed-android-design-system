@@ -1,3 +1,5 @@
+@file:JvmName("SeedTextFieldKt")
+
 package com.greenlabsfin.design.component
 
 import androidx.compose.animation.animateColorAsState
@@ -15,47 +17,47 @@ import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import com.greenlabsfin.design.core.GfTheme
-import com.greenlabsfin.design.core.LocalGfContentColor
-import com.greenlabsfin.design.core.typo.ProvideGfTextStyle
+import com.greenlabsfin.design.core.SeedTheme
+import com.greenlabsfin.design.core.LocalSeedContainerColor
+import com.greenlabsfin.design.core.typo.ProvideSeedTextStyle
 
 @Immutable
-object GfTextFieldDefaults {
+object SeedTextFieldDefaults {
 
     val minWidth = 280.dp
     val minHeight = 32.dp
 
     @Composable
     fun fillTextFieldColors(
-        textColor: Color = GfTheme.colorScheme.contents.neutralPrimary,
-        disabledTextColor: Color = GfTheme.colorScheme.contents.neutralTertiary,
-        backgroundColor: Color = GfTheme.colorScheme.container.neutralSecondary,
-        disabledBackgroundColor: Color = GfTheme.colorScheme.container.neutralTertiary,
-        cursorColor: Color = GfTheme.colorScheme.contents.primary,
-        errorCursorColor: Color = GfTheme.colorScheme.contents.error,
-        errorOutlineColor: Color = GfTheme.colorScheme.contents.error,
-        prefixIconColor: Color = GfTheme.colorScheme.contents.neutralTertiary,
+        textColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
+        disabledTextColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
+        backgroundColor: Color = SeedTheme.colorScheme.container.neutralSecondary,
+        disabledBackgroundColor: Color = SeedTheme.colorScheme.container.neutralTertiary,
+        cursorColor: Color = SeedTheme.colorScheme.contents.primary,
+        errorCursorColor: Color = SeedTheme.colorScheme.contents.error,
+        errorOutlineColor: Color = SeedTheme.colorScheme.contents.error,
+        prefixIconColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
         disabledPrefixIconColor: Color = prefixIconColor,
         errorPrefixIconColor: Color = prefixIconColor,
-        suffixIconColor: Color = GfTheme.colorScheme.contents.neutralTertiary,
+        suffixIconColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
         disabledSuffixIconColor: Color = suffixIconColor,
         errorSuffixIconColor: Color = suffixIconColor,
-        labelColor: Color = GfTheme.colorScheme.contents.neutralPrimary,
+        labelColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
         unfocusedLabelColor: Color = labelColor,
         disabledLabelColor: Color = labelColor,
         errorLabelColor: Color = labelColor,
-        placeholderColor: Color = GfTheme.colorScheme.contents.neutralTertiary,
+        placeholderColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
         disabledPlaceholderColor: Color = placeholderColor,
-    ): GfTextFieldColors =
-        GfDefaultTextFieldColors(
+    ): SeedTextFieldColors =
+        SeedDefaultTextFieldColors(
             textColor = textColor,
             disabledTextColor = disabledTextColor,
             cursorColor = cursorColor,
             errorCursorColor = errorCursorColor,
-            focusedIndicatorColor = GfTheme.colorScheme.container.inverse,
-            unfocusedIndicatorColor = GfTheme.colorScheme.container.outline,
+            focusedIndicatorColor = SeedTheme.colorScheme.container.inverse,
+            unfocusedIndicatorColor = SeedTheme.colorScheme.container.outline,
             errorIndicatorColor = errorOutlineColor,
-            disabledIndicatorColor = GfTheme.colorScheme.container.outline,
+            disabledIndicatorColor = SeedTheme.colorScheme.container.outline,
             leadingIconColor = prefixIconColor,
             disabledLeadingIconColor = disabledPrefixIconColor,
             errorLeadingIconColor = errorPrefixIconColor,
@@ -70,38 +72,38 @@ object GfTextFieldDefaults {
             errorLabelColor = errorLabelColor,
             placeholderColor = placeholderColor,
             disabledPlaceholderColor = disabledPlaceholderColor,
-            readOnlyBackgroundColor = GfTheme.colorScheme.container.neutralTertiary,
-            readOnlyIndicatorColor = GfTheme.colorScheme.container.outline,
+            readOnlyBackgroundColor = SeedTheme.colorScheme.container.neutralTertiary,
+            readOnlyIndicatorColor = SeedTheme.colorScheme.container.outline,
         )
 
     @Composable
     fun outlineTextFieldColors(
-        textColor: Color = GfTheme.colorScheme.contents.neutralPrimary,
-        disabledTextColor: Color = GfTheme.colorScheme.contents.neutralTertiary,
-        backgroundColor: Color = GfTheme.colorScheme.container.background,
-        readOnlyBackgroundColor: Color = GfTheme.colorScheme.container.neutralTertiary,
-        disabledBackgroundColor: Color = GfTheme.colorScheme.container.neutralTertiary,
-        cursorColor: Color = GfTheme.colorScheme.contents.primary,
+        textColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
+        disabledTextColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
+        backgroundColor: Color = SeedTheme.colorScheme.container.background,
+        readOnlyBackgroundColor: Color = SeedTheme.colorScheme.container.neutralTertiary,
+        disabledBackgroundColor: Color = SeedTheme.colorScheme.container.neutralTertiary,
+        cursorColor: Color = SeedTheme.colorScheme.contents.primary,
         errorCursorColor: Color = cursorColor,
-        focusedOutlineColor: Color = GfTheme.colorScheme.container.inverse,
-        unfocusedOutlineColor: Color = GfTheme.colorScheme.container.outline,
-        readOnlyOutlineColor: Color = GfTheme.colorScheme.container.outline,
-        disabledOutlineColor: Color = GfTheme.colorScheme.container.outline,
-        errorOutlineColor: Color = GfTheme.colorScheme.contents.error,
-        prefixIconColor: Color = GfTheme.colorScheme.contents.neutralTertiary,
+        focusedOutlineColor: Color = SeedTheme.colorScheme.container.inverse,
+        unfocusedOutlineColor: Color = SeedTheme.colorScheme.container.outline,
+        readOnlyOutlineColor: Color = SeedTheme.colorScheme.container.outline,
+        disabledOutlineColor: Color = SeedTheme.colorScheme.container.outline,
+        errorOutlineColor: Color = SeedTheme.colorScheme.contents.error,
+        prefixIconColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
         disabledPrefixIconColor: Color = prefixIconColor,
         errorPrefixIconColor: Color = prefixIconColor,
-        suffixIconColor: Color = GfTheme.colorScheme.contents.neutralTertiary,
+        suffixIconColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
         disabledSuffixIconColor: Color = suffixIconColor,
         errorSuffixIconColor: Color = suffixIconColor,
-        focusedLabelColor: Color = GfTheme.colorScheme.contents.neutralPrimary,
+        focusedLabelColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
         unfocusedLabelColor: Color = focusedLabelColor,
         disabledLabelColor: Color = focusedLabelColor,
         errorLabelColor: Color = focusedLabelColor,
-        placeholderColor: Color = GfTheme.colorScheme.contents.neutralTertiary,
+        placeholderColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
         disabledPlaceholderColor: Color = placeholderColor,
-    ): GfTextFieldColors =
-        GfDefaultTextFieldColors(
+    ): SeedTextFieldColors =
+        SeedDefaultTextFieldColors(
             textColor = textColor,
             disabledTextColor = disabledTextColor,
             cursorColor = cursorColor,
@@ -130,28 +132,28 @@ object GfTextFieldDefaults {
 
     @Composable
     fun lineTextFieldColors(
-        textColor: Color = GfTheme.colorScheme.contents.neutralPrimary,
-        disabledTextColor: Color = GfTheme.colorScheme.contents.neutralTertiary,
-        cursorColor: Color = GfTheme.colorScheme.contents.primary,
-        errorCursorColor: Color = GfTheme.colorScheme.contents.error,
-        focusedLineColor: Color = GfTheme.colorScheme.container.primary,
-        unfocusedLineColor: Color = GfTheme.colorScheme.container.outline,
-        disabledLineColor: Color = GfTheme.colorScheme.container.outline,
-        errorLineColor: Color = GfTheme.colorScheme.contents.error,
-        prefixIconColor: Color = GfTheme.colorScheme.contents.neutralTertiary,
+        textColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
+        disabledTextColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
+        cursorColor: Color = SeedTheme.colorScheme.contents.primary,
+        errorCursorColor: Color = SeedTheme.colorScheme.contents.error,
+        focusedLineColor: Color = SeedTheme.colorScheme.container.primary,
+        unfocusedLineColor: Color = SeedTheme.colorScheme.container.outline,
+        disabledLineColor: Color = SeedTheme.colorScheme.container.outline,
+        errorLineColor: Color = SeedTheme.colorScheme.contents.error,
+        prefixIconColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
         disabledPrefixIconColor: Color = prefixIconColor,
         errorPrefixIconColor: Color = prefixIconColor,
-        suffixIconColor: Color = GfTheme.colorScheme.contents.neutralTertiary,
+        suffixIconColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
         disabledSuffixIconColor: Color = suffixIconColor,
         errorSuffixIconColor: Color = suffixIconColor,
-        focusedLabelColor: Color = GfTheme.colorScheme.contents.neutralPrimary,
+        focusedLabelColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
         unfocusedLabelColor: Color = focusedLabelColor,
         disabledLabelColor: Color = focusedLabelColor,
         errorLabelColor: Color = focusedLabelColor,
-        placeholderColor: Color = GfTheme.colorScheme.contents.neutralTertiary,
+        placeholderColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
         disabledPlaceholderColor: Color = placeholderColor,
-    ): GfTextFieldColors =
-        GfDefaultTextFieldColors(
+    ): SeedTextFieldColors =
+        SeedDefaultTextFieldColors(
             textColor = textColor,
             disabledTextColor = disabledTextColor,
             cursorColor = cursorColor,
@@ -166,21 +168,21 @@ object GfTextFieldDefaults {
             trailingIconColor = suffixIconColor,
             disabledTrailingIconColor = disabledSuffixIconColor,
             errorTrailingIconColor = errorSuffixIconColor,
-            backgroundColor = GfTheme.colorScheme.container.background,
-            disabledBackgroundColor = GfTheme.colorScheme.container.background,
+            backgroundColor = SeedTheme.colorScheme.container.background,
+            disabledBackgroundColor = SeedTheme.colorScheme.container.background,
             focusedLabelColor = focusedLabelColor,
             unfocusedLabelColor = unfocusedLabelColor,
             disabledLabelColor = disabledLabelColor,
             errorLabelColor = errorLabelColor,
             placeholderColor = placeholderColor,
             disabledPlaceholderColor = disabledPlaceholderColor,
-            readOnlyBackgroundColor = GfTheme.colorScheme.container.neutralTertiary,
-            readOnlyIndicatorColor = GfTheme.colorScheme.container.outline,
+            readOnlyBackgroundColor = SeedTheme.colorScheme.container.neutralTertiary,
+            readOnlyIndicatorColor = SeedTheme.colorScheme.container.outline,
         )
 }
 
 @Stable
-interface GfTextFieldColors : TextFieldColors {
+interface SeedTextFieldColors : TextFieldColors {
     @Composable
     fun indicatorColor(
         enabled: Boolean,
@@ -194,7 +196,7 @@ interface GfTextFieldColors : TextFieldColors {
 }
 
 @Immutable
-private data class GfDefaultTextFieldColors(
+private data class SeedDefaultTextFieldColors(
     private val textColor: Color,
     private val disabledTextColor: Color,
     private val cursorColor: Color,
@@ -219,7 +221,7 @@ private data class GfDefaultTextFieldColors(
     private val errorLabelColor: Color,
     private val placeholderColor: Color,
     private val disabledPlaceholderColor: Color,
-) : GfTextFieldColors {
+) : SeedTextFieldColors {
     @Composable
     override fun leadingIconColor(enabled: Boolean, isError: Boolean): State<Color> {
         return rememberUpdatedState(
@@ -343,10 +345,10 @@ internal fun Decoration(
     content: @Composable () -> Unit,
 ) {
     val colorAndEmphasis: @Composable () -> Unit = @Composable {
-        CompositionLocalProvider(LocalGfContentColor provides contentColor, content = content)
+        CompositionLocalProvider(LocalSeedContainerColor provides contentColor, content = content)
     }
 
-    typography?.let { ProvideGfTextStyle(it, colorAndEmphasis) } ?: colorAndEmphasis()
+    typography?.let { ProvideSeedTextStyle(it, colorAndEmphasis) } ?: colorAndEmphasis()
 }
 
 

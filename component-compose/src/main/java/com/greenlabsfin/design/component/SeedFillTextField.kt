@@ -8,21 +8,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
-import com.greenlabsfin.design.core.GfTheme
+import com.greenlabsfin.design.core.SeedTheme
 
 @Composable
-fun GfFillTextField(
+fun SeedFillTextField(
     modifier: Modifier = Modifier,
-    height: GFHeight,
+    height: SeedTextField.Height,
     value: String,
     label: String? = null,
-    textStyle: TextStyle = GfTheme.typoScheme.body.mediumRegular,
-    labelTextStyle: TextStyle = GfTheme.typoScheme.body.mediumBold,
+    textStyle: TextStyle = SeedTheme.typoScheme.body.mediumRegular,
+    labelTextStyle: TextStyle = SeedTheme.typoScheme.body.mediumBold,
     placeholder: String = "",
     prefix: @Composable (() -> Unit)? = null,
     suffix: @Composable (() -> Unit)? = null,
-    suffixTextStyle: TextStyle? = GfTheme.typoScheme.body.smallRegular.merge(TextStyle(color = GfTheme.colorScheme.contents.neutralTertiary)),
-    colors: GfTextFieldColors = GfTextFieldDefaults.fillTextFieldColors(),
+    suffixTextStyle: TextStyle? = SeedTheme.typoScheme.body.smallRegular.merge(TextStyle(color = SeedTheme.colorScheme.contents.neutralTertiary)),
+    colors: SeedTextFieldColors = SeedTextFieldDefaults.fillTextFieldColors(),
     enabled: Boolean = true,
     isError: Boolean = false,
     errorText: String? = null,
@@ -35,9 +35,9 @@ fun GfFillTextField(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     onValueChange: (String) -> Unit,
 ) {
-    GfBoxTextField(
+    SeedBoxTextField(
         modifier = modifier,
-        style = GfBoxTextField.Style.Fill,
+        style = SeedTextField.Style.Fill,
         height = height,
         value = value,
         colors = colors,

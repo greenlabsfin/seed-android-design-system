@@ -17,8 +17,8 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.example.application.ui.theme.GFSampleTheme
 import com.example.application.util.ThemedPreview
-import com.greenlabsfin.design.component.GfChip
-import com.greenlabsfin.design.component.GfChipDefaults
+import com.greenlabsfin.design.component.SeedChip
+import com.greenlabsfin.design.component.SeedChipDefaults
 
 @Composable
 fun ChipScreen() {
@@ -32,22 +32,22 @@ fun ChipScreen() {
                 .size(Size.ORIGINAL)
                 .build()
         )
-        GfChip(
+        SeedChip(
             modifier = Modifier.width(200.dp),
-            size = GfChip.Size.Large,
-            style = GfChip.Style.Pill,
-            colors = GfChipDefaults.Colors.neutralOutline,
+            size = SeedChip.Size.Large,
+            style = SeedChip.Style.Pill,
+            colors = SeedChipDefaults.Colors.neutralOutline(),
             text = "귤귤귤귤귤귤귤귤귤귤귤귤귤귤귤",
             leadingImagePainter = painter
         ) {
 
         }
 
-        GfChip(
+        SeedChip(
             modifier = Modifier.width(200.dp),
-            size = GfChip.Size.Large,
-            style = GfChip.Style.Rectangle,
-            colors = GfChipDefaults.Colors.primary,
+            size = SeedChip.Size.Large,
+            style = SeedChip.Style.Rectangle,
+            colors = SeedChipDefaults.Colors.primary(),
             text = "귤귤귤귤귤귤귤귤귤귤귤귤귤귤귤",
             leadingIcon = Icons.Default.Search,
             trailingIcon = Icons.Default.Delete,
@@ -55,11 +55,11 @@ fun ChipScreen() {
 
         }
 
-        GfChip(
+        SeedChip(
             modifier = Modifier.width(200.dp),
-            size = GfChip.Size.Large,
-            style = GfChip.Style.Pill,
-            colors = GfChipDefaults.Colors.primary,
+            size = SeedChip.Size.Large,
+            style = SeedChip.Style.Pill,
+            colors = SeedChipDefaults.Colors.primary(),
             text = "귤귤귤귤귤귤귤귤귤귤귤귤귤귤귤",
             leadingImagePainter = painter,
             count = 3,
@@ -68,11 +68,11 @@ fun ChipScreen() {
 
         }
 
-        GfChip(
+        SeedChip(
             modifier = Modifier.width(200.dp),
-            size = GfChip.Size.Large,
-            style = GfChip.Style.Pill,
-            colors = GfChipDefaults.Colors.neutralOutline,
+            size = SeedChip.Size.Large,
+            style = SeedChip.Style.Pill,
+            colors = SeedChipDefaults.Colors.neutralOutline(),
             text = "귤귤귤귤귤귤귤귤귤귤귤귤귤귤귤",
             leadingImagePainter = painter,
             count = 3,

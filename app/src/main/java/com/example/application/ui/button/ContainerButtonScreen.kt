@@ -15,11 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.application.ui.theme.GFSampleTheme
 import com.example.application.util.ThemedPreview
-import com.greenlabsfin.design.component.GFButton
-import com.greenlabsfin.design.component.GFHeight
-import com.greenlabsfin.design.component.GfCountDefaults
-import com.greenlabsfin.design.component.GfText
-import com.greenlabsfin.design.core.GfTheme
+import com.greenlabsfin.design.component.SeedButton
+import com.greenlabsfin.design.component.SeedButtonDefaults
+import com.greenlabsfin.design.component.SeedCountDefaults
+import com.greenlabsfin.design.component.SeedText
+import com.greenlabsfin.design.core.SeedTheme
 import com.greenlabsfin.design.core.color.gray60
 import com.greenlabsfin.design.core.color.red80
 
@@ -27,78 +27,78 @@ import com.greenlabsfin.design.core.color.red80
 fun ContainerButtonScreen() {
     Column(verticalArrangement = Arrangement.spacedBy(4.dp),
         modifier = Modifier.padding(16.dp)) {
-        GfText(text = "Primary", style = GfTheme.typoScheme.headline.largeBold)
-        GFButton(
-            height = GFHeight.Small,
-            colors = GFButton.Style.containerPrimary,
+        SeedText(text = "Primary", style = SeedTheme.typoScheme.headline.largeBold)
+        SeedButton(
+            height = SeedButton.Height.Small,
+            colors = SeedButtonDefaults.Colors.containerPrimary(),
             onClick = {},
             leftIcon = Icons.Outlined.Notifications,
             text = "버튼 레이블",
             rightIcon = Icons.Filled.ArrowForward,
             count = 2,
-            countColors = GfCountDefaults.getByButtonColor(buttonColor = GFButton.Style.containerPrimary)
+            countColors = SeedCountDefaults.getByButtonColor(buttonColor = SeedButtonDefaults.Colors.containerPrimary())
         )
-        GFButton(
-            height = GFHeight.Small,
-            colors = GFButton.Style.outlinePrimary,
+        SeedButton(
+            height = SeedButton.Height.Small,
+            colors = SeedButtonDefaults.Colors.outlinePrimary(),
             onClick = {},
             leftIcon = Icons.Outlined.Notifications,
             text = "버튼 레이블",
             rightIcon = Icons.Filled.ArrowForward,
             count = 2,
-            countColors = GfCountDefaults.getByButtonColor(buttonColor = GFButton.Style.outlinePrimary)
+            countColors = SeedCountDefaults.getByButtonColor(buttonColor = SeedButtonDefaults.Colors.outlinePrimary())
         )
-        GFButton(
-            height = GFHeight.Small,
-            colors = GFButton.Style.tintPrimary,
+        SeedButton(
+            height = SeedButton.Height.Small,
+            colors = SeedButtonDefaults.Colors.tintPrimary(),
             onClick = {},
             leftIcon = Icons.Outlined.Notifications,
             text = "버튼 레이블",
             rightIcon = Icons.Filled.ArrowForward,
             count = 22,
-            countColors = GfCountDefaults.getByButtonColor(buttonColor = GFButton.Style.tintPrimary)
+            countColors = SeedCountDefaults.getByButtonColor(buttonColor = SeedButtonDefaults.Colors.tintPrimary())
         )
         Spacer(modifier = Modifier.height(10.dp))
-        GfText(text = "Neutral", style = GfTheme.typoScheme.headline.largeBold)
-        GFButton(
-            height = GFHeight.Small,
-            colors = GFButton.Style.outlineNeutral,
+        SeedText(text = "Neutral", style = SeedTheme.typoScheme.headline.largeBold)
+        SeedButton(
+            height = SeedButton.Height.Small,
+            colors = SeedButtonDefaults.Colors.outlineNeutral(),
             onClick = {},
             leftIcon = Icons.Outlined.Notifications,
             text = "버튼 레이블",
             rightIcon = Icons.Filled.ArrowForward
         )
-        GFButton(
-            height = GFHeight.Small,
-            colors = GFButton.Style.tintNeutral,
-            onClick = {},
-            leftIcon = Icons.Outlined.Notifications,
-            text = "버튼 레이블",
-            rightIcon = Icons.Filled.ArrowForward
-        )
-        Spacer(modifier = Modifier.height(10.dp))
-        GfText(text = "Negative", style = GfTheme.typoScheme.headline.largeBold)
-        GFButton(
-            height = GFHeight.Small,
-            colors = GFButton.Style.containerNegative,
-            onClick = {},
-            leftIcon = Icons.Outlined.Notifications,
-            text = "버튼 레이블",
-            rightIcon = Icons.Filled.ArrowForward
-        )
-        GFButton(
-            height = GFHeight.Small,
-            colors = GFButton.Style.tintNegative,
+        SeedButton(
+            height = SeedButton.Height.Small,
+            colors = SeedButtonDefaults.Colors.tintNeutral(),
             onClick = {},
             leftIcon = Icons.Outlined.Notifications,
             text = "버튼 레이블",
             rightIcon = Icons.Filled.ArrowForward
         )
         Spacer(modifier = Modifier.height(10.dp))
-        GfText(text = "Custom", style = GfTheme.typoScheme.headline.largeBold)
-        GFButton(
-            height = GFHeight.Small,
-            colors = GFButton.Style.custom(backgroundColor = red80, contentColor = gray60),
+        SeedText(text = "Negative", style = SeedTheme.typoScheme.headline.largeBold)
+        SeedButton(
+            height = SeedButton.Height.Small,
+            colors = SeedButtonDefaults.Colors.containerNegative(),
+            onClick = {},
+            leftIcon = Icons.Outlined.Notifications,
+            text = "버튼 레이블",
+            rightIcon = Icons.Filled.ArrowForward
+        )
+        SeedButton(
+            height = SeedButton.Height.Small,
+            colors = SeedButtonDefaults.Colors.tintNegative(),
+            onClick = {},
+            leftIcon = Icons.Outlined.Notifications,
+            text = "버튼 레이블",
+            rightIcon = Icons.Filled.ArrowForward
+        )
+        Spacer(modifier = Modifier.height(10.dp))
+        SeedText(text = "Custom", style = SeedTheme.typoScheme.headline.largeBold)
+        SeedButton(
+            height = SeedButton.Height.Small,
+            colors = SeedButtonDefaults.buttonColors(backgroundColor = red80, contentColor = gray60),
             onClick = {},
             leftIcon = Icons.Outlined.Home,
             text = "버튼 레이블",

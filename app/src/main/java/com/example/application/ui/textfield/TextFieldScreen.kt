@@ -21,13 +21,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.application.ui.theme.GFSampleTheme
 import com.example.application.util.ThemedPreview
-import com.greenlabsfin.design.component.GFHeight
-import com.greenlabsfin.design.component.GfFillTextField
-import com.greenlabsfin.design.component.GfIcon
-import com.greenlabsfin.design.component.GfLineTextField
-import com.greenlabsfin.design.component.GfOutlineTextField
-import com.greenlabsfin.design.component.GfText
-import com.greenlabsfin.design.core.GfTheme
+import com.greenlabsfin.design.component.SeedFillTextField
+import com.greenlabsfin.design.component.SeedIcon
+import com.greenlabsfin.design.component.SeedLineTextField
+import com.greenlabsfin.design.component.SeedOutlineTextField
+import com.greenlabsfin.design.component.SeedText
+import com.greenlabsfin.design.component.SeedTextField
+import com.greenlabsfin.design.core.SeedTheme
 
 @Composable
 fun TextFieldScreen() {
@@ -41,9 +41,9 @@ fun TextFieldScreen() {
     ) {
         var text by remember { mutableStateOf("") }
         Spacer(modifier = Modifier.height(20.dp))
-        GfOutlineTextField(
+        SeedOutlineTextField(
             modifier = Modifier.fillMaxWidth(),
-            height = GFHeight.Medium,
+            height = SeedTextField.Height.Medium,
             value = text,
             label = "Medium Outline Error with hint",
             placeholder = "Placeholder",
@@ -51,57 +51,57 @@ fun TextFieldScreen() {
             errorText = "Error Text",
             onValueChange = { text = it },
             prefix = {
-                GfIcon(
+                SeedIcon(
                     modifier = Modifier.size(20.dp),
                     imageVector = Icons.Filled.Search,
                     contentDescription = "Search")
             },
             suffix = {
-                GfText(text = "${text.length}/20")
+                SeedText(text = "${text.length}/20")
             }
         )
 
-        GfOutlineTextField(
+        SeedOutlineTextField(
             modifier = Modifier.fillMaxWidth(),
-            height = GFHeight.Small,
+            height = SeedTextField.Height.Small,
             value = text,
             label = "Small Outline Disabled",
             placeholder = "Placeholder",
             onValueChange = { text = it },
             prefix = {
-                GfIcon(
+                SeedIcon(
                     modifier = Modifier.size(20.dp),
                     imageVector = Icons.Filled.Search,
                     contentDescription = "Search")
             },
             suffix = {
-                GfText(text = "${text.length}/20")
+                SeedText(text = "${text.length}/20")
             },
             enabled = false
         )
 
-        GfOutlineTextField(
+        SeedOutlineTextField(
             modifier = Modifier.fillMaxWidth(),
-            height = GFHeight.XSmall,
+            height = SeedTextField.Height.XSmall,
             value = text,
             label = "XSmall Outline Read Only",
             placeholder = "Placeholder",
             onValueChange = { text = it },
             prefix = {
-                GfIcon(
+                SeedIcon(
                     modifier = Modifier.size(20.dp),
                     imageVector = Icons.Filled.Search,
                     contentDescription = "Search")
             },
             suffix = {
-                GfText(text = "${text.length}/20")
+                SeedText(text = "${text.length}/20")
             },
             readOnly = true
         )
 
-        GfFillTextField(
+        SeedFillTextField(
             modifier = Modifier.fillMaxWidth(),
-            height = GFHeight.Medium,
+            height = SeedTextField.Height.Medium,
             value = text,
             label = "Medium Fill Error with Hint",
             placeholder = "Placeholder",
@@ -109,72 +109,72 @@ fun TextFieldScreen() {
             errorText = "Error Text",
             onValueChange = { text = it },
             prefix = {
-                GfIcon(
+                SeedIcon(
                     modifier = Modifier.size(20.dp),
                     imageVector = Icons.Filled.Search,
                     contentDescription = "Search"
                 )
             },
             suffix = {
-                GfText(text = "${text.length}/20")
+                SeedText(text = "${text.length}/20")
             }
         )
 
-        GfFillTextField(
+        SeedFillTextField(
             modifier = Modifier.fillMaxWidth(),
-            height = GFHeight.Small,
+            height = SeedTextField.Height.Small,
             value = text,
             label = "Small Fill Disabled",
             placeholder = "Placeholder",
             onValueChange = { text = it },
             prefix = {
-                GfIcon(
+                SeedIcon(
                     modifier = Modifier.size(20.dp),
                     imageVector = Icons.Filled.Search,
                     contentDescription = "Search")
             },
             suffix = {
-                GfText(text = "${text.length}/20")
+                SeedText(text = "${text.length}/20")
             },
             enabled = false
         )
 
-        GfFillTextField(
+        SeedFillTextField(
             modifier = Modifier.fillMaxWidth(),
-            height = GFHeight.XSmall,
+            height = SeedTextField.Height.XSmall,
             value = text,
             label = "XSmall Fill TextField",
             placeholder = "Placeholder",
             onValueChange = { text = it },
             prefix = {
-                GfIcon(
+                SeedIcon(
                     modifier = Modifier.size(20.dp),
                     imageVector = Icons.Filled.Search,
                     contentDescription = "Search")
             },
             suffix = {
-                GfText(text = "${text.length}/20")
+                SeedText(text = "${text.length}/20")
             },
         )
 
-        GfLineTextField(
+        SeedLineTextField(
             modifier = Modifier.fillMaxWidth(),
             value = text,
             onValueChange = { text = it },
             label = "Line Text Field",
             placeholder = "Enter your full name",
-            labelTextStyle = GfTheme.typoScheme.body.smallMedium,
+            labelTextStyle = SeedTheme.typoScheme.body.smallMedium,
             isError = text.length > 4,
             errorText = "Error Error Error"
         )
 
-        GfLineTextField(
+        SeedLineTextField(
             modifier = Modifier.fillMaxWidth(),
             value = text,
             onValueChange = { text = it },
             label = "Line Disabled Text Field",
             placeholder = "Enter your full name",
-            labelTextStyle = GfTheme.typoScheme.body.smallMedium,
+            labelTextStyle = SeedTheme.typoScheme.body.smallMedium,
             errorText = "Error Error Error",
             enabled = false
         )

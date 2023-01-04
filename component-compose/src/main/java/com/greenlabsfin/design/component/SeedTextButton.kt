@@ -17,24 +17,24 @@ import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import com.greenlabsfin.design.core.GfTheme
-import com.greenlabsfin.design.core.LocalGfTypoScheme
+import com.greenlabsfin.design.core.SeedTheme
+import com.greenlabsfin.design.core.LocalSeedTypoScheme
 
 @Composable
-fun GfTextButton(
+fun SeedTextButton(
     modifier: Modifier = Modifier,
     text: String,
     leftIcon: ImageVector? = null,
     rightIcon: ImageVector? = null,
     count: Int? = null,
-    countColors: GfCountColors? = null,
+    countColors: SeedCount.Colors? = null,
     badge: Boolean = false,
     color: Color = Color.Unspecified,
     overflow: TextOverflow = TextOverflow.Clip,
     softWrap: Boolean = true,
     maxLines: Int = Int.MAX_VALUE,
     onTextLayout: (TextLayoutResult) -> Unit = {},
-    style: TextStyle = LocalGfTypoScheme.current.body.mediumBold,
+    style: TextStyle = LocalSeedTypoScheme.current.body.mediumBold,
     enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
@@ -60,13 +60,11 @@ fun GfTextButton(
         }
     }
 
-
-
     Surface(
         color = surfaceColor.value,
         shape = RoundedCornerShape(2.dp)
     ) {
-        GfText(
+        SeedText(
             modifier = modifier.clickable(
                 interactionSource = interactionSource,
                 indication = null,
@@ -90,16 +88,16 @@ fun GfTextButton(
     }
 }
 
-object GfTextButton {
+object SeedTextButton {
     object Style {
         val XSmall: TextStyle
             @Composable
-            get() = GfTheme.typoScheme.caption.xSmallMedium
+            get() = SeedTheme.typoScheme.caption.xSmallMedium
         val Small: TextStyle
             @Composable
-            get() = GfTheme.typoScheme.body.smallMedium
+            get() = SeedTheme.typoScheme.body.smallMedium
         val Medium: TextStyle
             @Composable
-            get() = GfTheme.typoScheme.body.mediumMedium
+            get() = SeedTheme.typoScheme.body.mediumMedium
     }
 }
