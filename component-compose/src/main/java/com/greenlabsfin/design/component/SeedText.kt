@@ -30,13 +30,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.greenlabsfin.design.core.GfTheme
-import com.greenlabsfin.design.core.LocalGfColorScheme
-import com.greenlabsfin.design.core.LocalGfTextStyle
+import com.greenlabsfin.design.core.SeedTheme
+import com.greenlabsfin.design.core.LocalSeedColorScheme
+import com.greenlabsfin.design.core.LocalSeedTextStyle
 import com.greenlabsfin.design.core.color.red60
 
 @Composable
-fun GfText(
+fun SeedText(
     modifier: Modifier = Modifier,
     text: String,
     leadingIcon: ImageVector? = null,
@@ -45,21 +45,21 @@ fun GfText(
     trailingIconColor: Color = Color.Unspecified,
     iconAlignment: Alignment.Vertical = Alignment.CenterVertically,
     count: Int? = null,
-    countColors: GfCountColors? = null,
+    countColors: SeedCount.Colors? = null,
     badge: Boolean = false,
     color: Color = Color.Unspecified,
     overflow: TextOverflow = TextOverflow.Clip,
     softWrap: Boolean = true,
     maxLines: Int = Int.MAX_VALUE,
     onTextLayout: (TextLayoutResult) -> Unit = {},
-    style: TextStyle = LocalGfTextStyle.current,
+    style: TextStyle = LocalSeedTextStyle.current,
     enabled: Boolean = true,
     fillText: Boolean = false,
 ) {
     // text color priority color -> style -> local provider
     val takenTextColor = color.takeOrElse {
         style.color.takeOrElse {
-            LocalGfColorScheme.current.contents.neutralPrimary
+            LocalSeedColorScheme.current.contents.neutralPrimary
         }
     }
 
@@ -129,7 +129,7 @@ fun GfText(
             )
             count?.let {
                 countColors?.let {
-                    GfCount(
+                    SeedCount(
                         count = count,
                         colors = countColors,
                         enabled = enabled,
@@ -152,10 +152,10 @@ fun GfText(
 
 @Preview(showBackground = true)
 @Composable
-fun GfTextPreview() {
-    GfTheme {
+fun SeedTextPreview() {
+    SeedTheme {
         Surface(
-            color = GfTheme.colorScheme.container.background
+            color = SeedTheme.colorScheme.container.background
         ) {
             Column(
                 modifier = Modifier
@@ -163,39 +163,39 @@ fun GfTextPreview() {
                     .padding(20.dp),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                GfText(
+                SeedText(
                     modifier = Modifier.fillMaxWidth(),
                     leadingIcon = Icons.Filled.Menu,
                     text = "텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트",
                     badge = true,
                     count = 3,
-                    style = GfTheme.typoScheme.headline.largeBold,
-                    countColors = GfCountDefaults.Colors.neutral,
+                    style = SeedTheme.typoScheme.headline.largeBold,
+                    countColors = SeedCountDefaults.Colors.neutral(),
                     trailingIcon = Icons.Filled.ArrowDropDown,
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 2,
                     iconAlignment = Alignment.Top,
                 )
 
-                GfText(
+                SeedText(
                     modifier = Modifier.width(200.dp),
                     leadingIcon = Icons.Filled.Menu,
                     text = "텍스트",
                     count = 3,
                     badge = true,
-                    style = GfTheme.typoScheme.headline.largeBold,
-                    countColors = GfCountDefaults.Colors.neutral,
+                    style = SeedTheme.typoScheme.headline.largeBold,
+                    countColors = SeedCountDefaults.Colors.neutral(),
                     trailingIcon = Icons.Filled.ArrowDropDown
                 )
 
-                GfText(
+                SeedText(
                     modifier = Modifier.wrapContentSize(),
                     leadingIcon = Icons.Filled.Menu,
                     text = "텍스트",
                     badge = true,
                     count = 3,
-                    style = GfTheme.typoScheme.body.smallMedium,
-                    countColors = GfCountDefaults.Colors.neutral,
+                    style = SeedTheme.typoScheme.body.smallMedium,
+                    countColors = SeedCountDefaults.Colors.neutral(),
                     trailingIcon = Icons.Filled.ArrowDropDown
                 )
             }

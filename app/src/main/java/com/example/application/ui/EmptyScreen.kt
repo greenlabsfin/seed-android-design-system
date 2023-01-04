@@ -8,14 +8,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.application.ui.theme.GFSampleTheme
 import com.example.application.util.ThemedPreview
-import com.greenlabsfin.design.core.GfTheme
-import com.greenlabsfin.design.core.typo.GfTypoScheme
+import com.greenlabsfin.design.core.SeedTheme
+import com.greenlabsfin.design.core.typo.SeedTypoScheme
 
 @Composable
 fun EmptyScreen(
     modifier: Modifier = Modifier,
     title: String = "EmptyScreen",
-    typoScheme: GfTypoScheme = GfTheme.typoScheme,
+    typoScheme: SeedTypoScheme = SeedTheme.typoScheme,
 ) {
     Box(modifier = modifier.fillMaxSize()) {
         Text(

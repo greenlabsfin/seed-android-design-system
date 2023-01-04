@@ -35,27 +35,27 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.greenlabsfin.design.core.GfTheme
-import com.greenlabsfin.design.core.LocalGfBackgroundColor
+import com.greenlabsfin.design.core.SeedTheme
+import com.greenlabsfin.design.core.LocalSeedBackgroundColor
 import com.greenlabsfin.design.core.color.red60
 
-object GfBottomNavigationDefaults {
+object SeedBottomNavigationDefaults {
     val elevation = 12.dp
     val height = 80.dp
     val contentPadding = PaddingValues(top = 12.dp)
     val arrangement = Arrangement.spacedBy(3.dp)
 }
 
-object GfBottomNavigation {
+object SeedBottomNavigation {
     enum class IconSize(val size: Dp) {
         Large(24.dp),
         Small(20.dp),
         ;
 
-        val countSize: GfCount.Size
+        val countSize: SeedCount.Size
             get() = when (this) {
-                Large -> GfCount.Size.Large
-                Small -> GfCount.Size.Medium
+                Large -> SeedCount.Size.Large
+                Small -> SeedCount.Size.Medium
             }
 
         val badgeRadius: Dp
@@ -67,22 +67,22 @@ object GfBottomNavigation {
 }
 
 @Composable
-fun GfBottomNavigation(
+fun SeedBottomNavigation(
     modifier: Modifier = Modifier,
-    backgroundColor: Color = LocalGfBackgroundColor.current,
-    elevation: Dp = GfBottomNavigationDefaults.elevation,
-    state: GfBarState = rememberGfBarState(false),
+    backgroundColor: Color = LocalSeedBackgroundColor.current,
+    elevation: Dp = SeedBottomNavigationDefaults.elevation,
+    state: SeedBarState = rememberSeedBarState(false),
     hideWhileScrollUp: Boolean = false,
     content: @Composable RowScope.() -> Unit,
 ) {
 
-    val heightPixel = with(LocalDensity.current) { GfBottomNavigationDefaults.height.toPx() }
+    val heightPixel = with(LocalDensity.current) { SeedBottomNavigationDefaults.height.toPx() }
     val yPosition by animateFloatAsState(
         if (state.visible.not() && hideWhileScrollUp) heightPixel else 0f,
         animationSpec = defaultBarVisibilityAnimationSpec(),
     )
     val animatedHeight by animateDpAsState(
-        targetValue = if (state.visible) GfBottomNavigationDefaults.height else 0.dp,
+        targetValue = if (state.visible) SeedBottomNavigationDefaults.height else 0.dp,
         animationSpec = defaultBarVisibilityAnimationSpec()
     )
 
@@ -92,7 +92,7 @@ fun GfBottomNavigation(
         modifier = modifier.then(
             if (state.animated) Modifier.graphicsLayer { translationY = yPosition }
             else Modifier.offset(
-                y = if (state.visible.not() && hideWhileScrollUp) GfBottomNavigationDefaults.height
+                y = if (state.visible.not() && hideWhileScrollUp) SeedBottomNavigationDefaults.height
                 else 0.dp
             )
         ),
@@ -104,9 +104,9 @@ fun GfBottomNavigation(
                 .then(
                     when {
                         state.visible || hideWhileScrollUp.not() ->
-                            Modifier.height(GfBottomNavigationDefaults.height)
+                            Modifier.height(SeedBottomNavigationDefaults.height)
                         state.animated -> Modifier.height(animatedHeight)
-                        else -> Modifier.height(GfBottomNavigationDefaults.height)
+                        else -> Modifier.height(SeedBottomNavigationDefaults.height)
                     }
                 )
                 .selectableGroup(),
@@ -117,24 +117,24 @@ fun GfBottomNavigation(
 }
 
 @Composable
-fun RowScope.GfBottomNavigationItem(
+fun RowScope.SeedBottomNavigationItem(
     selected: Boolean,
     onClick: () -> Unit,
     selectedIcon: Painter,
     contentDescription: String?,
     modifier: Modifier = Modifier,
     unselectedIcon: Painter = selectedIcon,
-    selectedContentColor: Color = GfTheme.colorScheme.contents.neutralPrimary,
-    unselectedContentColor: Color = GfTheme.colorScheme.contents.neutralSecondary,
+    selectedContentColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
+    unselectedContentColor: Color = SeedTheme.colorScheme.contents.neutralSecondary,
     enabled: Boolean = true,
     count: Int? = null,
-    countColor: GfCountColors = GfCountDefaults.Colors.errorSecondary,
+    countColor: SeedCount.Colors = SeedCountDefaults.Colors.errorSecondary(),
     badge: Boolean = false,
     label: @Composable (() -> Unit)? = null,
     alwaysShowLabel: Boolean = true,
-    iconSize: GfBottomNavigation.IconSize = GfBottomNavigation.IconSize.Small,
-    contentPadding: PaddingValues = GfBottomNavigationDefaults.contentPadding,
-    verticalArrangement: Arrangement.Vertical = GfBottomNavigationDefaults.arrangement,
+    iconSize: SeedBottomNavigation.IconSize = SeedBottomNavigation.IconSize.Small,
+    contentPadding: PaddingValues = SeedBottomNavigationDefaults.contentPadding,
+    verticalArrangement: Arrangement.Vertical = SeedBottomNavigationDefaults.arrangement,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
 ) {
     Box(
@@ -161,7 +161,7 @@ fun RowScope.GfBottomNavigationItem(
             Box(
                 modifier = Modifier.size(iconSize.size)
             ) {
-                GfBottomNavigationIcon(
+                SeedBottomNavigationIcon(
                     iconSize = iconSize,
                     selected = selected,
                     selectedIcon = selectedIcon,
@@ -179,7 +179,7 @@ fun RowScope.GfBottomNavigationItem(
                     Crossfade(targetState = selected) { selected ->
                         Decoration(
                             contentColor = if (selected) selectedContentColor else unselectedContentColor,
-                            typography = GfTheme.typoScheme.caption.xSmallRegular.merge(TextStyle(
+                            typography = SeedTheme.typoScheme.caption.xSmallRegular.merge(TextStyle(
                                 color = if (selected) selectedContentColor else unselectedContentColor))
                         ) {
                             Box(
@@ -197,8 +197,8 @@ fun RowScope.GfBottomNavigationItem(
 }
 
 @Composable
-private fun BoxScope.GfBottomNavigationIcon(
-    iconSize: GfBottomNavigation.IconSize,
+private fun BoxScope.SeedBottomNavigationIcon(
+    iconSize: SeedBottomNavigation.IconSize,
     selected: Boolean,
     selectedIcon: Painter,
     unselectedIcon: Painter = selectedIcon,
@@ -207,10 +207,10 @@ private fun BoxScope.GfBottomNavigationIcon(
     unselectedContentColor: Color,
     badge: Boolean,
     count: Int?,
-    countColor: GfCountColors,
+    countColor: SeedCount.Colors,
 ) {
     Crossfade(targetState = selected) {
-        GfIcon(
+        SeedIcon(
             modifier = Modifier
                 .size(iconSize.size)
                 .align(Alignment.Center),
@@ -231,7 +231,7 @@ private fun BoxScope.GfBottomNavigationIcon(
         })
     }
     count?.let {
-        GfCount(
+        SeedCount(
             modifier = Modifier
                 .offset(
                     x = 11.dp,

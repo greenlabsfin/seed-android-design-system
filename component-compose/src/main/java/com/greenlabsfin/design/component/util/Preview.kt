@@ -11,6 +11,6 @@ import androidx.compose.ui.tooling.preview.Preview
 @Preview(
     name = "Light Theme"
 )
-annotation class GfPreview(
+annotation class SeedPreview(
     val name: String = "",
 )

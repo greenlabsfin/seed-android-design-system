@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.Color
 
 @Immutable
-data class GfColorScheme(
+data class SeedColorScheme(
     val contents: ContentsScheme = ContentsScheme(),
     val container: ContainerScheme = ContainerScheme(),
 ) {
@@ -36,7 +36,7 @@ data class GfColorScheme(
         fun default(
             darkTheme: Boolean,
         ) =
-            if (darkTheme) GfColorScheme(
+            if (darkTheme) SeedColorScheme(
                 contents = ContentsScheme(
                     primary = green60,
                     neutralPrimary = gray10,
@@ -60,6 +60,6 @@ data class GfColorScheme(
                     error = red10A
                 )
             )
-            else GfColorScheme()
+            else SeedColorScheme()
     }
 }

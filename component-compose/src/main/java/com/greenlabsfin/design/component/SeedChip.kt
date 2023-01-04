@@ -37,84 +37,137 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.greenlabsfin.design.core.GfTheme
+import com.greenlabsfin.design.core.SeedTheme
 import com.greenlabsfin.design.core.color.gray90
 
-object GfChipDefaults {
+object SeedChipDefaults {
     val minWidth = 56.dp
 
     object Colors {
-        val primary: GfChipColors
-            @Composable
-            get() = chipColors(
-                backgroundColor = GfTheme.colorScheme.container.primary,
-                disabledBackgroundColor = GfTheme.colorScheme.container.neutralSecondary,
-                textColor = GfTheme.colorScheme.contents.onPrimary,
-                disabledTextColor = GfTheme.colorScheme.contents.neutralTertiary,
-                leadingIconColor = GfTheme.colorScheme.contents.onPrimary,
-                disabledLeadingIconColor = GfTheme.colorScheme.contents.neutralTertiary,
-                trailingIconColor = GfTheme.colorScheme.contents.onPrimary,
-                disabledTrailingIconColor = GfTheme.colorScheme.contents.neutralTertiary,
-                pressedColor = gray90.copy(alpha = .24f),
-                countColors = GfCountDefaults.Colors.secondary,
-                countTextColor = GfTheme.colorScheme.contents.onPrimary,
-                disabledCountTextColor = GfTheme.colorScheme.contents.neutralTertiary,
-            )
 
-        val neutral: GfChipColors
-            @Composable
-            get() = chipColors(
-                backgroundColor = GfTheme.colorScheme.container.neutralSecondary,
-                disabledBackgroundColor = GfTheme.colorScheme.container.neutralTertiary,
-                textColor = GfTheme.colorScheme.contents.neutralPrimary,
-                disabledTextColor = GfTheme.colorScheme.contents.neutralTertiary,
-                leadingIconColor = GfTheme.colorScheme.contents.neutralPrimary,
-                disabledLeadingIconColor = GfTheme.colorScheme.contents.neutralTertiary,
-                trailingIconColor = GfTheme.colorScheme.contents.neutralPrimary,
-                disabledTrailingIconColor = GfTheme.colorScheme.contents.neutralTertiary,
-                pressedColor = GfTheme.colorScheme.contents.neutralPrimary.copy(alpha = .08f),
-                countColors = GfCountDefaults.Colors.neutral,
-                countTextColor = GfTheme.colorScheme.contents.primary,
-                disabledCountTextColor = GfTheme.colorScheme.contents.neutralTertiary,
-            )
+        @Composable
+        fun primary(
+            backgroundColor: Color = SeedTheme.colorScheme.container.primary,
+            disabledBackgroundColor: Color = SeedTheme.colorScheme.container.neutralSecondary,
+            textColor: Color = SeedTheme.colorScheme.contents.onPrimary,
+            disabledTextColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
+            leadingIconColor: Color = SeedTheme.colorScheme.contents.onPrimary,
+            disabledLeadingIconColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
+            trailingIconColor: Color = SeedTheme.colorScheme.contents.onPrimary,
+            disabledTrailingIconColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
+            pressedColor: Color = gray90.copy(alpha = .24f),
+            countColors: SeedCount.Colors = SeedCountDefaults.Colors.secondary(),
+            countTextColor: Color = SeedTheme.colorScheme.contents.onPrimary,
+            disabledCountTextColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
+        ): SeedChip.Colors = chipColors(
+            backgroundColor = backgroundColor,
+            disabledBackgroundColor = disabledBackgroundColor,
+            textColor = textColor,
+            disabledTextColor = disabledTextColor,
+            leadingIconColor = leadingIconColor,
+            disabledLeadingIconColor = disabledLeadingIconColor,
+            trailingIconColor = trailingIconColor,
+            disabledTrailingIconColor = disabledTrailingIconColor,
+            pressedColor = pressedColor,
+            countColors = countColors,
+            countTextColor = countTextColor,
+            disabledCountTextColor = disabledCountTextColor
+        )
 
-        val primaryOutline: GfChipColors
-            @Composable
-            get() = chipColors(
-                backgroundColor = GfTheme.colorScheme.container.secondary,
-                disabledBackgroundColor = GfTheme.colorScheme.container.neutralSecondary,
-                textColor = GfTheme.colorScheme.contents.primary,
-                disabledTextColor = GfTheme.colorScheme.contents.neutralTertiary,
-                outlineColor = GfTheme.colorScheme.container.primary,
-                disabledOutlineColor = GfTheme.colorScheme.container.neutralTertiary,
-                leadingIconColor = GfTheme.colorScheme.contents.primary,
-                disabledLeadingIconColor = GfTheme.colorScheme.contents.neutralTertiary,
-                trailingIconColor = GfTheme.colorScheme.contents.primary,
-                disabledTrailingIconColor = GfTheme.colorScheme.contents.neutralTertiary,
-                pressedColor = GfTheme.colorScheme.contents.neutralPrimary.copy(alpha = .08f),
-                countColors = GfCountDefaults.Colors.primary,
-                countTextColor = GfTheme.colorScheme.contents.primary,
-                disabledCountTextColor = GfTheme.colorScheme.contents.neutralTertiary,
-            )
+        @Composable
+        fun neutral(
+            backgroundColor: Color = SeedTheme.colorScheme.container.neutralSecondary,
+            disabledBackgroundColor: Color = SeedTheme.colorScheme.container.neutralTertiary,
+            textColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
+            disabledTextColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
+            leadingIconColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
+            disabledLeadingIconColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
+            trailingIconColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
+            disabledTrailingIconColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
+            pressedColor: Color = SeedTheme.colorScheme.contents.neutralPrimary.copy(alpha = .08f),
+            countColors: SeedCount.Colors = SeedCountDefaults.Colors.neutral(),
+            countTextColor: Color = SeedTheme.colorScheme.contents.primary,
+            disabledCountTextColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
+        ): SeedChip.Colors = chipColors(
+            backgroundColor = backgroundColor,
+            disabledBackgroundColor = disabledBackgroundColor,
+            textColor = textColor,
+            disabledTextColor = disabledTextColor,
+            leadingIconColor = leadingIconColor,
+            disabledLeadingIconColor = disabledLeadingIconColor,
+            trailingIconColor = trailingIconColor,
+            disabledTrailingIconColor = disabledTrailingIconColor,
+            pressedColor = pressedColor,
+            countColors = countColors,
+            countTextColor = countTextColor,
+            disabledCountTextColor = disabledCountTextColor
+        )
 
-        val neutralOutline: GfChipColors
-            @Composable
-            get() = chipColors(
-                backgroundColor = GfTheme.colorScheme.container.background,
-                disabledBackgroundColor = GfTheme.colorScheme.container.neutralSecondary,
-                textColor = GfTheme.colorScheme.contents.neutralPrimary,
-                disabledTextColor = GfTheme.colorScheme.contents.neutralTertiary,
-                outlineColor = GfTheme.colorScheme.container.outline,
-                disabledOutlineColor = GfTheme.colorScheme.container.neutralTertiary,
-                leadingIconColor = GfTheme.colorScheme.contents.neutralPrimary,
-                disabledLeadingIconColor = GfTheme.colorScheme.contents.neutralTertiary,
-                trailingIconColor = GfTheme.colorScheme.contents.neutralPrimary,
-                disabledTrailingIconColor = GfTheme.colorScheme.contents.neutralTertiary,
-                pressedColor = GfTheme.colorScheme.contents.neutralPrimary.copy(alpha = .08f),
-                countColors = GfCountDefaults.Colors.neutral,
-                countTextColor = GfTheme.colorScheme.contents.primary,
-                disabledCountTextColor = GfTheme.colorScheme.contents.neutralTertiary,
-            )
+        @Composable
+        fun primaryOutline(
+            backgroundColor: Color = SeedTheme.colorScheme.container.secondary,
+            disabledBackgroundColor: Color = SeedTheme.colorScheme.container.neutralSecondary,
+            textColor: Color = SeedTheme.colorScheme.contents.primary,
+            disabledTextColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
+            outlineColor: Color = SeedTheme.colorScheme.container.primary,
+            disabledOutlineColor: Color = SeedTheme.colorScheme.container.neutralTertiary,
+            leadingIconColor: Color = SeedTheme.colorScheme.contents.primary,
+            disabledLeadingIconColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
+            trailingIconColor: Color = SeedTheme.colorScheme.contents.primary,
+            disabledTrailingIconColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
+            pressedColor: Color = SeedTheme.colorScheme.contents.neutralPrimary.copy(alpha = .08f),
+            countColors: SeedCount.Colors = SeedCountDefaults.Colors.primary(),
+            countTextColor: Color = SeedTheme.colorScheme.contents.primary,
+            disabledCountTextColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
+        ): SeedChip.Colors = chipColors(
+            backgroundColor = backgroundColor,
+            disabledBackgroundColor = disabledBackgroundColor,
+            textColor = textColor,
+            disabledTextColor = disabledTextColor,
+            outlineColor = outlineColor,
+            disabledOutlineColor = disabledOutlineColor,
+            leadingIconColor = leadingIconColor,
+            disabledLeadingIconColor = disabledLeadingIconColor,
+            trailingIconColor = trailingIconColor,
+            disabledTrailingIconColor = disabledTrailingIconColor,
+            pressedColor = pressedColor,
+            countColors = countColors,
+            countTextColor = countTextColor,
+            disabledCountTextColor = disabledCountTextColor,
+        )
+
+        @Composable
+        fun neutralOutline(
+            backgroundColor: Color = SeedTheme.colorScheme.container.background,
+            disabledBackgroundColor: Color = SeedTheme.colorScheme.container.neutralSecondary,
+            textColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
+            disabledTextColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
+            outlineColor: Color = SeedTheme.colorScheme.container.outline,
+            disabledOutlineColor: Color = SeedTheme.colorScheme.container.neutralTertiary,
+            leadingIconColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
+            disabledLeadingIconColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
+            trailingIconColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
+            disabledTrailingIconColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
+            pressedColor: Color = SeedTheme.colorScheme.contents.neutralPrimary.copy(alpha = .08f),
+            countColors: SeedCount.Colors = SeedCountDefaults.Colors.neutral(),
+            countTextColor: Color = SeedTheme.colorScheme.contents.primary,
+            disabledCountTextColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
+        ): SeedChip.Colors = chipColors(
+            backgroundColor = backgroundColor,
+            disabledBackgroundColor = disabledBackgroundColor,
+            textColor = textColor,
+            disabledTextColor = disabledTextColor,
+            outlineColor = outlineColor,
+            disabledOutlineColor = disabledOutlineColor,
+            leadingIconColor = leadingIconColor,
+            disabledLeadingIconColor = disabledLeadingIconColor,
+            trailingIconColor = trailingIconColor,
+            disabledTrailingIconColor = disabledTrailingIconColor,
+            pressedColor = pressedColor,
+            countColors = countColors,
+            countTextColor = countTextColor,
+            disabledCountTextColor = disabledCountTextColor,
+        )
     }
 
     @Composable
@@ -130,10 +183,10 @@ object GfChipDefaults {
         trailingIconColor: Color = Color.Unspecified,
         disabledTrailingIconColor: Color = Color.Unspecified,
         pressedColor: Color = Color.Unspecified,
-        countColors: GfCountColors,
+        countColors: SeedCount.Colors,
         countTextColor: Color = Color.Unspecified,
         disabledCountTextColor: Color = Color.Unspecified,
-    ): GfChipColors = DefaultGfChipColors(
+    ): SeedChip.Colors = DefaultSeedChipColors(
         backgroundColor = backgroundColor,
         disabledBackgroundColor = disabledBackgroundColor,
         textColor = textColor,
@@ -151,33 +204,8 @@ object GfChipDefaults {
     )
 }
 
-@Stable
-interface GfChipColors {
-    @Composable
-    fun backgroundColor(enabled: Boolean): State<Color>
-
-    @Composable
-    fun textColor(enabled: Boolean): State<Color>
-
-    @Composable
-    fun outlineColor(enabled: Boolean): State<Color>
-
-    @Composable
-    fun leadingIconColor(enabled: Boolean): State<Color>
-
-    @Composable
-    fun trailingIconColor(enabled: Boolean): State<Color>
-
-    @Composable
-    fun countTextColor(enabled: Boolean): State<Color>
-
-    val countColors: GfCountColors
-
-    val pressedColor: Color
-}
-
 @Immutable
-private data class DefaultGfChipColors(
+private data class DefaultSeedChipColors(
     private val backgroundColor: Color,
     private val disabledBackgroundColor: Color,
     private val textColor: Color,
@@ -191,8 +219,8 @@ private data class DefaultGfChipColors(
     private val countTextColor: Color,
     private val disabledCountTextColor: Color,
     override val pressedColor: Color,
-    override val countColors: GfCountColors,
-) : GfChipColors {
+    override val countColors: SeedCount.Colors,
+) : SeedChip.Colors {
     @Composable
     override fun backgroundColor(enabled: Boolean): State<Color> =
         rememberUpdatedState(if (enabled) backgroundColor else disabledBackgroundColor)
@@ -219,7 +247,7 @@ private data class DefaultGfChipColors(
 
 }
 
-object GfChip {
+object SeedChip {
     enum class Size(val height: Dp) {
         Large(48.dp),
         Medium(40.dp),
@@ -280,21 +308,46 @@ object GfChip {
                 Rectangle -> 8.dp
             }
     }
+
+    @Stable
+    interface Colors {
+        @Composable
+        fun backgroundColor(enabled: Boolean): State<Color>
+
+        @Composable
+        fun textColor(enabled: Boolean): State<Color>
+
+        @Composable
+        fun outlineColor(enabled: Boolean): State<Color>
+
+        @Composable
+        fun leadingIconColor(enabled: Boolean): State<Color>
+
+        @Composable
+        fun trailingIconColor(enabled: Boolean): State<Color>
+
+        @Composable
+        fun countTextColor(enabled: Boolean): State<Color>
+
+        val countColors: SeedCount.Colors
+
+        val pressedColor: Color
+    }
 }
 
 @Composable
-fun GfChip(
+fun SeedChip(
     modifier: Modifier = Modifier,
-    size: GfChip.Size,
-    style: GfChip.Style,
+    size: SeedChip.Size,
+    style: SeedChip.Style,
     text: String? = null,
-    textStyle: TextStyle = GfTheme.typoScheme.body.mediumMedium,
+    textStyle: TextStyle = SeedTheme.typoScheme.body.mediumMedium,
     leadingImagePainter: Painter? = null,
     leadingIcon: ImageVector? = null,
     trailingIcon: ImageVector? = null,
     count: Int? = null,
     isCircleCount: Boolean = true,
-    colors: GfChipColors = GfChipDefaults.Colors.primary,
+    colors: SeedChip.Colors = SeedChipDefaults.Colors.primary(),
     enabled: Boolean = true,
     onClick: (() -> Unit)? = null,
 ) {
@@ -302,10 +355,10 @@ fun GfChip(
 
     val isImageOnly = text == null && count == null && trailingIcon == null
     val shape = when (style) {
-        GfChip.Style.Pill ->
+        SeedChip.Style.Pill ->
             if (isImageOnly) CircleShape
             else RoundedCornerShape(style.radius(size))
-        GfChip.Style.Rectangle -> RoundedCornerShape(style.radius(size))
+        SeedChip.Style.Rectangle -> RoundedCornerShape(style.radius(size))
     }
 
 
@@ -342,7 +395,7 @@ fun GfChip(
         modifier = modifier
             .defaultMinSize(
                 minHeight = size.height,
-                minWidth = if (shape == CircleShape) size.height else GfChipDefaults.minWidth
+                minWidth = if (shape == CircleShape) size.height else SeedChipDefaults.minWidth
             )
             .height(size.height),
         color = surfaceColor.value,
@@ -379,7 +432,7 @@ fun GfChip(
                 }
             }
             leadingIcon?.let {
-                GfIcon(
+                SeedIcon(
                     modifier = Modifier.size(size.iconSize),
                     imageVector = it,
                     contentDescription = it.name,
@@ -392,7 +445,7 @@ fun GfChip(
                     leadingIcon != null -> Spacer(modifier = Modifier.width(4.dp))
                 }
                 Box(modifier = modifier.weight(1f, false)) {
-                    GfText(
+                    SeedText(
                         text = it,
                         style = textStyle,
                         color = colors.textColor(enabled = enabled).value,
@@ -404,12 +457,12 @@ fun GfChip(
             count?.let {
                 Spacer(modifier = Modifier.width(2.dp))
                 if (isCircleCount) {
-                    GfCount(
+                    SeedCount(
                         modifier = Modifier.size(20.dp),
                         count = it,
                         colors = colors.countColors)
                 } else {
-                    GfText(
+                    SeedText(
                         text = it.toString(),
                         color = colors.countTextColor(enabled = enabled).value,
                         style = textStyle,
@@ -418,7 +471,7 @@ fun GfChip(
             }
             trailingIcon?.let {
                 Spacer(modifier = Modifier.width(4.dp))
-                GfIcon(
+                SeedIcon(
                     modifier = Modifier.size(size.iconSize),
                     imageVector = it,
                     contentDescription = it.name,

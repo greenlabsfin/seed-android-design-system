@@ -10,11 +10,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
-import com.greenlabsfin.design.core.LocalGfTextStyle
+import com.greenlabsfin.design.core.LocalSeedTextStyle
 import com.greenlabsfin.design.core.R
 
 @Immutable
-data class GfTypoScheme(
+data class SeedTypoScheme(
     val headline: HeadlineTypoScheme = HeadlineTypoScheme(),
     val body: BodyTypoScheme = BodyTypoScheme(),
     val caption: CaptionTypoScheme = CaptionTypoScheme(),
@@ -53,29 +53,29 @@ data class GfTypoScheme(
 @Immutable
 data class HeadlineTypoScheme(
     val xLargeBold: TextStyle = default(
-        sizeType = GfTypoScheme.SizeType.XLarge,
+        sizeType = SeedTypoScheme.SizeType.XLarge,
         weight = FontWeight.Bold
     ),
     val largeBold: TextStyle = default(
-        sizeType = GfTypoScheme.SizeType.Large,
+        sizeType = SeedTypoScheme.SizeType.Large,
         weight = FontWeight.Bold
     ),
     val mediumBold: TextStyle = default(
-        sizeType = GfTypoScheme.SizeType.Medium,
+        sizeType = SeedTypoScheme.SizeType.Medium,
         weight = FontWeight.Bold
     ),
     val smallBold: TextStyle = default(
-        sizeType = GfTypoScheme.SizeType.Small,
+        sizeType = SeedTypoScheme.SizeType.Small,
         weight = FontWeight.Bold
     ),
     val smallRegular: TextStyle = default(
-        sizeType = GfTypoScheme.SizeType.Small,
+        sizeType = SeedTypoScheme.SizeType.Small,
         weight = FontWeight.Regular
     ),
 ) {
 
     companion object {
-        val defaultSize = GfTypoScheme.SizeValue(
+        val defaultSize = SeedTypoScheme.SizeValue(
             xLarge = 32.sp,
             large = 24.sp,
             medium = 22.sp,
@@ -85,8 +85,8 @@ data class HeadlineTypoScheme(
 }
 
 fun HeadlineTypoScheme.Companion.default(
-    sizeType: GfTypoScheme.SizeType,
-    sizeValue: GfTypoScheme.SizeValue = defaultSize,
+    sizeType: SeedTypoScheme.SizeType,
+    sizeValue: SeedTypoScheme.SizeValue = defaultSize,
     weight: FontWeight,
 ): TextStyle {
     val size = sizeValue.sizeOf(sizeType)
@@ -106,48 +106,48 @@ fun HeadlineTypoScheme.Companion.default(
 @Immutable
 data class BodyTypoScheme(
     val xLargeBold: TextStyle = default(
-        sizeType = GfTypoScheme.SizeType.XLarge,
+        sizeType = SeedTypoScheme.SizeType.XLarge,
         weight = FontWeight.Bold
     ),
     val xLargeRegular: TextStyle = default(
-        sizeType = GfTypoScheme.SizeType.XLarge,
+        sizeType = SeedTypoScheme.SizeType.XLarge,
         weight = FontWeight.Regular
     ),
     val largeBold: TextStyle = default(
-        sizeType = GfTypoScheme.SizeType.Large,
+        sizeType = SeedTypoScheme.SizeType.Large,
         weight = FontWeight.Bold
     ),
     val largeRegular: TextStyle = default(
-        sizeType = GfTypoScheme.SizeType.Large,
+        sizeType = SeedTypoScheme.SizeType.Large,
         weight = FontWeight.Regular
     ),
     val mediumBold: TextStyle = default(
-        sizeType = GfTypoScheme.SizeType.Medium,
+        sizeType = SeedTypoScheme.SizeType.Medium,
         weight = FontWeight.Bold
     ),
     val mediumMedium: TextStyle = default(
-        sizeType = GfTypoScheme.SizeType.Medium,
+        sizeType = SeedTypoScheme.SizeType.Medium,
         weight = FontWeight.Medium
     ),
     val mediumRegular: TextStyle = default(
-        sizeType = GfTypoScheme.SizeType.Medium,
+        sizeType = SeedTypoScheme.SizeType.Medium,
         weight = FontWeight.Regular
     ),
     val smallBold: TextStyle = default(
-        sizeType = GfTypoScheme.SizeType.Small,
+        sizeType = SeedTypoScheme.SizeType.Small,
         weight = FontWeight.Bold
     ),
     val smallMedium: TextStyle = default(
-        sizeType = GfTypoScheme.SizeType.Small,
+        sizeType = SeedTypoScheme.SizeType.Small,
         weight = FontWeight.Medium
     ),
     val smallRegular: TextStyle = default(
-        sizeType = GfTypoScheme.SizeType.Small,
+        sizeType = SeedTypoScheme.SizeType.Small,
         weight = FontWeight.Regular
     ),
 ) {
     companion object {
-        val defaultSize = GfTypoScheme.SizeValue(
+        val defaultSize = SeedTypoScheme.SizeValue(
             xLarge = 22.sp,
             large = 19.sp,
             medium = 17.sp,
@@ -157,8 +157,8 @@ data class BodyTypoScheme(
 }
 
 fun BodyTypoScheme.Companion.default(
-    sizeType: GfTypoScheme.SizeType,
-    sizeValue: GfTypoScheme.SizeValue = defaultSize,
+    sizeType: SeedTypoScheme.SizeType,
+    sizeValue: SeedTypoScheme.SizeValue = defaultSize,
     weight: FontWeight,
 ): TextStyle {
     val size = sizeValue.sizeOf(sizeType)
@@ -175,28 +175,28 @@ fun BodyTypoScheme.Companion.default(
 @Immutable
 data class CaptionTypoScheme(
     val xSmallRegular: TextStyle = default(
-        sizeType = GfTypoScheme.SizeType.XSmall,
+        sizeType = SeedTypoScheme.SizeType.XSmall,
         weight = FontWeight.Regular
     ),
     val xSmallBold: TextStyle = default(
-        sizeType = GfTypoScheme.SizeType.XSmall,
+        sizeType = SeedTypoScheme.SizeType.XSmall,
         weight = FontWeight.Bold
     ),
     val xSmallMedium: TextStyle = default(
-        sizeType = GfTypoScheme.SizeType.XSmall,
+        sizeType = SeedTypoScheme.SizeType.XSmall,
         weight = FontWeight.Medium
     ),
 ) {
     companion object {
-        val defaultSize = GfTypoScheme.SizeValue(
+        val defaultSize = SeedTypoScheme.SizeValue(
             xSmall = 13.sp
         )
     }
 }
 
 fun CaptionTypoScheme.Companion.default(
-    sizeType: GfTypoScheme.SizeType,
-    sizeValue: GfTypoScheme.SizeValue = defaultSize,
+    sizeType: SeedTypoScheme.SizeType,
+    sizeValue: SeedTypoScheme.SizeValue = defaultSize,
     weight: FontWeight,
 ): TextStyle {
     val size = sizeValue.sizeOf(sizeType)
@@ -229,21 +229,21 @@ private val TextUnit.letterSpacing: TextUnit
         else -> 0.sp
     }
 
-fun GfTypoScheme.SizeValue.sizeOf(
-    sizeType: GfTypoScheme.SizeType,
+fun SeedTypoScheme.SizeValue.sizeOf(
+    sizeType: SeedTypoScheme.SizeType,
 ): TextUnit = when (sizeType) {
-    GfTypoScheme.SizeType.XLarge -> xLarge
-    GfTypoScheme.SizeType.Large -> large
-    GfTypoScheme.SizeType.Medium -> medium
-    GfTypoScheme.SizeType.Small -> small
-    GfTypoScheme.SizeType.XSmall -> xSmall
+    SeedTypoScheme.SizeType.XLarge -> xLarge
+    SeedTypoScheme.SizeType.Large -> large
+    SeedTypoScheme.SizeType.Medium -> medium
+    SeedTypoScheme.SizeType.Small -> small
+    SeedTypoScheme.SizeType.XSmall -> xSmall
 }
 
 @Composable
-fun ProvideGfTextStyle(
+fun ProvideSeedTextStyle(
     value: TextStyle,
     content: @Composable () -> Unit,
 ) {
-    val mergedStyle = LocalGfTextStyle.current.merge(value)
-    CompositionLocalProvider(LocalGfTextStyle provides mergedStyle, content = content)
+    val mergedStyle = LocalSeedTextStyle.current.merge(value)
+    CompositionLocalProvider(LocalSeedTextStyle provides mergedStyle, content = content)
 }
