@@ -19,9 +19,9 @@ import com.greenlabsfin.design.core.typo.SeedTypoScheme
  *        darkTheme: Boolean = isSystemInDarkTheme(),
  *        content: @Composable () -> Unit,
  *    ) {
- *      val colorScheme = GfColorScheme.default(darkTheme)
- *      val typoScheme = TODO
- *      GfTheme(
+ *      val colorScheme = SeedColorScheme.default(darkTheme)
+ *      val typoScheme = SeedTypoScheme()
+ *      SeedTheme(
  *          colorScheme = colorScheme,
  *          typoScheme = typoScheme,
  *          content = content,
@@ -42,7 +42,7 @@ fun SeedTheme(
     CompositionLocalProvider(
         LocalSeedColorScheme provides colorScheme,
         LocalSeedTypoScheme provides typoScheme,
-        LocalSeedContainerColor provides colorScheme.contents.neutralPrimary,
+        LocalSeedContentColor provides colorScheme.contents.neutralPrimary,
         LocalSeedTextStyle provides typoScheme.body.mediumRegular,
         LocalSeedBackgroundColor provides backgroundColor,
         content = content
@@ -67,7 +67,7 @@ val LocalSeedTypoScheme = staticCompositionLocalOf {
     SeedTypoScheme()
 }
 
-val LocalSeedContainerColor = staticCompositionLocalOf { gray90 }
+val LocalSeedContentColor = staticCompositionLocalOf { gray90 }
 
 val LocalSeedTextStyle =
     compositionLocalOf(structuralEqualityPolicy()) { SeedTypoScheme().body.mediumRegular }

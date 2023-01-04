@@ -6,7 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.example.application.ui.theme.GFSampleTheme
+import com.example.application.ui.theme.SeedSampleTheme
 import com.example.application.util.ThemedPreview
 import com.greenlabsfin.design.core.SeedTheme
 import com.greenlabsfin.design.core.typo.SeedTypoScheme
@@ -29,7 +29,7 @@ fun EmptyScreen(
 @ThemedPreview
 @Composable
 fun EmptyScreenPreview() {
-    GFSampleTheme {
+    SeedSampleTheme {
         EmptyScreen()
     }
 }

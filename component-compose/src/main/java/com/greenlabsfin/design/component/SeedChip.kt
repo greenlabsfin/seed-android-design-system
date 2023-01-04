@@ -40,135 +40,228 @@ import androidx.compose.ui.unit.dp
 import com.greenlabsfin.design.core.SeedTheme
 import com.greenlabsfin.design.core.color.gray90
 
+@Composable
+fun SeedChip(
+    size: SeedChip.Size,
+    style: SeedChip.Style,
+    colors: SeedChipColors,
+    modifier: Modifier = Modifier,
+    text: String? = null,
+    textStyle: TextStyle = SeedTheme.typoScheme.body.mediumMedium,
+    leadingImagePainter: Painter? = null,
+    leadingIcon: ImageVector? = null,
+    trailingIcon: ImageVector? = null,
+    count: Int? = null,
+    isCircleCount: Boolean = true,
+    enabled: Boolean = true,
+    clickable: Boolean = true,
+    onClick: (() -> Unit)? = null,
+) {
+    if (leadingImagePainter != null && leadingIcon != null) throw IllegalArgumentException("only one leading argument allowed")
+
+    val isImageOnly = text == null && count == null && trailingIcon == null
+    val shape = when (style) {
+        SeedChip.Style.Pill ->
+            if (isImageOnly) CircleShape
+            else RoundedCornerShape(style.radius(size))
+        SeedChip.Style.Rectangle -> RoundedCornerShape(style.radius(size))
+    }
+
+
+    val borderStroke =
+        colors.outlineColor(enabled = enabled).value
+            .takeIf { it.isUnspecified.not() }
+            ?.let { BorderStroke(width = 1.dp, color = it) }
+
+    val interactionSource = remember { MutableInteractionSource() }
+    val backgroundColor = colors.backgroundColor(enabled = enabled).value
+    val isPressed = interactionSource.collectIsPressedAsState()
+    val isHovered = interactionSource.collectIsHoveredAsState()
+    val surfaceColor = remember { Animatable(colors.pressedColor) }
+    when {
+        isHovered.value -> {
+            LaunchedEffect(Unit) {
+                surfaceColor.animateTo(colors.pressedColor.compositeOver(backgroundColor))
+            }
+        }
+        isPressed.value -> {
+            LaunchedEffect(Unit) {
+                surfaceColor.animateTo(colors.pressedColor.compositeOver(backgroundColor))
+            }
+        }
+        else -> {
+            LaunchedEffect(Unit) {
+                surfaceColor.animateTo(backgroundColor)
+            }
+        }
+    }
+
+
+    Surface(
+        modifier = modifier
+            .defaultMinSize(
+                minHeight = size.height,
+                minWidth = if (shape == CircleShape) size.height else SeedChipDefaults.minWidth
+            )
+            .height(size.height),
+        color = surfaceColor.value,
+        shape = shape,
+        border = borderStroke
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = modifier
+                .padding(
+                    start = style.startPadding(size, leadingImagePainter != null),
+                    end = style.endPadding(size),
+                )
+                .then(
+                    onClick?.let {
+                        Modifier.clickable(
+                            interactionSource = interactionSource,
+                            indication = null,
+                            enabled = enabled && clickable,
+                            onClick = it,
+                        )
+                    } ?: Modifier
+                )
+        ) {
+            leadingImagePainter?.let {
+                Box(modifier = Modifier
+                    .size(size.imageSize)
+                    .clip(CircleShape)) {
+                    Image(
+                        modifier = modifier.size(40.dp),
+                        painter = it,
+                        contentDescription = ""
+                    )
+                }
+            }
+            leadingIcon?.let {
+                SeedIcon(
+                    modifier = Modifier.size(size.iconSize),
+                    imageVector = it,
+                    contentDescription = it.name,
+                    tint = colors.leadingIconColor(enabled = enabled).value
+                )
+            }
+            text?.let {
+                when {
+                    leadingImagePainter != null -> Spacer(modifier = Modifier.width(8.dp))
+                    leadingIcon != null -> Spacer(modifier = Modifier.width(4.dp))
+                }
+                Box(modifier = modifier.weight(1f, false)) {
+                    SeedText(
+                        text = it,
+                        style = textStyle,
+                        color = colors.textColor(enabled = enabled).value,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1
+                    )
+                }
+            }
+            count?.let {
+                Spacer(modifier = Modifier.width(2.dp))
+                if (isCircleCount) {
+                    SeedCount(
+                        modifier = Modifier.size(20.dp),
+                        count = it,
+                        colors = colors.countColors)
+                } else {
+                    SeedText(
+                        text = it.toString(),
+                        color = colors.countTextColor(enabled = enabled).value,
+                        style = textStyle,
+                    )
+                }
+            }
+            trailingIcon?.let {
+                Spacer(modifier = Modifier.width(4.dp))
+                SeedIcon(
+                    modifier = Modifier.size(size.iconSize),
+                    imageVector = it,
+                    contentDescription = it.name,
+                    tint = colors.leadingIconColor(enabled = enabled).value
+                )
+            }
+        }
+    }
+}
+
 object SeedChipDefaults {
     val minWidth = 56.dp
 
-    object Colors {
-
-        @Composable
-        fun primary(
-            backgroundColor: Color = SeedTheme.colorScheme.container.primary,
-            disabledBackgroundColor: Color = SeedTheme.colorScheme.container.neutralSecondary,
-            textColor: Color = SeedTheme.colorScheme.contents.onPrimary,
-            disabledTextColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
-            leadingIconColor: Color = SeedTheme.colorScheme.contents.onPrimary,
-            disabledLeadingIconColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
-            trailingIconColor: Color = SeedTheme.colorScheme.contents.onPrimary,
-            disabledTrailingIconColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
-            pressedColor: Color = gray90.copy(alpha = .24f),
-            countColors: SeedCount.Colors = SeedCountDefaults.Colors.secondary(),
-            countTextColor: Color = SeedTheme.colorScheme.contents.onPrimary,
-            disabledCountTextColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
-        ): SeedChip.Colors = chipColors(
-            backgroundColor = backgroundColor,
-            disabledBackgroundColor = disabledBackgroundColor,
-            textColor = textColor,
-            disabledTextColor = disabledTextColor,
-            leadingIconColor = leadingIconColor,
-            disabledLeadingIconColor = disabledLeadingIconColor,
-            trailingIconColor = trailingIconColor,
-            disabledTrailingIconColor = disabledTrailingIconColor,
-            pressedColor = pressedColor,
-            countColors = countColors,
-            countTextColor = countTextColor,
-            disabledCountTextColor = disabledCountTextColor
+    @Composable
+    fun primaryColors(): SeedChipColors =
+        chipColors(
+            backgroundColor = SeedTheme.colorScheme.container.primary,
+            disabledBackgroundColor = SeedTheme.colorScheme.container.neutralSecondary,
+            textColor = SeedTheme.colorScheme.contents.onPrimary,
+            disabledTextColor = SeedTheme.colorScheme.contents.neutralTertiary,
+            leadingIconColor = SeedTheme.colorScheme.contents.onPrimary,
+            disabledLeadingIconColor = SeedTheme.colorScheme.contents.neutralTertiary,
+            trailingIconColor = SeedTheme.colorScheme.contents.onPrimary,
+            disabledTrailingIconColor = SeedTheme.colorScheme.contents.neutralTertiary,
+            pressedColor = gray90.copy(alpha = .24f),
+            countColors = SeedCountDefaults.secondaryColors(),
+            countTextColor = SeedTheme.colorScheme.contents.onPrimary,
+            disabledCountTextColor = SeedTheme.colorScheme.contents.neutralTertiary,
         )
 
-        @Composable
-        fun neutral(
-            backgroundColor: Color = SeedTheme.colorScheme.container.neutralSecondary,
-            disabledBackgroundColor: Color = SeedTheme.colorScheme.container.neutralTertiary,
-            textColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
-            disabledTextColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
-            leadingIconColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
-            disabledLeadingIconColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
-            trailingIconColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
-            disabledTrailingIconColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
-            pressedColor: Color = SeedTheme.colorScheme.contents.neutralPrimary.copy(alpha = .08f),
-            countColors: SeedCount.Colors = SeedCountDefaults.Colors.neutral(),
-            countTextColor: Color = SeedTheme.colorScheme.contents.primary,
-            disabledCountTextColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
-        ): SeedChip.Colors = chipColors(
-            backgroundColor = backgroundColor,
-            disabledBackgroundColor = disabledBackgroundColor,
-            textColor = textColor,
-            disabledTextColor = disabledTextColor,
-            leadingIconColor = leadingIconColor,
-            disabledLeadingIconColor = disabledLeadingIconColor,
-            trailingIconColor = trailingIconColor,
-            disabledTrailingIconColor = disabledTrailingIconColor,
-            pressedColor = pressedColor,
-            countColors = countColors,
-            countTextColor = countTextColor,
-            disabledCountTextColor = disabledCountTextColor
+    @Composable
+    fun neutralColors(): SeedChipColors =
+        chipColors(
+            backgroundColor = SeedTheme.colorScheme.container.neutralSecondary,
+            disabledBackgroundColor = SeedTheme.colorScheme.container.neutralTertiary,
+            textColor = SeedTheme.colorScheme.contents.neutralPrimary,
+            disabledTextColor = SeedTheme.colorScheme.contents.neutralTertiary,
+            leadingIconColor = SeedTheme.colorScheme.contents.neutralPrimary,
+            disabledLeadingIconColor = SeedTheme.colorScheme.contents.neutralTertiary,
+            trailingIconColor = SeedTheme.colorScheme.contents.neutralPrimary,
+            disabledTrailingIconColor = SeedTheme.colorScheme.contents.neutralTertiary,
+            pressedColor = SeedTheme.colorScheme.contents.neutralPrimary.copy(alpha = .08f),
+            countColors = SeedCountDefaults.neutralColors(),
+            countTextColor = SeedTheme.colorScheme.contents.primary,
+            disabledCountTextColor = SeedTheme.colorScheme.contents.neutralTertiary,
         )
 
-        @Composable
-        fun primaryOutline(
-            backgroundColor: Color = SeedTheme.colorScheme.container.secondary,
-            disabledBackgroundColor: Color = SeedTheme.colorScheme.container.neutralSecondary,
-            textColor: Color = SeedTheme.colorScheme.contents.primary,
-            disabledTextColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
-            outlineColor: Color = SeedTheme.colorScheme.container.primary,
-            disabledOutlineColor: Color = SeedTheme.colorScheme.container.neutralTertiary,
-            leadingIconColor: Color = SeedTheme.colorScheme.contents.primary,
-            disabledLeadingIconColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
-            trailingIconColor: Color = SeedTheme.colorScheme.contents.primary,
-            disabledTrailingIconColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
-            pressedColor: Color = SeedTheme.colorScheme.contents.neutralPrimary.copy(alpha = .08f),
-            countColors: SeedCount.Colors = SeedCountDefaults.Colors.primary(),
-            countTextColor: Color = SeedTheme.colorScheme.contents.primary,
-            disabledCountTextColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
-        ): SeedChip.Colors = chipColors(
-            backgroundColor = backgroundColor,
-            disabledBackgroundColor = disabledBackgroundColor,
-            textColor = textColor,
-            disabledTextColor = disabledTextColor,
-            outlineColor = outlineColor,
-            disabledOutlineColor = disabledOutlineColor,
-            leadingIconColor = leadingIconColor,
-            disabledLeadingIconColor = disabledLeadingIconColor,
-            trailingIconColor = trailingIconColor,
-            disabledTrailingIconColor = disabledTrailingIconColor,
-            pressedColor = pressedColor,
-            countColors = countColors,
-            countTextColor = countTextColor,
-            disabledCountTextColor = disabledCountTextColor,
+    @Composable
+    fun primaryOutlineColors(): SeedChipColors =
+        chipColors(
+            backgroundColor = SeedTheme.colorScheme.container.secondary,
+            disabledBackgroundColor = SeedTheme.colorScheme.container.neutralSecondary,
+            textColor = SeedTheme.colorScheme.contents.primary,
+            disabledTextColor = SeedTheme.colorScheme.contents.neutralTertiary,
+            outlineColor = SeedTheme.colorScheme.container.primary,
+            disabledOutlineColor = SeedTheme.colorScheme.container.neutralTertiary,
+            leadingIconColor = SeedTheme.colorScheme.contents.primary,
+            disabledLeadingIconColor = SeedTheme.colorScheme.contents.neutralTertiary,
+            trailingIconColor = SeedTheme.colorScheme.contents.primary,
+            disabledTrailingIconColor = SeedTheme.colorScheme.contents.neutralTertiary,
+            pressedColor = SeedTheme.colorScheme.contents.neutralPrimary.copy(alpha = .08f),
+            countColors = SeedCountDefaults.primaryColors(),
+            countTextColor = SeedTheme.colorScheme.contents.primary,
+            disabledCountTextColor = SeedTheme.colorScheme.contents.neutralTertiary,
         )
 
-        @Composable
-        fun neutralOutline(
-            backgroundColor: Color = SeedTheme.colorScheme.container.background,
-            disabledBackgroundColor: Color = SeedTheme.colorScheme.container.neutralSecondary,
-            textColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
-            disabledTextColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
-            outlineColor: Color = SeedTheme.colorScheme.container.outline,
-            disabledOutlineColor: Color = SeedTheme.colorScheme.container.neutralTertiary,
-            leadingIconColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
-            disabledLeadingIconColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
-            trailingIconColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
-            disabledTrailingIconColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
-            pressedColor: Color = SeedTheme.colorScheme.contents.neutralPrimary.copy(alpha = .08f),
-            countColors: SeedCount.Colors = SeedCountDefaults.Colors.neutral(),
-            countTextColor: Color = SeedTheme.colorScheme.contents.primary,
-            disabledCountTextColor: Color = SeedTheme.colorScheme.contents.neutralTertiary,
-        ): SeedChip.Colors = chipColors(
-            backgroundColor = backgroundColor,
-            disabledBackgroundColor = disabledBackgroundColor,
-            textColor = textColor,
-            disabledTextColor = disabledTextColor,
-            outlineColor = outlineColor,
-            disabledOutlineColor = disabledOutlineColor,
-            leadingIconColor = leadingIconColor,
-            disabledLeadingIconColor = disabledLeadingIconColor,
-            trailingIconColor = trailingIconColor,
-            disabledTrailingIconColor = disabledTrailingIconColor,
-            pressedColor = pressedColor,
-            countColors = countColors,
-            countTextColor = countTextColor,
-            disabledCountTextColor = disabledCountTextColor,
+    @Composable
+    fun neutralOutlineColors(): SeedChipColors =
+        chipColors(
+            backgroundColor = SeedTheme.colorScheme.container.background,
+            disabledBackgroundColor = SeedTheme.colorScheme.container.neutralSecondary,
+            textColor = SeedTheme.colorScheme.contents.neutralPrimary,
+            disabledTextColor = SeedTheme.colorScheme.contents.neutralTertiary,
+            outlineColor = SeedTheme.colorScheme.container.outline,
+            disabledOutlineColor = SeedTheme.colorScheme.container.neutralTertiary,
+            leadingIconColor = SeedTheme.colorScheme.contents.neutralPrimary,
+            disabledLeadingIconColor = SeedTheme.colorScheme.contents.neutralTertiary,
+            trailingIconColor = SeedTheme.colorScheme.contents.neutralPrimary,
+            disabledTrailingIconColor = SeedTheme.colorScheme.contents.neutralTertiary,
+            pressedColor = SeedTheme.colorScheme.contents.neutralPrimary.copy(alpha = .08f),
+            countColors = SeedCountDefaults.neutralColors(),
+            countTextColor = SeedTheme.colorScheme.contents.primary,
+            disabledCountTextColor = SeedTheme.colorScheme.contents.neutralTertiary,
         )
-    }
 
     @Composable
     fun chipColors(
@@ -183,10 +276,10 @@ object SeedChipDefaults {
         trailingIconColor: Color = Color.Unspecified,
         disabledTrailingIconColor: Color = Color.Unspecified,
         pressedColor: Color = Color.Unspecified,
-        countColors: SeedCount.Colors,
+        countColors: SeedCountColors,
         countTextColor: Color = Color.Unspecified,
         disabledCountTextColor: Color = Color.Unspecified,
-    ): SeedChip.Colors = DefaultSeedChipColors(
+    ): SeedChipColors = DefaultSeedChipColors(
         backgroundColor = backgroundColor,
         disabledBackgroundColor = disabledBackgroundColor,
         textColor = textColor,
@@ -204,6 +297,31 @@ object SeedChipDefaults {
     )
 }
 
+@Stable
+interface SeedChipColors {
+    @Composable
+    fun backgroundColor(enabled: Boolean): State<Color>
+
+    @Composable
+    fun textColor(enabled: Boolean): State<Color>
+
+    @Composable
+    fun outlineColor(enabled: Boolean): State<Color>
+
+    @Composable
+    fun leadingIconColor(enabled: Boolean): State<Color>
+
+    @Composable
+    fun trailingIconColor(enabled: Boolean): State<Color>
+
+    @Composable
+    fun countTextColor(enabled: Boolean): State<Color>
+
+    val countColors: SeedCountColors
+
+    val pressedColor: Color
+}
+
 @Immutable
 private data class DefaultSeedChipColors(
     private val backgroundColor: Color,
@@ -219,8 +337,8 @@ private data class DefaultSeedChipColors(
     private val countTextColor: Color,
     private val disabledCountTextColor: Color,
     override val pressedColor: Color,
-    override val countColors: SeedCount.Colors,
-) : SeedChip.Colors {
+    override val countColors: SeedCountColors,
+) : SeedChipColors {
     @Composable
     override fun backgroundColor(enabled: Boolean): State<Color> =
         rememberUpdatedState(if (enabled) backgroundColor else disabledBackgroundColor)
@@ -307,177 +425,5 @@ object SeedChip {
                 }
                 Rectangle -> 8.dp
             }
-    }
-
-    @Stable
-    interface Colors {
-        @Composable
-        fun backgroundColor(enabled: Boolean): State<Color>
-
-        @Composable
-        fun textColor(enabled: Boolean): State<Color>
-
-        @Composable
-        fun outlineColor(enabled: Boolean): State<Color>
-
-        @Composable
-        fun leadingIconColor(enabled: Boolean): State<Color>
-
-        @Composable
-        fun trailingIconColor(enabled: Boolean): State<Color>
-
-        @Composable
-        fun countTextColor(enabled: Boolean): State<Color>
-
-        val countColors: SeedCount.Colors
-
-        val pressedColor: Color
-    }
-}
-
-@Composable
-fun SeedChip(
-    modifier: Modifier = Modifier,
-    size: SeedChip.Size,
-    style: SeedChip.Style,
-    text: String? = null,
-    textStyle: TextStyle = SeedTheme.typoScheme.body.mediumMedium,
-    leadingImagePainter: Painter? = null,
-    leadingIcon: ImageVector? = null,
-    trailingIcon: ImageVector? = null,
-    count: Int? = null,
-    isCircleCount: Boolean = true,
-    colors: SeedChip.Colors = SeedChipDefaults.Colors.primary(),
-    enabled: Boolean = true,
-    onClick: (() -> Unit)? = null,
-) {
-    if (leadingImagePainter != null && leadingIcon != null) throw IllegalArgumentException("only one leading argument allowed")
-
-    val isImageOnly = text == null && count == null && trailingIcon == null
-    val shape = when (style) {
-        SeedChip.Style.Pill ->
-            if (isImageOnly) CircleShape
-            else RoundedCornerShape(style.radius(size))
-        SeedChip.Style.Rectangle -> RoundedCornerShape(style.radius(size))
-    }
-
-
-    val borderStroke =
-        colors.outlineColor(enabled = enabled).value
-            .takeIf { it.isUnspecified.not() }
-            ?.let { BorderStroke(width = 1.dp, color = it) }
-
-    val interactionSource = remember { MutableInteractionSource() }
-    val backgroundColor = colors.backgroundColor(enabled = enabled).value
-    val isPressed = interactionSource.collectIsPressedAsState()
-    val isHovered = interactionSource.collectIsHoveredAsState()
-    val surfaceColor = remember { Animatable(colors.pressedColor) }
-    when {
-        isHovered.value -> {
-            LaunchedEffect(Unit) {
-                surfaceColor.animateTo(colors.pressedColor.compositeOver(backgroundColor))
-            }
-        }
-        isPressed.value -> {
-            LaunchedEffect(Unit) {
-                surfaceColor.animateTo(colors.pressedColor.compositeOver(backgroundColor))
-            }
-        }
-        else -> {
-            LaunchedEffect(Unit) {
-                surfaceColor.animateTo(backgroundColor)
-            }
-        }
-    }
-
-
-    Surface(
-        modifier = modifier
-            .defaultMinSize(
-                minHeight = size.height,
-                minWidth = if (shape == CircleShape) size.height else SeedChipDefaults.minWidth
-            )
-            .height(size.height),
-        color = surfaceColor.value,
-        shape = shape,
-        border = borderStroke
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = modifier
-                .padding(
-                    start = style.startPadding(size, leadingImagePainter != null),
-                    end = style.endPadding(size),
-                )
-                .then(
-                    onClick?.let {
-                        Modifier.clickable(
-                            interactionSource = interactionSource,
-                            indication = null,
-                            enabled = enabled,
-                            onClick = it,
-                        )
-                    } ?: Modifier
-                )
-        ) {
-            leadingImagePainter?.let {
-                Box(modifier = Modifier
-                    .size(size.imageSize)
-                    .clip(CircleShape)) {
-                    Image(
-                        modifier = modifier.size(40.dp),
-                        painter = it,
-                        contentDescription = ""
-                    )
-                }
-            }
-            leadingIcon?.let {
-                SeedIcon(
-                    modifier = Modifier.size(size.iconSize),
-                    imageVector = it,
-                    contentDescription = it.name,
-                    tint = colors.leadingIconColor(enabled = enabled).value
-                )
-            }
-            text?.let {
-                when {
-                    leadingImagePainter != null -> Spacer(modifier = Modifier.width(8.dp))
-                    leadingIcon != null -> Spacer(modifier = Modifier.width(4.dp))
-                }
-                Box(modifier = modifier.weight(1f, false)) {
-                    SeedText(
-                        text = it,
-                        style = textStyle,
-                        color = colors.textColor(enabled = enabled).value,
-                        overflow = TextOverflow.Ellipsis,
-                        maxLines = 1
-                    )
-                }
-            }
-            count?.let {
-                Spacer(modifier = Modifier.width(2.dp))
-                if (isCircleCount) {
-                    SeedCount(
-                        modifier = Modifier.size(20.dp),
-                        count = it,
-                        colors = colors.countColors)
-                } else {
-                    SeedText(
-                        text = it.toString(),
-                        color = colors.countTextColor(enabled = enabled).value,
-                        style = textStyle,
-                    )
-                }
-            }
-            trailingIcon?.let {
-                Spacer(modifier = Modifier.width(4.dp))
-                SeedIcon(
-                    modifier = Modifier.size(size.iconSize),
-                    imageVector = it,
-                    contentDescription = it.name,
-                    tint = colors.leadingIconColor(enabled = enabled).value
-                )
-            }
-        }
     }
 }

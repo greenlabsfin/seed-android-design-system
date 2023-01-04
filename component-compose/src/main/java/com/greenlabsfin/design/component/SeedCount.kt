@@ -31,82 +31,93 @@ import com.greenlabsfin.design.core.color.SeedColorScheme
 import com.greenlabsfin.design.core.typo.SeedTypoScheme
 
 object SeedCountDefaults {
-    object Colors {
-        @Composable
-        fun primary(
-            textColor: Color = SeedTheme.colorScheme.contents.onPrimary,
-            backgroundColor: Color = SeedTheme.colorScheme.contents.primary
-        ): SeedCount.Colors = DefaultSeedCountColors(
-            textColor = textColor,
-            backgroundColor = backgroundColor
-        )
-
-        @Composable
-        fun secondary(
-            textColor: Color = SeedTheme.colorScheme.contents.primary,
-            backgroundColor: Color = SeedTheme.colorScheme.container.secondary
-        ): SeedCount.Colors = DefaultSeedCountColors(
-            textColor = textColor,
-            backgroundColor = backgroundColor
-        )
-
-        @Composable
-        fun neutral(
-            textColor: Color = SeedTheme.colorScheme.contents.onInverse,
-            backgroundColor: Color = SeedTheme.colorScheme.container.inverse
-        ): SeedCount.Colors = DefaultSeedCountColors(
-            textColor = textColor,
-            backgroundColor = backgroundColor
-        )
-
-        @Composable
-        fun errorPrimary(
-            textColor: Color = SeedTheme.colorScheme.contents.error,
-            backgroundColor: Color = SeedTheme.colorScheme.contents.onPrimary
-        ): SeedCount.Colors = DefaultSeedCountColors(
-            textColor = textColor,
-            backgroundColor = backgroundColor
-        )
-
-        @Composable
-        fun errorSecondary(
-            textColor: Color = SeedTheme.colorScheme.contents.onPrimary,
-            backgroundColor: Color = SeedTheme.colorScheme.contents.error
-        ): SeedCount.Colors = DefaultSeedCountColors(
-            textColor = textColor,
-            backgroundColor = backgroundColor
-        )
-
-    }
+    @Composable
+    fun primaryColors(
+        textColor: Color = SeedTheme.colorScheme.contents.onPrimary,
+        backgroundColor: Color = SeedTheme.colorScheme.contents.primary,
+    ): SeedCountColors = DefaultSeedCountColors(
+        textColor = textColor,
+        backgroundColor = backgroundColor
+    )
 
     @Composable
-    fun getByButtonColor(buttonColor: SeedButton.Colors): SeedCount.Colors =
-        when (buttonColor) {
-            SeedButtonDefaults.Colors.containerPrimary() -> Colors.secondary()
-            SeedButtonDefaults.Colors.outlinePrimary() -> Colors.primary()
-            SeedButtonDefaults.Colors.tintPrimary() -> Colors.primary()
-            SeedButtonDefaults.Colors.outlineNeutral() -> Colors.neutral()
-            SeedButtonDefaults.Colors.tintNeutral() -> Colors.neutral()
-            SeedButtonDefaults.Colors.containerNegative() -> Colors.errorPrimary()
-            SeedButtonDefaults.Colors.tintNegative() -> Colors.errorSecondary()
-            else -> Colors.primary()
-        }
+    fun secondaryColors(
+        textColor: Color = SeedTheme.colorScheme.contents.primary,
+        backgroundColor: Color = SeedTheme.colorScheme.container.secondary,
+    ): SeedCountColors = DefaultSeedCountColors(
+        textColor = textColor,
+        backgroundColor = backgroundColor
+    )
+
+    @Composable
+    fun neutralColors(
+        textColor: Color = SeedTheme.colorScheme.contents.onInverse,
+        backgroundColor: Color = SeedTheme.colorScheme.container.inverse,
+    ): SeedCountColors = DefaultSeedCountColors(
+        textColor = textColor,
+        backgroundColor = backgroundColor
+    )
+
+    @Composable
+    fun errorPrimaryColors(
+        textColor: Color = SeedTheme.colorScheme.contents.error,
+        backgroundColor: Color = SeedTheme.colorScheme.contents.onPrimary,
+    ): SeedCountColors = DefaultSeedCountColors(
+        textColor = textColor,
+        backgroundColor = backgroundColor
+    )
+
+    @Composable
+    fun errorSecondaryColors(
+        textColor: Color = SeedTheme.colorScheme.contents.onPrimary,
+        backgroundColor: Color = SeedTheme.colorScheme.contents.error,
+    ): SeedCountColors = DefaultSeedCountColors(
+        textColor = textColor,
+        backgroundColor = backgroundColor
+    )
 
     @Composable
     fun countColors(
         textColor: Color = Color.Unspecified,
         backgroundColor: Color = Color.Unspecified,
-    ): SeedCount.Colors = DefaultSeedCountColors(
+    ): SeedCountColors = DefaultSeedCountColors(
         textColor = textColor,
         backgroundColor = backgroundColor,
     )
+
+    @Composable
+    fun getByButtonColor(buttonColor: SeedButton.Colors): SeedCountColors =
+        when (buttonColor) {
+            SeedButtonDefaults.Colors.containerPrimary() -> secondaryColors()
+            SeedButtonDefaults.Colors.outlinePrimary() -> primaryColors()
+            SeedButtonDefaults.Colors.tintPrimary() -> primaryColors()
+            SeedButtonDefaults.Colors.outlineNeutral() -> neutralColors()
+            SeedButtonDefaults.Colors.tintNeutral() -> neutralColors()
+            SeedButtonDefaults.Colors.containerNegative() -> errorPrimaryColors()
+            SeedButtonDefaults.Colors.tintNegative() -> errorSecondaryColors()
+            else -> primaryColors()
+        }
 }
+
+
+@Stable
+interface SeedCountColors {
+    @Composable
+    fun backgroundColor(enabled: Boolean): State<Color>
+
+    @Composable
+    fun textColor(enabled: Boolean): State<Color>
+
+    @Composable
+    fun textStyle(textStyle: TextStyle, enabled: Boolean): State<TextStyle>
+}
+
 
 @Immutable
 private data class DefaultSeedCountColors(
     val textColor: Color,
     val backgroundColor: Color,
-) : SeedCount.Colors {
+) : SeedCountColors {
     @Composable
     override fun backgroundColor(enabled: Boolean): State<Color> =
         rememberUpdatedState(if (enabled) backgroundColor else backgroundColor.copy(alpha = .6f))
@@ -149,24 +160,12 @@ object SeedCount {
                 )
             }
     }
-
-    @Stable
-    interface Colors {
-        @Composable
-        fun backgroundColor(enabled: Boolean): State<Color>
-
-        @Composable
-        fun textColor(enabled: Boolean): State<Color>
-
-        @Composable
-        fun textStyle(textStyle: TextStyle, enabled: Boolean): State<TextStyle>
-    }
 }
 
 @Composable
 internal fun SeedCount(
     count: Int,
-    colors: SeedCount.Colors,
+    colors: SeedCountColors,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
     size: SeedCount.Size = SeedCount.Size.Large,
@@ -191,10 +190,6 @@ internal fun SeedCount(
     }
 }
 
-private val counterTextStyle = SeedTypoScheme.custom(
-    size = 12.sp,
-    weight = FontWeight.Medium
-)
 
 @SeedPreview
 @Composable
@@ -202,22 +197,22 @@ fun SeedCountPreview() {
     SeedTheme(colorScheme = SeedColorScheme.default(isSystemInDarkTheme())) {
         Surface(color = SeedTheme.colorScheme.container.background) {
             Column(modifier = Modifier, verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                SeedCount(count = 3, colors = SeedCountDefaults.Colors.primary())
-                SeedCount(count = 33, colors = SeedCountDefaults.Colors.secondary())
+                SeedCount(count = 3, colors = SeedCountDefaults.primaryColors())
+                SeedCount(count = 33, colors = SeedCountDefaults.secondaryColors())
                 SeedCount(
                     size = SeedCount.Size.Small,
                     count = 3,
-                    colors = SeedCountDefaults.Colors.neutral()
+                    colors = SeedCountDefaults.neutralColors()
                 )
                 SeedCount(
                     size = SeedCount.Size.Small,
                     count = 333,
-                    colors = SeedCountDefaults.Colors.errorPrimary()
+                    colors = SeedCountDefaults.errorPrimaryColors()
                 )
                 SeedCount(
                     size = SeedCount.Size.Medium,
                     count = 3,
-                    colors = SeedCountDefaults.Colors.errorSecondary(),
+                    colors = SeedCountDefaults.errorSecondaryColors(),
                 )
             }
         }

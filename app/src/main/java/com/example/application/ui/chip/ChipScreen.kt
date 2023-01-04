@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Delete
@@ -15,10 +16,11 @@ import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import coil.size.Size
-import com.example.application.ui.theme.GFSampleTheme
+import com.example.application.ui.theme.SeedSampleTheme
 import com.example.application.util.ThemedPreview
 import com.greenlabsfin.design.component.SeedChip
 import com.greenlabsfin.design.component.SeedChipDefaults
+import com.greenlabsfin.design.core.SeedTheme
 
 @Composable
 fun ChipScreen() {
@@ -36,7 +38,7 @@ fun ChipScreen() {
             modifier = Modifier.width(200.dp),
             size = SeedChip.Size.Large,
             style = SeedChip.Style.Pill,
-            colors = SeedChipDefaults.Colors.neutralOutline(),
+            colors = SeedChipDefaults.neutralOutlineColors(),
             text = "귤귤귤귤귤귤귤귤귤귤귤귤귤귤귤",
             leadingImagePainter = painter
         ) {
@@ -47,10 +49,11 @@ fun ChipScreen() {
             modifier = Modifier.width(200.dp),
             size = SeedChip.Size.Large,
             style = SeedChip.Style.Rectangle,
-            colors = SeedChipDefaults.Colors.primary(),
+            colors = SeedChipDefaults.primaryColors(),
             text = "귤귤귤귤귤귤귤귤귤귤귤귤귤귤귤",
             leadingIcon = Icons.Default.Search,
             trailingIcon = Icons.Default.Delete,
+            clickable = false,
         ) {
 
         }
@@ -59,7 +62,7 @@ fun ChipScreen() {
             modifier = Modifier.width(200.dp),
             size = SeedChip.Size.Large,
             style = SeedChip.Style.Pill,
-            colors = SeedChipDefaults.Colors.primary(),
+            colors = SeedChipDefaults.primaryColors(),
             text = "귤귤귤귤귤귤귤귤귤귤귤귤귤귤귤",
             leadingImagePainter = painter,
             count = 3,
@@ -72,7 +75,7 @@ fun ChipScreen() {
             modifier = Modifier.width(200.dp),
             size = SeedChip.Size.Large,
             style = SeedChip.Style.Pill,
-            colors = SeedChipDefaults.Colors.neutralOutline(),
+            colors = SeedChipDefaults.neutralOutlineColors(),
             text = "귤귤귤귤귤귤귤귤귤귤귤귤귤귤귤",
             leadingImagePainter = painter,
             count = 3,
@@ -88,7 +91,9 @@ fun ChipScreen() {
 @ThemedPreview
 @Composable
 fun ChipScreenPreview() {
-    GFSampleTheme {
-        ChipScreen()
+    SeedSampleTheme {
+        Surface(color = SeedTheme.colorScheme.container.background) {
+            ChipScreen()
+        }
     }
 }
