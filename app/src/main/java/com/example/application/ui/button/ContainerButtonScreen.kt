@@ -13,7 +13,7 @@ import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.application.ui.theme.GFSampleTheme
+import com.example.application.ui.theme.SeedSampleTheme
 import com.example.application.util.ThemedPreview
 import com.greenlabsfin.design.component.SeedButton
 import com.greenlabsfin.design.component.SeedButtonDefaults
@@ -110,7 +110,7 @@ fun ContainerButtonScreen() {
 @ThemedPreview
 @Composable
 fun ContainerButtonScreenPreview() {
-    GFSampleTheme {
+    SeedSampleTheme {
         ContainerButtonScreen()
     }
 }

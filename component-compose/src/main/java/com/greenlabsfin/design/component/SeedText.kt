@@ -1,7 +1,6 @@
 package com.greenlabsfin.design.component
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
@@ -11,41 +10,45 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Badge
 import androidx.compose.material.BadgedBox
-import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.takeOrElse
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import com.greenlabsfin.design.core.SeedTheme
 import com.greenlabsfin.design.core.LocalSeedColorScheme
 import com.greenlabsfin.design.core.LocalSeedTextStyle
+import com.greenlabsfin.design.core.SeedTheme
 import com.greenlabsfin.design.core.color.red60
 
 @Composable
 fun SeedText(
     modifier: Modifier = Modifier,
     text: String,
-    leadingIcon: ImageVector? = null,
+    leadingIcon: Painter? = null,
+    leadingIconContentDescription: String? = null,
     leadingIconColor: Color = Color.Unspecified,
-    trailingIcon: ImageVector? = null,
+    trailingIcon: Painter? = null,
+    trailingIconContentDescription: String? = null,
     trailingIconColor: Color = Color.Unspecified,
     iconAlignment: Alignment.Vertical = Alignment.CenterVertically,
     count: Int? = null,
-    countColors: SeedCount.Colors? = null,
+    countColors: SeedCountColors? = null,
     badge: Boolean = false,
     color: Color = Color.Unspecified,
     overflow: TextOverflow = TextOverflow.Clip,
@@ -82,18 +85,33 @@ fun SeedText(
                 else takenTrailingIconColor.copy(alpha = .3f)
             )
 
+    val leadingContent: Pair<Painter, String?>?
+    val trailingContent: Pair<Painter, String?>?
+    when (LocalLayoutDirection.current) {
+        LayoutDirection.Ltr -> {
+            leadingContent = leadingIcon?.let { it to leadingIconContentDescription }
+            trailingContent = trailingIcon?.let { it to trailingIconContentDescription }
+        }
+        LayoutDirection.Rtl -> {
+            leadingContent = trailingIcon?.let { it to trailingIconContentDescription }
+            trailingContent = leadingIcon?.let { it to leadingIconContentDescription }
+        }
+    }
+
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        leadingIcon?.let { imageVector ->
-            Icon(
-                modifier = modifier
+        leadingContent?.let {
+            val painter = it.first
+            val contentDescription = it.second
+            SeedIcon(
+                modifier = Modifier
                     .weight(1f, false)
                     .align(iconAlignment),
-                imageVector = imageVector,
-                contentDescription = imageVector.name,
+                painter = painter,
+                contentDescription = contentDescription,
                 tint = leadingColor
             )
         }
@@ -137,13 +155,15 @@ fun SeedText(
                 }
             }
         }
-        trailingIcon?.let { imageVector ->
-            Icon(
-                modifier = modifier
+        trailingContent?.let {
+            val painter = it.first
+            val contentDescription = it.second
+            SeedIcon(
+                modifier = Modifier
                     .weight(1f, false)
                     .align(iconAlignment),
-                imageVector = imageVector,
-                contentDescription = imageVector.name,
+                painter = painter,
+                contentDescription = contentDescription,
                 tint = trailingColor
             )
         }
@@ -154,24 +174,21 @@ fun SeedText(
 @Composable
 fun SeedTextPreview() {
     SeedTheme {
-        Surface(
-            color = SeedTheme.colorScheme.container.background
+        CompositionLocalProvider(
+            LocalLayoutDirection provides LayoutDirection.Ltr
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(20.dp),
-                verticalArrangement = Arrangement.spacedBy(4.dp)
+            Surface(
+                color = SeedTheme.colorScheme.container.background
             ) {
                 SeedText(
                     modifier = Modifier.fillMaxWidth(),
-                    leadingIcon = Icons.Filled.Menu,
+                    leadingIcon = Icons.Filled.Menu.toPainter(),
                     text = "텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트텍스트",
                     badge = true,
                     count = 3,
                     style = SeedTheme.typoScheme.headline.largeBold,
-                    countColors = SeedCountDefaults.Colors.neutral(),
-                    trailingIcon = Icons.Filled.ArrowDropDown,
+                    countColors = SeedCountDefaults.neutralColors(),
+                    trailingIcon = Icons.Filled.ArrowDropDown.toPainter(),
                     overflow = TextOverflow.Ellipsis,
                     maxLines = 2,
                     iconAlignment = Alignment.Top,
@@ -179,24 +196,24 @@ fun SeedTextPreview() {
 
                 SeedText(
                     modifier = Modifier.width(200.dp),
-                    leadingIcon = Icons.Filled.Menu,
+                    leadingIcon = Icons.Filled.Menu.toPainter(),
                     text = "텍스트",
                     count = 3,
                     badge = true,
                     style = SeedTheme.typoScheme.headline.largeBold,
-                    countColors = SeedCountDefaults.Colors.neutral(),
-                    trailingIcon = Icons.Filled.ArrowDropDown
+                    countColors = SeedCountDefaults.neutralColors(),
+                    trailingIcon = Icons.Filled.ArrowDropDown.toPainter()
                 )
 
                 SeedText(
                     modifier = Modifier.wrapContentSize(),
-                    leadingIcon = Icons.Filled.Menu,
+                    leadingIcon = Icons.Filled.Menu.toPainter(),
                     text = "텍스트",
                     badge = true,
                     count = 3,
                     style = SeedTheme.typoScheme.body.smallMedium,
-                    countColors = SeedCountDefaults.Colors.neutral(),
-                    trailingIcon = Icons.Filled.ArrowDropDown
+                    countColors = SeedCountDefaults.neutralColors(),
+                    trailingIcon = Icons.Filled.ArrowDropDown.toPainter()
                 )
             }
         }

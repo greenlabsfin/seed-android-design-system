@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
@@ -19,12 +20,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.application.ui.theme.GFSampleTheme
+import com.example.application.ui.theme.SeedSampleTheme
 import com.example.application.util.ThemedPreview
-import com.greenlabsfin.design.component.SeedFillTextField
 import com.greenlabsfin.design.component.SeedIcon
-import com.greenlabsfin.design.component.SeedLineTextField
-import com.greenlabsfin.design.component.SeedOutlineTextField
 import com.greenlabsfin.design.component.SeedText
 import com.greenlabsfin.design.component.SeedTextField
 import com.greenlabsfin.design.core.SeedTheme
@@ -41,9 +39,10 @@ fun TextFieldScreen() {
     ) {
         var text by remember { mutableStateOf("") }
         Spacer(modifier = Modifier.height(20.dp))
-        SeedOutlineTextField(
+        SeedTextField(
+            style = SeedTextField.Style.Outline,
             modifier = Modifier.fillMaxWidth(),
-            height = SeedTextField.Height.Medium,
+            height = SeedTextField.Size.Medium,
             value = text,
             label = "Medium Outline Error with hint",
             placeholder = "Placeholder",
@@ -61,9 +60,10 @@ fun TextFieldScreen() {
             }
         )
 
-        SeedOutlineTextField(
+        SeedTextField(
+            style = SeedTextField.Style.Outline,
             modifier = Modifier.fillMaxWidth(),
-            height = SeedTextField.Height.Small,
+            height = SeedTextField.Size.Small,
             value = text,
             label = "Small Outline Disabled",
             placeholder = "Placeholder",
@@ -80,9 +80,10 @@ fun TextFieldScreen() {
             enabled = false
         )
 
-        SeedOutlineTextField(
+        SeedTextField(
+            style = SeedTextField.Style.Outline,
             modifier = Modifier.fillMaxWidth(),
-            height = SeedTextField.Height.XSmall,
+            height = SeedTextField.Size.XSmall,
             value = text,
             label = "XSmall Outline Read Only",
             placeholder = "Placeholder",
@@ -99,9 +100,10 @@ fun TextFieldScreen() {
             readOnly = true
         )
 
-        SeedFillTextField(
+        SeedTextField(
+            style = SeedTextField.Style.Fill,
             modifier = Modifier.fillMaxWidth(),
-            height = SeedTextField.Height.Medium,
+            height = SeedTextField.Size.Medium,
             value = text,
             label = "Medium Fill Error with Hint",
             placeholder = "Placeholder",
@@ -120,9 +122,10 @@ fun TextFieldScreen() {
             }
         )
 
-        SeedFillTextField(
+        SeedTextField(
+            style = SeedTextField.Style.Fill,
             modifier = Modifier.fillMaxWidth(),
-            height = SeedTextField.Height.Small,
+            height = SeedTextField.Size.Small,
             value = text,
             label = "Small Fill Disabled",
             placeholder = "Placeholder",
@@ -139,9 +142,10 @@ fun TextFieldScreen() {
             enabled = false
         )
 
-        SeedFillTextField(
+        SeedTextField(
+            style = SeedTextField.Style.Fill,
             modifier = Modifier.fillMaxWidth(),
-            height = SeedTextField.Height.XSmall,
+            height = SeedTextField.Size.XSmall,
             value = text,
             label = "XSmall Fill TextField",
             placeholder = "Placeholder",
@@ -157,7 +161,8 @@ fun TextFieldScreen() {
             },
         )
 
-        SeedLineTextField(
+        SeedTextField(
+            style = SeedTextField.Style.Line,
             modifier = Modifier.fillMaxWidth(),
             value = text,
             onValueChange = { text = it },
@@ -168,7 +173,8 @@ fun TextFieldScreen() {
             errorText = "Error Error Error"
         )
 
-        SeedLineTextField(
+        SeedTextField(
+            style = SeedTextField.Style.Line,
             modifier = Modifier.fillMaxWidth(),
             value = text,
             onValueChange = { text = it },
@@ -179,13 +185,16 @@ fun TextFieldScreen() {
             enabled = false
         )
         Spacer(modifier = Modifier.height(20.dp))
+//        Spacer(modifier = Modifier.height(with(density) { bottomPadding.toDp() }))
     }
 }
 
 @ThemedPreview
 @Composable
 fun TextFieldScreenPreview() {
-    GFSampleTheme {
-        TextFieldScreen()
+    SeedSampleTheme {
+        Surface(color = SeedTheme.colorScheme.container.background) {
+            TextFieldScreen()
+        }
     }
 }

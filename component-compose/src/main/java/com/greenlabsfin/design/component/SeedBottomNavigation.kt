@@ -35,8 +35,8 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.greenlabsfin.design.core.SeedTheme
 import com.greenlabsfin.design.core.LocalSeedBackgroundColor
+import com.greenlabsfin.design.core.SeedTheme
 import com.greenlabsfin.design.core.color.red60
 
 object SeedBottomNavigationDefaults {
@@ -78,11 +78,16 @@ fun SeedBottomNavigation(
 
     val heightPixel = with(LocalDensity.current) { SeedBottomNavigationDefaults.height.toPx() }
     val yPosition by animateFloatAsState(
-        if (state.visible.not() && hideWhileScrollUp) heightPixel else 0f,
+        targetValue = when {
+            state.visible.not() && hideWhileScrollUp -> heightPixel
+            else -> 0f
+        },
         animationSpec = defaultBarVisibilityAnimationSpec(),
     )
     val animatedHeight by animateDpAsState(
-        targetValue = if (state.visible) SeedBottomNavigationDefaults.height else 0.dp,
+        targetValue =
+        if (state.visible) SeedBottomNavigationDefaults.height
+        else 0.dp,
         animationSpec = defaultBarVisibilityAnimationSpec()
     )
 
@@ -92,8 +97,10 @@ fun SeedBottomNavigation(
         modifier = modifier.then(
             if (state.animated) Modifier.graphicsLayer { translationY = yPosition }
             else Modifier.offset(
-                y = if (state.visible.not() && hideWhileScrollUp) SeedBottomNavigationDefaults.height
-                else 0.dp
+                y = when {
+                    state.visible.not() && hideWhileScrollUp -> SeedBottomNavigationDefaults.height
+                    else -> 0.dp
+                }
             )
         ),
         shape = RoundedCornerShape(topEnd = 12.dp, topStart = 12.dp)
@@ -128,7 +135,7 @@ fun RowScope.SeedBottomNavigationItem(
     unselectedContentColor: Color = SeedTheme.colorScheme.contents.neutralSecondary,
     enabled: Boolean = true,
     count: Int? = null,
-    countColor: SeedCount.Colors = SeedCountDefaults.Colors.errorSecondary(),
+    countColor: SeedCountColors = SeedCountDefaults.errorSecondaryColors(),
     badge: Boolean = false,
     label: @Composable (() -> Unit)? = null,
     alwaysShowLabel: Boolean = true,
@@ -207,7 +214,7 @@ private fun BoxScope.SeedBottomNavigationIcon(
     unselectedContentColor: Color,
     badge: Boolean,
     count: Int?,
-    countColor: SeedCount.Colors,
+    countColor: SeedCountColors,
 ) {
     Crossfade(targetState = selected) {
         SeedIcon(

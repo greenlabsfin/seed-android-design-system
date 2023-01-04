@@ -39,16 +39,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.example.application.R
-import com.example.application.ui.theme.GFSampleTheme
+import com.example.application.ui.theme.SeedSampleTheme
 import com.example.application.util.ThemedPreview
-import com.greenlabsfin.design.component.SeedButton
 import com.greenlabsfin.design.component.SeedBottomSheetState
 import com.greenlabsfin.design.component.SeedBottomSheetValue
+import com.greenlabsfin.design.component.SeedButton
 import com.greenlabsfin.design.component.SeedButtonDefaults
+import com.greenlabsfin.design.component.SeedCheckbox
 import com.greenlabsfin.design.component.SeedIcon
 import com.greenlabsfin.design.component.SeedText
 import com.greenlabsfin.design.component.SeedTextButton
-import com.greenlabsfin.design.component.SeedCheckbox
 import com.greenlabsfin.design.component.rememberSeedBottomSheetState
 import com.greenlabsfin.design.component.util.DecorateBackground
 import com.greenlabsfin.design.core.SeedTheme
@@ -102,7 +102,9 @@ fun BottomSheetScreen(
                         contentDescription = "launcher"
                     )
                     Spacer(modifier = Modifier.width(10.dp))
-                    Column {
+                    Column(
+
+                    ) {
                         SeedText(
                             text = "Marketing Title",
                             style = SeedTheme.typoScheme.body.smallBold,
@@ -294,7 +296,7 @@ fun PlccBannerContent(
 @ThemedPreview
 @Composable
 fun BottomSheetScreenPreview() {
-    GFSampleTheme {
+    SeedSampleTheme {
         Surface(color = SeedTheme.colorScheme.container.background) {
 //            BottomSheetScreen()
             PlccBannerContent()

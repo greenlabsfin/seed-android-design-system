@@ -29,6 +29,7 @@ import com.greenlabsfin.design.component.SeedDropdown
 import com.greenlabsfin.design.component.SeedIcon
 import com.greenlabsfin.design.component.SeedText
 import com.greenlabsfin.design.component.SeedTextButton
+import com.greenlabsfin.design.component.toPainter
 import com.greenlabsfin.design.core.SeedTheme
 
 @Composable
@@ -81,7 +82,7 @@ fun DropdownScreen() {
             isExpanded = textExpanded,
             placeholder = {
                 SeedTextButton(text = selectedTextDropdownItem,
-                    rightIcon = if (textExpanded) Icons.Filled.ArrowDropDown else Icons.Filled.ThumbUp) {
+                    trailingIcon = if (textExpanded) Icons.Filled.ArrowDropDown.toPainter() else Icons.Filled.ThumbUp.toPainter()) {
                     textExpanded = textExpanded.not()
                 }
             },
