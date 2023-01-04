@@ -8,6 +8,8 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
@@ -23,11 +25,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.greenlabsfin.design.core.SeedTheme
 import com.greenlabsfin.design.core.LocalSeedBackgroundColor
+import com.greenlabsfin.design.core.SeedTheme
 
 object SeedTopBarDefaults {
     val height = 56.dp
@@ -149,4 +152,16 @@ fun SeedTopBar(
             }
         }
     }
+}
+
+@Composable
+private fun PaddingValues.merge(other: PaddingValues): PaddingValues {
+    val layoutDirection = LocalLayoutDirection.current
+    return PaddingValues(
+        start = calculateStartPadding(layoutDirection).plus(other.calculateStartPadding(
+            layoutDirection)),
+        top = calculateTopPadding().plus(other.calculateTopPadding()),
+        bottom = calculateBottomPadding().plus(other.calculateBottomPadding()),
+        end = calculateEndPadding(layoutDirection).plus(other.calculateEndPadding(layoutDirection))
+    )
 }

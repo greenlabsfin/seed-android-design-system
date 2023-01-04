@@ -1,11 +1,32 @@
-@file:JvmName("SeedTextFieldKt")
-
 package com.greenlabsfin.design.component
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.InteractionSource
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Divider
+import androidx.compose.material.Icon
+import androidx.compose.material.Surface
 import androidx.compose.material.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -13,19 +34,313 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.greenlabsfin.design.component.icons.Icons
+import com.greenlabsfin.design.component.icons.filled.Delete
+import com.greenlabsfin.design.core.LocalSeedContentColor
 import com.greenlabsfin.design.core.SeedTheme
-import com.greenlabsfin.design.core.LocalSeedContainerColor
 import com.greenlabsfin.design.core.typo.ProvideSeedTextStyle
+import kotlinx.coroutines.android.awaitFrame
+import kotlinx.coroutines.launch
+
+@Composable
+fun SeedTextField(
+    value: String,
+    style: SeedTextField.Style,
+    modifier: Modifier = Modifier,
+    height: SeedTextField.Size? = null,
+    label: String? = null,
+    textStyle: TextStyle = SeedTheme.typoScheme.body.mediumRegular,
+    labelTextStyle: TextStyle = SeedTheme.typoScheme.body.mediumBold,
+    placeholder: String = "",
+    prefix: @Composable () -> Unit = {},
+    suffix: @Composable () -> Unit = {},
+    suffixTextStyle: TextStyle? = SeedTheme.typoScheme.body.smallRegular.merge(TextStyle(color = SeedTheme.colorScheme.contents.neutralTertiary)),
+    colors: SeedTextFieldColors = SeedTextFieldDefaults.defaultColorsByStyle(style),
+    enabled: Boolean = true,
+    readOnly: Boolean = false,
+    isError: Boolean = false,
+    errorText: String? = null,
+    singleLine: Boolean = true,
+    showClear: Boolean = true,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    maxLines: Int = Int.MAX_VALUE,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    onValueChange: (String) -> Unit,
+) {
+    when (style) {
+        SeedTextField.Style.Line -> SeedLineTextField(
+            modifier = modifier,
+            value = value,
+            colors = colors,
+            label = label,
+            textStyle = textStyle,
+            labelTextStyle = labelTextStyle,
+            placeholder = placeholder,
+            prefix = prefix,
+            suffix = suffix,
+            suffixTextStyle = suffixTextStyle,
+            enabled = enabled,
+            readOnly = readOnly,
+            isError = isError,
+            errorText = errorText,
+            singleLine = singleLine,
+            showClear = showClear,
+            visualTransformation = visualTransformation,
+            keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions,
+            maxLines = maxLines,
+            interactionSource = interactionSource,
+            onValueChange = onValueChange,
+        )
+        else -> SeedBoxTextField(
+            modifier = modifier,
+            style = style,
+            height = height ?: throw NullPointerException("height must require"),
+            value = value,
+            colors = colors,
+            label = label,
+            textStyle = textStyle,
+            labelTextStyle = labelTextStyle,
+            placeholder = placeholder,
+            prefix = prefix,
+            suffix = suffix,
+            suffixTextStyle = suffixTextStyle,
+            enabled = enabled,
+            isError = isError,
+            errorText = errorText,
+            singleLine = singleLine,
+            showClear = showClear,
+            visualTransformation = visualTransformation,
+            keyboardOptions = keyboardOptions,
+            keyboardActions = keyboardActions,
+            maxLines = maxLines,
+            interactionSource = interactionSource,
+            onValueChange = onValueChange,
+        )
+    }
+}
+
+@Composable
+private fun SeedLineTextField(
+    value: String,
+    modifier: Modifier = Modifier,
+    label: String? = null,
+    textStyle: TextStyle = SeedTheme.typoScheme.body.mediumRegular,
+    labelTextStyle: TextStyle = SeedTheme.typoScheme.body.mediumBold,
+    placeholder: String = "",
+    prefix: @Composable () -> Unit = {},
+    suffix: @Composable () -> Unit = {},
+    suffixTextStyle: TextStyle? = SeedTheme.typoScheme.body.smallRegular.merge(TextStyle(color = SeedTheme.colorScheme.contents.neutralTertiary)),
+    colors: SeedTextFieldColors = SeedTextFieldDefaults.lineTextFieldColors(),
+    enabled: Boolean = true,
+    readOnly: Boolean = false,
+    isError: Boolean = false,
+    errorText: String? = null,
+    singleLine: Boolean = true,
+    showClear: Boolean = true,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    maxLines: Int = Int.MAX_VALUE,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    onValueChange: (String) -> Unit,
+) {
+    val scope = rememberCoroutineScope()
+    val isFocused = interactionSource.collectIsFocusedAsState()
+    val bringIntoViewRequester = remember { BringIntoViewRequester() }
+    val labelColor = colors.labelColor(
+        enabled = enabled,
+        error = isError,
+        interactionSource = interactionSource,
+    )
+    val visibleClear = rememberUpdatedState(
+        when {
+            showClear.not() -> false
+            readOnly -> false
+            enabled.not() -> false
+            isFocused.value && value.isNotEmpty() -> true
+            else -> false
+        }
+    )
+    val textColor = textStyle.color.takeOrElse {
+        colors.textColor(enabled).value
+    }
+    val mergedTextStyle = textStyle.merge(TextStyle(color = textColor))
+    val indicatorColor = colors.indicatorColor(
+        enabled = enabled,
+        isError = isError,
+        readOnly = readOnly,
+        interactionSource = interactionSource
+    )
+
+    val backgroundColor = colors.backgroundColor(enabled = enabled, readOnly = readOnly)
+    Column(modifier = modifier.bringIntoViewRequester(bringIntoViewRequester)) {
+        label?.let {
+            SeedText(
+                text = label,
+                modifier = modifier,
+                color = labelColor.value,
+                style = labelTextStyle,
+            )
+            Spacer(modifier = Modifier.height(2.dp))
+        }
+
+        Surface(
+            modifier = modifier
+                .defaultMinSize(
+                    minWidth = SeedTextFieldDefaults.minWidth,
+                    minHeight = SeedTextFieldDefaults.minHeight,
+                )
+                .wrapContentHeight(),
+            color = backgroundColor.value,
+        ) {
+            Row(
+                modifier = modifier,
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                Decoration(
+                    contentColor = colors.leadingIconColor(
+                        enabled = enabled,
+                        isError = isError
+                    ).value,
+                    content = prefix)
+
+                Box(modifier = modifier.weight(1f, false)) {
+                    BasicTextField(
+                        value = value,
+                        onValueChange = onValueChange,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .onFocusEvent {
+                                if (it.isFocused) {
+                                    scope.launch {
+                                        awaitFrame()
+                                        bringIntoViewRequester.bringIntoView()
+                                    }
+                                }
+                            },
+                        enabled = enabled,
+                        readOnly = readOnly,
+                        textStyle = mergedTextStyle,
+                        visualTransformation = visualTransformation,
+                        keyboardOptions = keyboardOptions,
+                        keyboardActions = keyboardActions,
+                        maxLines = maxLines,
+                        singleLine = singleLine,
+                        interactionSource = interactionSource,
+                        cursorBrush = SolidColor(colors.cursorColor(isError).value)
+                    )
+                    if (value.isBlank()) {
+                        SeedText(
+                            text = placeholder,
+                            style = mergedTextStyle,
+                            color = colors.placeholderColor(enabled = enabled).value
+                        )
+                    }
+                }
+                if (visibleClear.value) {
+                    Icon(
+                        modifier = Modifier
+                            .size(20.dp)
+                            .clickable(
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null
+                            ) {
+                                onValueChange("")
+                            },
+                        imageVector = Icons.Filled.Delete,
+                        contentDescription = "clear",
+                        tint = SeedTheme.colorScheme.contents.neutralTertiary,
+                    )
+                }
+                Decoration(
+                    contentColor = colors.trailingIconColor(
+                        enabled = enabled,
+                        isError = isError
+                    ).value,
+                    typography = suffixTextStyle,
+                    content = suffix
+                )
+            }
+        }
+
+        Divider(
+            color = indicatorColor.value,
+            thickness = 2.dp
+        )
+
+        errorText?.let {
+            if (isError) {
+                Spacer(modifier = Modifier.height(4.dp))
+                SeedText(
+                    text = errorText,
+                    style = SeedTheme.typoScheme.body.smallRegular,
+                    color = SeedTheme.colorScheme.contents.error,
+                )
+            }
+        }
+    }
+}
+
+object SeedTextField {
+    enum class Style {
+        Outline,
+        Fill,
+        Line,
+    }
+
+    enum class Size(val value: Dp) {
+        XLarge(64.dp),
+        Large(56.dp),
+        Medium(48.dp),
+        Small(40.dp),
+        XSmall(32.dp);
+
+        val typography: TextStyle
+            @Composable
+            get() = when (this) {
+                XLarge -> SeedTheme.typoScheme.body.xLargeBold
+                Large -> SeedTheme.typoScheme.body.largeBold
+                Medium -> SeedTheme.typoScheme.body.mediumMedium
+                else -> SeedTheme.typoScheme.body.smallMedium
+            }
+
+        val radius: Dp
+            get() = when (this) {
+                XLarge, Large -> 12.dp
+                Medium -> 10.dp
+                Small, XSmall -> 8.dp
+            }
+    }
+}
 
 @Immutable
 object SeedTextFieldDefaults {
-
-    val minWidth = 280.dp
+    val minWidth = 24.dp
     val minHeight = 32.dp
+
+    @Composable
+    fun defaultColorsByStyle(style: SeedTextField.Style): SeedTextFieldColors = when (style) {
+        SeedTextField.Style.Outline -> outlineTextFieldColors()
+        SeedTextField.Style.Fill -> fillTextFieldColors()
+        SeedTextField.Style.Line -> lineTextFieldColors()
+    }
 
     @Composable
     fun fillTextFieldColors(
@@ -345,10 +660,182 @@ internal fun Decoration(
     content: @Composable () -> Unit,
 ) {
     val colorAndEmphasis: @Composable () -> Unit = @Composable {
-        CompositionLocalProvider(LocalSeedContainerColor provides contentColor, content = content)
+        CompositionLocalProvider(LocalSeedContentColor provides contentColor, content = content)
     }
 
     typography?.let { ProvideSeedTextStyle(it, colorAndEmphasis) } ?: colorAndEmphasis()
 }
 
+@Composable
+private fun SeedBoxTextField(
+    modifier: Modifier = Modifier,
+    style: SeedTextField.Style,
+    height: SeedTextField.Size,
+    value: String,
+    colors: SeedTextFieldColors,
+    label: String? = null,
+    textStyle: TextStyle = SeedTheme.typoScheme.body.mediumRegular,
+    labelTextStyle: TextStyle = SeedTheme.typoScheme.body.mediumBold,
+    placeholder: String = "",
+    prefix: @Composable (() -> Unit)? = null,
+    suffix: @Composable (() -> Unit)? = null,
+    suffixTextStyle: TextStyle? = null,
+    enabled: Boolean = true,
+    readOnly: Boolean = false,
+    isError: Boolean = false,
+    errorText: String? = null,
+    singleLine: Boolean = true,
+    showClear: Boolean = true,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
+    maxLines: Int = Int.MAX_VALUE,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    onValueChange: (String) -> Unit,
+) {
+    val scope = rememberCoroutineScope()
+    val isFocused = interactionSource.collectIsFocusedAsState()
+    val bringIntoViewRequester = remember { BringIntoViewRequester() }
+    val labelColor = colors.labelColor(
+        enabled = enabled,
+        error = isError,
+        interactionSource = interactionSource,
+    )
+    val visibleClear = rememberUpdatedState(
+        // 순서 바꾸지 말것!!
+        when {
+            showClear.not() -> false
+            readOnly -> false
+            enabled.not() -> false
+            isFocused.value && value.isNotEmpty() -> true
+            else -> false
+        }
+    )
+    val textColor = textStyle.color.takeOrElse { colors.textColor(enabled).value }
+    val mergedTextStyle = textStyle.merge(TextStyle(color = textColor))
+    val outlineColor = colors.indicatorColor(
+        enabled = enabled,
+        isError = isError,
+        readOnly = readOnly,
+        interactionSource = interactionSource
+    )
+    val backgroundColor = colors.backgroundColor(enabled = enabled, readOnly = readOnly)
+    val borderStroke = when (style) {
+        SeedTextField.Style.Outline -> BorderStroke(width = 1.dp, color = outlineColor.value)
+        SeedTextField.Style.Fill ->
+            if (isError) BorderStroke(width = 1.dp, color = outlineColor.value)
+            else null
+        else -> throw IllegalArgumentException("unsupported style:${style.name}")
+    }
 
+    Column(modifier = modifier.bringIntoViewRequester(bringIntoViewRequester)) {
+        label?.let {
+            SeedText(
+                text = label,
+                modifier = modifier,
+                color = labelColor.value,
+                style = labelTextStyle,
+            )
+            Spacer(modifier = Modifier.height(2.dp))
+        }
+
+        Surface(
+            modifier = modifier
+                .defaultMinSize(
+                    minWidth = SeedTextFieldDefaults.minWidth,
+                    minHeight = SeedTextFieldDefaults.minHeight,
+                )
+                .height(height.value),
+            color = backgroundColor.value,
+            border = borderStroke,
+            shape = RoundedCornerShape(height.radius)
+        ) {
+            Row(
+                modifier = modifier.padding(horizontal = 20.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                prefix?.let {
+                    Decoration(
+                        contentColor = colors.leadingIconColor(
+                            enabled = enabled,
+                            isError = isError
+                        ).value,
+                        content = prefix
+                    )
+                }
+
+
+                Box(modifier = modifier.weight(1f, false)) {
+                    BasicTextField(
+                        value = value,
+                        onValueChange = onValueChange,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .onFocusEvent {
+                                if (it.isFocused) {
+                                    scope.launch {
+                                        awaitFrame()
+                                        bringIntoViewRequester.bringIntoView()
+                                    }
+                                }
+                            },
+                        enabled = enabled,
+                        readOnly = readOnly,
+                        textStyle = mergedTextStyle,
+                        visualTransformation = visualTransformation,
+                        keyboardOptions = keyboardOptions,
+                        keyboardActions = keyboardActions,
+                        maxLines = maxLines,
+                        singleLine = singleLine,
+                        interactionSource = interactionSource,
+                        cursorBrush = SolidColor(colors.cursorColor(isError).value)
+                    )
+                    if (value.isBlank()) {
+                        SeedText(
+                            text = placeholder,
+                            style = mergedTextStyle,
+                            color = colors.placeholderColor(enabled = enabled).value
+                        )
+                    }
+                }
+                if (visibleClear.value) {
+                    Icon(
+                        modifier = Modifier
+                            .size(20.dp)
+                            .clickable(
+                                interactionSource = remember { MutableInteractionSource() },
+                                indication = null
+                            ) {
+                                onValueChange("")
+                            },
+                        imageVector = Icons.Filled.Delete,
+                        contentDescription = "clear",
+                        tint = SeedTheme.colorScheme.contents.neutralTertiary,
+                    )
+                }
+                suffix?.let {
+                    Decoration(
+                        contentColor = colors.trailingIconColor(
+                            enabled = enabled,
+                            isError = isError
+                        ).value,
+                        typography = suffixTextStyle,
+                        content = suffix
+                    )
+                }
+            }
+        }
+
+        errorText?.let {
+            if (isError) {
+                Spacer(modifier = Modifier.height(4.dp))
+                SeedText(
+                    text = errorText,
+                    style = SeedTheme.typoScheme.body.smallRegular,
+                    color = SeedTheme.colorScheme.contents.error,
+                )
+            }
+        }
+    }
+}

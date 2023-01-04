@@ -35,7 +35,7 @@ fun SeedButton(
     leftIcon: ImageVector? = null,
     rightIcon: ImageVector? = null,
     count: Int? = null,
-    countColors: SeedCount.Colors? = null,
+    countColors: SeedCountColors? = null,
     onClick: () -> Unit,
 ) {
     Button(

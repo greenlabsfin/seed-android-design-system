@@ -30,7 +30,7 @@ import com.example.application.ui.control.ControlScreen
 import com.example.application.ui.dialog.DialogScreen
 import com.example.application.ui.dropdown.DropdownScreen
 import com.example.application.ui.textfield.TextFieldScreen
-import com.example.application.ui.theme.GFSampleTheme
+import com.example.application.ui.theme.SeedSampleTheme
 import com.example.application.ui.typography.TypographyScreen
 import com.example.application.util.ThemedPreview
 import com.greenlabsfin.design.component.SeedBottomSheetScaffold
@@ -284,7 +284,7 @@ sealed class DrawerScreens(
 @Composable
 @ExperimentalMaterial3Api
 fun HomeScreenPreview() {
-    GFSampleTheme {
+    SeedSampleTheme {
         HomeScreen()
     }
 }

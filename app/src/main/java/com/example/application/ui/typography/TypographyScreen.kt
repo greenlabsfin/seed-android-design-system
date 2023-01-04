@@ -19,7 +19,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.unit.dp
 import com.example.application.R
-import com.example.application.ui.theme.GFSampleTheme
+import com.example.application.ui.theme.SeedSampleTheme
 import com.example.application.util.LocaleHelper
 import com.example.application.util.ThemedPreview
 import com.greenlabsfin.design.component.SeedButton
@@ -180,7 +180,7 @@ enum class TypographyCategories(
 @ThemedPreview
 @Composable
 fun TypographyScreenPreview() {
-    GFSampleTheme {
+    SeedSampleTheme {
         TypographyScreen {}
     }
 }

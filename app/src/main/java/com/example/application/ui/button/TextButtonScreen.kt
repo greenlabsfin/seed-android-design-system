@@ -3,15 +3,18 @@ package com.example.application.ui.button
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.application.ui.theme.GFSampleTheme
+import com.example.application.ui.theme.SeedSampleTheme
 import com.example.application.util.ThemedPreview
 import com.greenlabsfin.design.component.SeedTextButton
+import com.greenlabsfin.design.component.SeedTextButtonDefaults
+import com.greenlabsfin.design.component.toPainter
 import com.greenlabsfin.design.core.SeedTheme
 
 @Composable
@@ -23,45 +26,45 @@ fun TextButtonScreen() {
         SeedTextButton(
             text = "활성화 XS 버튼",
             color = SeedTheme.colorScheme.contents.primary,
-            rightIcon = Icons.Filled.ArrowDropDown,
-            style = SeedTextButton.Style.XSmall,
+            trailingIcon = Icons.Filled.ArrowDropDown.toPainter(),
+            style = SeedTextButtonDefaults.XSmall,
         ) {}
 
         SeedTextButton(
             text = "비활성화 XS 버튼",
             color = SeedTheme.colorScheme.contents.primary,
-            rightIcon = Icons.Filled.ArrowDropDown,
-            style = SeedTextButton.Style.XSmall,
+            trailingIcon = Icons.Filled.ArrowDropDown.toPainter(),
+            style = SeedTextButtonDefaults.XSmall,
             enabled = false
         ) {}
 
         SeedTextButton(
             text = "활성화 SM 버튼",
             color = SeedTheme.colorScheme.contents.neutralSecondary,
-            rightIcon = Icons.Filled.KeyboardArrowRight,
-            style = SeedTextButton.Style.Small,
+            trailingIcon = Icons.Filled.KeyboardArrowRight.toPainter(),
+            style = SeedTextButtonDefaults.Small,
         ) {}
 
         SeedTextButton(
             text = "비활성화 SM 버튼",
             color = SeedTheme.colorScheme.contents.neutralSecondary,
-            rightIcon = Icons.Filled.KeyboardArrowRight,
-            style = SeedTextButton.Style.Small,
+            trailingIcon = Icons.Filled.KeyboardArrowRight.toPainter(),
+            style = SeedTextButtonDefaults.Small,
             enabled = false
         ) {}
 
         SeedTextButton(
             text = "활성화 MD 버튼",
             color = SeedTheme.colorScheme.contents.primary,
-            rightIcon = Icons.Filled.ArrowDropDown,
-            style = SeedTextButton.Style.Medium,
+            trailingIcon = Icons.Filled.ArrowDropDown.toPainter(),
+            style = SeedTextButtonDefaults.Medium,
         ) {}
 
         SeedTextButton(
             text = "비활성화 MD 버튼",
             color = SeedTheme.colorScheme.contents.primary,
-            rightIcon = Icons.Filled.ArrowDropDown,
-            style = SeedTextButton.Style.Medium,
+            trailingIcon = Icons.Filled.ArrowDropDown.toPainter(),
+            style = SeedTextButtonDefaults.Medium,
             enabled = false
         ) {}
     }
@@ -70,7 +73,9 @@ fun TextButtonScreen() {
 @ThemedPreview
 @Composable
 fun TextButtonScreenPreview() {
-    GFSampleTheme {
-        TextButtonScreen()
+    SeedSampleTheme {
+        Surface(color = SeedTheme.colorScheme.container.background) {
+            TextButtonScreen()
+        }
     }
 }

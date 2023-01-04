@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">GFSample</string>
+    <string name="app_name" translatable="false">Seed Design Sample</string>
     <string name="typography_title_headline_xlarge_bold">Headline xL Bold</string>
     <string name="typography_title_headline_large_bold">Headline L Bold</string>
     <string name="typography_title_headline_medium_bold">Headline M Bold</string>

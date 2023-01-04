@@ -21,7 +21,7 @@ class MainActivity : ...
     override fun onCreate(savedInstanceState: Bundle?) {
         ...
         setContent {
-            GfTheme {
+            SeedTheme {
                 YourScreen()
             }
         }
@@ -34,13 +34,13 @@ fun CustomTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
-    val colorScheme = GfColorScheme.default(darkTheme)
+    val colorScheme = SeedColorScheme.default(darkTheme)
     val customTypoScheme = typoScheme.copy(
         headline = HeadlineTypoScheme(
             xLargeBold = TextStyle(fontSize = 1000.sp)
         )
     )
-    GfTheme(
+    SeedTheme(
         colorScheme = colorScheme,
         typoScheme = customTypoScheme,
         content = content,

@@ -12,29 +12,30 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.greenlabsfin.design.core.SeedTheme
-import com.greenlabsfin.design.core.LocalSeedTypoScheme
 
 @Composable
 fun SeedTextButton(
     modifier: Modifier = Modifier,
     text: String,
-    leftIcon: ImageVector? = null,
-    rightIcon: ImageVector? = null,
+    leadingIcon: Painter? = null,
+    leadingIconContentDescription: String? = null,
+    trailingIcon: Painter? = null,
+    trailingIconContentDescription: String? = null,
     count: Int? = null,
-    countColors: SeedCount.Colors? = null,
+    countColors: SeedCountColors? = null,
     badge: Boolean = false,
     color: Color = Color.Unspecified,
     overflow: TextOverflow = TextOverflow.Clip,
     softWrap: Boolean = true,
     maxLines: Int = Int.MAX_VALUE,
     onTextLayout: (TextLayoutResult) -> Unit = {},
-    style: TextStyle = LocalSeedTypoScheme.current.body.mediumBold,
+    style: TextStyle = SeedTextButtonDefaults.Medium,
     enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
@@ -72,8 +73,10 @@ fun SeedTextButton(
                 onClick = onClick
             ),
             text = text,
-            leadingIcon = leftIcon,
-            trailingIcon = rightIcon,
+            leadingIcon = leadingIcon,
+            leadingIconContentDescription = leadingIconContentDescription,
+            trailingIcon = trailingIcon,
+            trailingIconContentDescription = trailingIconContentDescription,
             count = count,
             countColors = countColors,
             badge = badge,
@@ -88,16 +91,14 @@ fun SeedTextButton(
     }
 }
 
-object SeedTextButton {
-    object Style {
-        val XSmall: TextStyle
-            @Composable
-            get() = SeedTheme.typoScheme.caption.xSmallMedium
-        val Small: TextStyle
-            @Composable
-            get() = SeedTheme.typoScheme.body.smallMedium
-        val Medium: TextStyle
-            @Composable
-            get() = SeedTheme.typoScheme.body.mediumMedium
-    }
+object SeedTextButtonDefaults {
+    val XSmall: TextStyle
+        @Composable
+        get() = SeedTheme.typoScheme.caption.xSmallMedium
+    val Small: TextStyle
+        @Composable
+        get() = SeedTheme.typoScheme.body.smallMedium
+    val Medium: TextStyle
+        @Composable
+        get() = SeedTheme.typoScheme.body.mediumMedium
 }

@@ -13,7 +13,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import com.example.application.R
-import com.example.application.ui.theme.GFSampleTheme
+import com.example.application.ui.theme.SeedSampleTheme
 import com.example.application.util.ThemedPreview
 import com.greenlabsfin.design.component.SeedText
 import com.greenlabsfin.design.core.SeedTheme
@@ -84,7 +84,7 @@ fun ValuePanel(
 @ThemedPreview
 @Composable
 fun TypographyCardPreview() {
-    GFSampleTheme {
+    SeedSampleTheme {
         Column(modifier = Modifier.fillMaxWidth()) {
             TypographyCard(resId = R.string.typography_title_body_medium_medium)
         }

@@ -10,7 +10,7 @@ import com.greenlabsfin.design.core.color.SeedColorScheme
 
 
 @Composable
-fun GFSampleTheme(
+fun SeedSampleTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
