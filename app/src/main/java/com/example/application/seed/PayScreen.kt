@@ -15,19 +15,19 @@ import androidx.compose.ui.unit.dp
 import com.example.application.seed.benefit.Benefit1
 import com.example.application.seed.benefit.Benefit2
 import com.example.application.seed.benefit.Benefit3
-import com.greenlabsfin.design.component.GfBottomSheetValue
-import com.greenlabsfin.design.component.GfText
-import com.greenlabsfin.design.component.rememberGfBottomSheetState
+import com.greenlabsfin.design.component.SeedBottomSheetValue
+import com.greenlabsfin.design.component.SeedText
+import com.greenlabsfin.design.component.rememberSeedBottomSheetState
 import com.greenlabsfin.design.component.util.CatchScrollUp
 import com.greenlabsfin.design.component.util.DecorateBackground
-import com.greenlabsfin.design.core.GfTheme
+import com.greenlabsfin.design.core.SeedTheme
 import kotlinx.coroutines.launch
 
 @Composable
 fun PayScreen(
     onScrollChange: (isScrollUp: Boolean) -> Unit = {},
 ) {
-    val bottomSheetState = rememberGfBottomSheetState(initialValue = GfBottomSheetValue.Hidden)
+    val bottomSheetState = rememberSeedBottomSheetState(initialValue = SeedBottomSheetValue.Hidden)
     val scope = rememberCoroutineScope()
     val scrollState = rememberScrollState()
     scrollState.CatchScrollUp(onScrollChange = onScrollChange)
@@ -41,7 +41,7 @@ fun PayScreen(
             Spacer(modifier = Modifier.height(20.dp))
             Benefit1()
             Spacer(modifier = Modifier.height(12.dp))
-            Divider(color = GfTheme.colorScheme.container.outline)
+            Divider(color = SeedTheme.colorScheme.container.outline)
             Spacer(modifier = Modifier.height(28.dp))
             Benefit2(onClick = {
                 scope.launch {
@@ -49,7 +49,7 @@ fun PayScreen(
                 }
             })
             Spacer(modifier = Modifier.height(36.dp))
-            GfText(text = "돈이되는 지원사업", style = GfTheme.typoScheme.headline.smallBold)
+            SeedText(text = "돈이되는 지원사업", style = SeedTheme.typoScheme.headline.smallBold)
             Spacer(modifier = Modifier.height(20.dp))
             Benefit3() {}
             Spacer(modifier = Modifier.height(20.dp))

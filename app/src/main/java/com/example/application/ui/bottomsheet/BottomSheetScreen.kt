@@ -41,17 +41,17 @@ import androidx.compose.ui.unit.dp
 import com.example.application.R
 import com.example.application.ui.theme.GFSampleTheme
 import com.example.application.util.ThemedPreview
-import com.greenlabsfin.design.component.GFButton
-import com.greenlabsfin.design.component.GFHeight
-import com.greenlabsfin.design.component.GfBottomSheetState
-import com.greenlabsfin.design.component.GfBottomSheetValue
-import com.greenlabsfin.design.component.GfIcon
-import com.greenlabsfin.design.component.GfText
-import com.greenlabsfin.design.component.GfTextButton
-import com.greenlabsfin.design.component.control.GFCheckbox
-import com.greenlabsfin.design.component.rememberGfBottomSheetState
+import com.greenlabsfin.design.component.SeedButton
+import com.greenlabsfin.design.component.SeedBottomSheetState
+import com.greenlabsfin.design.component.SeedBottomSheetValue
+import com.greenlabsfin.design.component.SeedButtonDefaults
+import com.greenlabsfin.design.component.SeedIcon
+import com.greenlabsfin.design.component.SeedText
+import com.greenlabsfin.design.component.SeedTextButton
+import com.greenlabsfin.design.component.SeedCheckbox
+import com.greenlabsfin.design.component.rememberSeedBottomSheetState
 import com.greenlabsfin.design.component.util.DecorateBackground
-import com.greenlabsfin.design.core.GfTheme
+import com.greenlabsfin.design.core.SeedTheme
 import com.greenlabsfin.design.core.color.gray30
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -61,10 +61,10 @@ fun BottomSheetScreen(
     onShowBottomSheet: (content: @Composable () -> Unit, isFixed: Boolean) -> Unit,
 ) {
     DecorateBackground(
-        GfTheme.colorScheme.container.neutralTertiary
+        SeedTheme.colorScheme.container.neutralTertiary
     ) {
         val bottomSheetState =
-            rememberGfBottomSheetState(initialValue = GfBottomSheetValue.Hidden)
+            rememberSeedBottomSheetState(initialValue = SeedBottomSheetValue.Hidden)
         val scope = rememberCoroutineScope()
 
         Column(
@@ -102,18 +102,16 @@ fun BottomSheetScreen(
                         contentDescription = "launcher"
                     )
                     Spacer(modifier = Modifier.width(10.dp))
-                    Column(
-
-                    ) {
-                        GfText(
+                    Column {
+                        SeedText(
                             text = "Marketing Title",
-                            style = GfTheme.typoScheme.body.smallBold,
-                            color = GfTheme.colorScheme.contents.onPrimary
+                            style = SeedTheme.typoScheme.body.smallBold,
+                            color = SeedTheme.colorScheme.contents.onPrimary
                         )
-                        GfText(
+                        SeedText(
                             text = "Marketing description, description",
-                            style = GfTheme.typoScheme.caption.xSmallRegular,
-                            color = GfTheme.colorScheme.contents.onPrimary
+                            style = SeedTheme.typoScheme.caption.xSmallRegular,
+                            color = SeedTheme.colorScheme.contents.onPrimary
                         )
                     }
                 }
@@ -144,12 +142,12 @@ fun SelectMonthContentLayout() {
                 )
             })
         }
-        GfText(
+        SeedText(
             modifier = Modifier
                 .height(58.dp)
                 .padding(horizontal = 20.dp),
             text = "월 선택하기",
-            style = GfTheme.typoScheme.body.largeBold
+            style = SeedTheme.typoScheme.body.largeBold
         )
         LazyColumn(
             contentPadding = PaddingValues(horizontal = 20.dp)
@@ -164,12 +162,12 @@ fun SelectMonthContentLayout() {
                     targetMonth += 12
                 }
                 item {
-                    GfText(
+                    SeedText(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(58.dp),
                         text = "${targetYear}년 ${targetMonth}월",
-                        style = GfTheme.typoScheme.body.mediumRegular
+                        style = SeedTheme.typoScheme.body.mediumRegular
                     )
                 }
             }
@@ -180,7 +178,7 @@ fun SelectMonthContentLayout() {
 @Composable
 private fun SheetContentLayout(
     maxHeight: Dp,
-    bottomSheetState: GfBottomSheetState = rememberGfBottomSheetState(initialValue = GfBottomSheetValue.Hidden),
+    bottomSheetState: SeedBottomSheetState = rememberSeedBottomSheetState(initialValue = SeedBottomSheetValue.Hidden),
     scope: CoroutineScope = rememberCoroutineScope(),
 ) {
     Column(
@@ -188,12 +186,12 @@ private fun SheetContentLayout(
             .heightIn(min = 0.dp, max = maxHeight)
             .padding(bottom = 34.dp, start = 20.dp, end = 20.dp)
     ) {
-        GfText(
+        SeedText(
             modifier = Modifier
                 .height(60.dp)
                 .padding(top = 4.dp),
             text = "Terms of usage",
-            style = GfTheme.typoScheme.body.mediumBold
+            style = SeedTheme.typoScheme.body.mediumBold
         )
         LazyColumn(
             modifier = Modifier
@@ -208,26 +206,26 @@ private fun SheetContentLayout(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     var checked by remember { mutableStateOf(false) }
-                    GFCheckbox(
+                    SeedCheckbox(
 //                        modifier = Modifier.weight(1f, true),
                         checked = checked,
                         onCheckedChange = { checked = it },
                         text = "Term of something",
-                        textStyle = GfTheme.typoScheme.body.mediumRegular,
+                        textStyle = SeedTheme.typoScheme.body.mediumRegular,
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    GfIcon(
+                    SeedIcon(
                         imageVector = Icons.Default.KeyboardArrowRight,
                         contentDescription = "",
-                        tint = GfTheme.colorScheme.contents.neutralTertiary,
+                        tint = SeedTheme.colorScheme.contents.neutralTertiary,
                     )
                 }
             }
         }
-        GFButton(
+        SeedButton(
 //            modifier = Modifier.fillMaxWidth(),
-            height = GFHeight.Large,
-            colors = GFButton.Style.containerPrimary,
+            height = SeedButton.Height.Large,
+            colors = SeedButtonDefaults.Colors.containerPrimary(),
             text = "동의하고 시작하기"
         ) {
             scope.launch { bottomSheetState.hide() }
@@ -237,14 +235,14 @@ private fun SheetContentLayout(
 
 @Composable
 fun PlccBannerContent(
-    bottomSheetState: GfBottomSheetState = rememberGfBottomSheetState(initialValue = GfBottomSheetValue.Hidden),
+    bottomSheetState: SeedBottomSheetState = rememberSeedBottomSheetState(initialValue = SeedBottomSheetValue.Hidden),
     scope: CoroutineScope = rememberCoroutineScope(),
 ) {
     Column(
         modifier = Modifier.wrapContentHeight()
     ) {
         Surface(
-            color = GfTheme.colorScheme.contents.neutralPrimary
+            color = SeedTheme.colorScheme.contents.neutralPrimary
         ) {
             Box(
                 modifier = Modifier
@@ -255,13 +253,13 @@ fun PlccBannerContent(
                     .align(Alignment.BottomStart)
                     .padding(bottom = 37.dp, start = 20.dp, end = 20.dp)
                 ) {
-                    GfText(text = "Marketing\nThis is marketing",
-                        style = GfTheme.typoScheme.body.xLargeBold,
-                        color = GfTheme.colorScheme.contents.onPrimary)
+                    SeedText(text = "Marketing\nThis is marketing",
+                        style = SeedTheme.typoScheme.body.xLargeBold,
+                        color = SeedTheme.colorScheme.contents.onPrimary)
                     Spacer(modifier = Modifier.height(23.dp))
-                    GfText(text = "Marketing description, description is good",
-                        style = GfTheme.typoScheme.caption.xSmallRegular,
-                        color = GfTheme.colorScheme.contents.onPrimary)
+                    SeedText(text = "Marketing description, description is good",
+                        style = SeedTheme.typoScheme.caption.xSmallRegular,
+                        color = SeedTheme.colorScheme.contents.onPrimary)
                 }
             }
         }
@@ -270,21 +268,21 @@ fun PlccBannerContent(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            GfTextButton(
+            SeedTextButton(
                 modifier = Modifier
                     .padding(horizontal = 6.dp)
                     .weight(.1f, false),
                 text = "다음에",
-                style = GfTheme.typoScheme.body.mediumMedium,
-                color = GfTheme.colorScheme.contents.neutralSecondary,
+                style = SeedTheme.typoScheme.body.mediumMedium,
+                color = SeedTheme.colorScheme.contents.neutralSecondary,
             ) {
                 scope.launch { bottomSheetState.hide() }
             }
 
-            GFButton(
+            SeedButton(
                 modifier = Modifier.weight(.2f, true),
-                height = GFHeight.Large,
-                colors = GFButton.Style.tintNeutral,
+                height = SeedButton.Height.Large,
+                colors = SeedButtonDefaults.Colors.tintNeutral(),
                 text = "알아보기",
             ) {
                 scope.launch { bottomSheetState.hide() }
@@ -297,7 +295,7 @@ fun PlccBannerContent(
 @Composable
 fun BottomSheetScreenPreview() {
     GFSampleTheme {
-        Surface(color = GfTheme.colorScheme.container.background) {
+        Surface(color = SeedTheme.colorScheme.container.background) {
 //            BottomSheetScreen()
             PlccBannerContent()
         }

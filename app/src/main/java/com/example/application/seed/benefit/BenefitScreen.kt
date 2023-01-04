@@ -26,16 +26,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.greenlabsfin.design.component.GFButton
-import com.greenlabsfin.design.component.GFHeight
-import com.greenlabsfin.design.component.GfBottomSheetState
-import com.greenlabsfin.design.component.GfBottomSheetValue
-import com.greenlabsfin.design.component.GfText
-import com.greenlabsfin.design.component.GfTextButton
-import com.greenlabsfin.design.component.rememberGfBottomSheetState
+import com.greenlabsfin.design.component.SeedButton
+import com.greenlabsfin.design.component.SeedBottomSheetState
+import com.greenlabsfin.design.component.SeedBottomSheetValue
+import com.greenlabsfin.design.component.SeedButtonDefaults
+import com.greenlabsfin.design.component.SeedText
+import com.greenlabsfin.design.component.SeedTextButton
+import com.greenlabsfin.design.component.rememberSeedBottomSheetState
 import com.greenlabsfin.design.component.util.CatchScrollUp
 import com.greenlabsfin.design.component.util.DecorateBackground
-import com.greenlabsfin.design.core.GfTheme
+import com.greenlabsfin.design.core.SeedTheme
 import com.greenlabsfin.design.core.color.green30
 import com.greenlabsfin.design.core.color.red50
 import com.greenlabsfin.design.core.color.white
@@ -61,13 +61,13 @@ fun BenefitScreen(
             Spacer(modifier = Modifier.height(20.dp))
             Benefit1()
             Spacer(modifier = Modifier.height(12.dp))
-            Divider(color = GfTheme.colorScheme.container.outline)
+            Divider(color = SeedTheme.colorScheme.container.outline)
             Spacer(modifier = Modifier.height(28.dp))
             Benefit2(onClick = {
                 onShowBottomSheet({ SeedBenefitContent() }, true)
             })
             Spacer(modifier = Modifier.height(36.dp))
-            GfText(text = "돈이되는 지원사업", style = GfTheme.typoScheme.headline.smallBold)
+            SeedText(text = "돈이되는 지원사업", style = SeedTheme.typoScheme.headline.smallBold)
             Spacer(modifier = Modifier.height(20.dp))
             Benefit3() {
                 navController.navigate(MoreBenefit.route)
@@ -93,13 +93,13 @@ fun Benefit1() {
                 .size(28.dp)
                 .background(color = Color(0xFF4A89F9))
         )
-        GfText(
+        SeedText(
             modifier = Modifier.weight(1f),
-            text = "나에게 맞는 \n보조금, 지원사업은?", style = GfTheme.typoScheme.body.mediumBold)
-        GFButton(
+            text = "나에게 맞는 \n보조금, 지원사업은?", style = SeedTheme.typoScheme.body.mediumBold)
+        SeedButton(
             text = "검색",
-            height = GFHeight.XSmall,
-            colors = GFButton.Style.tintNeutral,
+            height = SeedButton.Height.XSmall,
+            colors = SeedButtonDefaults.Colors.tintNeutral(),
             onClick = {
 
             }
@@ -117,33 +117,33 @@ fun Benefit3(
         elevation = 1.dp
     ) {
         Column(modifier = Modifier.padding(horizontal = 20.dp, vertical = 24.dp)) {
-            GfText(text = "2023년 \n기본형 공익직불금", style = GfTheme.typoScheme.headline.smallBold)
+            SeedText(text = "2023년 \n기본형 공익직불금", style = SeedTheme.typoScheme.headline.smallBold)
             Spacer(modifier = Modifier.height(16.dp))
             Row {
-                GfText(
+                SeedText(
                     modifier = Modifier.weight(1f),
                     text = "전체 농가 대상",
-                    style = GfTheme.typoScheme.body.smallBold,
-                    color = GfTheme.colorScheme.contents.neutralSecondary,
+                    style = SeedTheme.typoScheme.body.smallBold,
+                    color = SeedTheme.colorScheme.contents.neutralSecondary,
                 )
-                GfText(
+                SeedText(
                     text = "D-20",
-                    style = GfTheme.typoScheme.body.smallBold,
+                    style = SeedTheme.typoScheme.body.smallBold,
                     color = red50,
                 )
             }
             Spacer(modifier = Modifier.height(28.dp))
-            GFButton(
+            SeedButton(
                 modifier = Modifier.fillMaxWidth(),
                 text = "공고보기",
-                colors = GFButton.Style.tintPrimary,
-                height = GFHeight.Small,
+                colors = SeedButtonDefaults.Colors.tintPrimary(),
+                height = SeedButton.Height.Small,
                 onClick = onClick
             )
             Spacer(modifier = Modifier.height(20.dp))
-            Divider(color = GfTheme.colorScheme.container.outline)
+            Divider(color = SeedTheme.colorScheme.container.outline)
             Spacer(modifier = Modifier.height(26.dp))
-            GfText(text = "관련 교육", style = GfTheme.typoScheme.body.smallBold)
+            SeedText(text = "관련 교육", style = SeedTheme.typoScheme.body.smallBold)
             Spacer(modifier = Modifier.height(20.dp))
             Column(
                 modifier = Modifier
@@ -173,15 +173,15 @@ fun Benefit2(onClick: () -> Unit) {
                 ),
             verticalArrangement = Arrangement.Center
         ) {
-            GfText(
+            SeedText(
                 text = "농민 혜택 카드 출시",
-                style = GfTheme.typoScheme.body.smallBold,
-                color = GfTheme.colorScheme.contents.onPrimary,
+                style = SeedTheme.typoScheme.body.smallBold,
+                color = SeedTheme.colorScheme.contents.onPrimary,
             )
-            GfText(
+            SeedText(
                 text = "농약사, 하나로마트, 병원, 약국 결제시 5% 적립",
-                style = GfTheme.typoScheme.caption.xSmallRegular,
-                color = GfTheme.colorScheme.contents.onPrimary,
+                style = SeedTheme.typoScheme.caption.xSmallRegular,
+                color = SeedTheme.colorScheme.contents.onPrimary,
             )
         }
     }
@@ -189,14 +189,14 @@ fun Benefit2(onClick: () -> Unit) {
 
 @Composable
 fun SeedBenefitContent(
-    bottomSheetState: GfBottomSheetState = rememberGfBottomSheetState(initialValue = GfBottomSheetValue.Hidden),
+    bottomSheetState: SeedBottomSheetState = rememberSeedBottomSheetState(initialValue = SeedBottomSheetValue.Hidden),
     scope: CoroutineScope = rememberCoroutineScope(),
 ) {
     Column(
         modifier = Modifier.wrapContentHeight()
     ) {
         androidx.compose.material3.Surface(
-            color = GfTheme.colorScheme.contents.neutralPrimary
+            color = SeedTheme.colorScheme.contents.neutralPrimary
         ) {
             Box(
                 modifier = Modifier
@@ -207,13 +207,13 @@ fun SeedBenefitContent(
                     .align(Alignment.BottomStart)
                     .padding(bottom = 37.dp, start = 20.dp, end = 20.dp)
                 ) {
-                    GfText(text = "Marketing\nThis is marketing",
-                        style = GfTheme.typoScheme.body.xLargeBold,
-                        color = GfTheme.colorScheme.contents.onPrimary)
+                    SeedText(text = "Marketing\nThis is marketing",
+                        style = SeedTheme.typoScheme.body.xLargeBold,
+                        color = SeedTheme.colorScheme.contents.onPrimary)
                     Spacer(modifier = Modifier.height(23.dp))
-                    GfText(text = "Marketing description, description is good",
-                        style = GfTheme.typoScheme.caption.xSmallRegular,
-                        color = GfTheme.colorScheme.contents.onPrimary)
+                    SeedText(text = "Marketing description, description is good",
+                        style = SeedTheme.typoScheme.caption.xSmallRegular,
+                        color = SeedTheme.colorScheme.contents.onPrimary)
                 }
             }
         }
@@ -222,21 +222,21 @@ fun SeedBenefitContent(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            GfTextButton(
+            SeedTextButton(
                 modifier = Modifier
                     .padding(horizontal = 6.dp)
                     .weight(.1f, false),
                 text = "다음에",
-                style = GfTheme.typoScheme.body.mediumMedium,
-                color = GfTheme.colorScheme.contents.neutralSecondary,
+                style = SeedTheme.typoScheme.body.mediumMedium,
+                color = SeedTheme.colorScheme.contents.neutralSecondary,
             ) {
                 scope.launch { bottomSheetState.hide() }
             }
 
-            GFButton(
+            SeedButton(
                 modifier = Modifier.weight(.2f, true),
-                height = GFHeight.Large,
-                colors = GFButton.Style.tintNeutral,
+                height = SeedButton.Height.Large,
+                colors = SeedButtonDefaults.Colors.tintNeutral(),
                 text = "알아보기",
             ) {
                 scope.launch { bottomSheetState.hide() }

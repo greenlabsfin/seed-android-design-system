@@ -27,21 +27,21 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.navigation
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.greenlabsfin.design.component.GfBottomNavigation
-import com.greenlabsfin.design.component.GfBottomNavigationItem
-import com.greenlabsfin.design.component.GfBottomSheetScaffold
-import com.greenlabsfin.design.component.GfBottomSheetValue
-import com.greenlabsfin.design.component.GfIcon
-import com.greenlabsfin.design.component.GfText
-import com.greenlabsfin.design.component.GfTopBar
-import com.greenlabsfin.design.component.rememberGfBottomSheetState
-import com.greenlabsfin.design.core.GfTheme
+import com.greenlabsfin.design.component.SeedBottomNavigation
+import com.greenlabsfin.design.component.SeedBottomNavigationItem
+import com.greenlabsfin.design.component.SeedBottomSheetScaffold
+import com.greenlabsfin.design.component.SeedBottomSheetValue
+import com.greenlabsfin.design.component.SeedIcon
+import com.greenlabsfin.design.component.SeedText
+import com.greenlabsfin.design.component.SeedTopBar
+import com.greenlabsfin.design.component.rememberSeedBottomSheetState
+import com.greenlabsfin.design.core.SeedTheme
 import kotlinx.coroutines.launch
 
 @Composable
 fun SeedMain() {
     val navController = rememberAnimatedNavController()
-    val bottomSheetState = rememberGfBottomSheetState(GfBottomSheetValue.Hidden)
+    val bottomSheetState = rememberSeedBottomSheetState(SeedBottomSheetValue.Hidden)
     val scope = rememberCoroutineScope()
     var bottomSheetContent by remember { mutableStateOf<@Composable () -> Unit>({}) }
     var isFixed by remember { mutableStateOf(true) }
@@ -51,10 +51,10 @@ fun SeedMain() {
         else -> true
     }
 
-    GfBottomSheetScaffold(
+    SeedBottomSheetScaffold(
         topBar = {
             if (isFullScreen.not()) {
-                GfTopBar(
+                SeedTopBar(
                     titleContent = {
                         Image(
                             painter = painterResource(id = R.drawable.logo),
@@ -63,14 +63,14 @@ fun SeedMain() {
                     },
                     titleAlignment = Alignment.CenterStart,
                     trailingContent = {
-                        GfIcon(
+                        SeedIcon(
                             painter = painterResource(id = R.drawable.profile),
                             contentDescription = "profile",
                             tint = Color.Unspecified
                         )
                     },
                     topBarPadding = PaddingValues(horizontal = 20.dp),
-                    color = GfTheme.colorScheme.container.background,
+                    color = SeedTheme.colorScheme.container.background,
                     hideWhileScrollUp = true,
                 )
             }
@@ -99,7 +99,7 @@ fun SeedMain() {
 
 @Composable
 fun SeedTopBar() {
-    GfTopBar(
+    SeedTopBar(
         titleContent = {
             Image(
                 painter = painterResource(id = R.drawable.logo),
@@ -108,14 +108,14 @@ fun SeedTopBar() {
         },
         titleAlignment = Alignment.CenterStart,
         trailingContent = {
-            GfIcon(
+            SeedIcon(
                 painter = painterResource(id = R.drawable.profile),
                 contentDescription = "profile",
                 tint = Color.Unspecified
             )
         },
         topBarPadding = PaddingValues(horizontal = 20.dp),
-        color = GfTheme.colorScheme.container.background,
+        color = SeedTheme.colorScheme.container.background,
         hideWhileScrollUp = true,
     )
 }
@@ -175,10 +175,10 @@ fun SeedBottomNavigation(
     val bottomMenus = listOf(
         Benefit, Pay, More
     )
-    GfBottomNavigation {
+    SeedBottomNavigation {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         bottomMenus.forEach { menu ->
-            GfBottomNavigationItem(
+            SeedBottomNavigationItem(
                 selected = navBackStackEntry?.destination?.hierarchy?.any { it.route == menu.route } == true,
                 onClick = {
                     navController.navigate(menu.route) {
@@ -192,10 +192,10 @@ fun SeedBottomNavigation(
                 },
                 selectedIcon = menu.icon(),
                 contentDescription = menu.title,
-                selectedContentColor = GfTheme.colorScheme.contents.neutralPrimary,
-                unselectedContentColor = GfTheme.colorScheme.contents.neutralSecondary,
+                selectedContentColor = SeedTheme.colorScheme.contents.neutralPrimary,
+                unselectedContentColor = SeedTheme.colorScheme.contents.neutralSecondary,
                 label = {
-                    GfText(text = menu.title)
+                    SeedText(text = menu.title)
                 }
             )
         }

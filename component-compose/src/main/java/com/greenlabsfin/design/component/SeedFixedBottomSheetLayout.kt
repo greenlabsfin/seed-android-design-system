@@ -25,19 +25,19 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
-import com.greenlabsfin.design.core.GfTheme
+import com.greenlabsfin.design.core.SeedTheme
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 @Composable
-internal fun GfFixedBottomSheetLayout(
+internal fun SeedFixedBottomSheetLayout(
     modifier: Modifier = Modifier,
-    scrimColor: Color = GfBottomSheetDefaults.scrimColor,
-    sheetState: GfBottomSheetState = rememberGfBottomSheetState(GfBottomSheetValue.Hidden),
+    scrimColor: Color = SeedBottomSheetDefaults.scrimColor,
+    sheetState: SeedBottomSheetState = rememberSeedBottomSheetState(SeedBottomSheetValue.Hidden),
     sheetShape: Shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
-    sheetElevation: Dp = GfBottomSheetDefaults.Elevation,
-    sheetBackgroundColor: Color = GfTheme.colorScheme.container.background,
-    sheetContentColor: Color = GfTheme.colorScheme.contents.neutralPrimary,
+    sheetElevation: Dp = SeedBottomSheetDefaults.Elevation,
+    sheetBackgroundColor: Color = SeedTheme.colorScheme.container.background,
+    sheetContentColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
     sheetContent: @Composable ColumnScope.() -> Unit,
     content: @Composable () -> Unit,
 ) {
@@ -50,7 +50,7 @@ internal fun GfFixedBottomSheetLayout(
             Scrim(
                 color = scrimColor,
                 onDismiss = { scope.launch { sheetState.hide() } },
-                visible = sheetState.targetValue != GfBottomSheetValue.Hidden
+                visible = sheetState.targetValue != SeedBottomSheetValue.Hidden
             )
         }
         Surface(
@@ -83,7 +83,7 @@ internal fun GfFixedBottomSheetLayout(
 }
 
 private fun Modifier.bottomSheetFixedSwipeable(
-    sheetState: GfBottomSheetState,
+    sheetState: SeedBottomSheetState,
     fullHeight: Float,
     sheetHeightState: State<Float?>,
 ): Modifier {
@@ -91,8 +91,8 @@ private fun Modifier.bottomSheetFixedSwipeable(
     // TODO sheetHeight > 0f <- 요놈 ModalBottomSheetLayout 에 적용 안되어 있음, ModalBottomSheet 도 따로 맹글어야 할수도..
     val modifier = if (sheetHeight != null && sheetHeight > 0f) {
         val anchors = mapOf(
-            fullHeight to GfBottomSheetValue.Hidden,
-            fullHeight - sheetHeight to GfBottomSheetValue.Expanded
+            fullHeight to SeedBottomSheetValue.Hidden,
+            fullHeight - sheetHeight to SeedBottomSheetValue.Expanded
         )
         Modifier.swipeable(
             state = sheetState,

@@ -16,10 +16,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.greenlabsfin.design.component.GfText
-import com.greenlabsfin.design.core.GfTheme
-import com.greenlabsfin.design.core.color.GfColorScheme
-import com.greenlabsfin.design.core.typo.GfTypoScheme
+import com.greenlabsfin.design.component.SeedText
+import com.greenlabsfin.design.core.SeedTheme
+import com.greenlabsfin.design.core.color.SeedColorScheme
+import com.greenlabsfin.design.core.typo.SeedTypoScheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -32,8 +32,8 @@ fun <T : NavDrawerItem> NavDrawer(
     selectedItem: T,
     scope: CoroutineScope = rememberCoroutineScope(),
     onItemSelected: (T) -> Unit,
-    colorScheme: GfColorScheme = GfTheme.colorScheme,
-    typoScheme: GfTypoScheme = GfTheme.typoScheme,
+    colorScheme: SeedColorScheme = SeedTheme.colorScheme,
+    typoScheme: SeedTypoScheme = SeedTheme.typoScheme,
     content: @Composable () -> Unit,
 ) {
     ModalNavigationDrawer(
@@ -46,7 +46,7 @@ fun <T : NavDrawerItem> NavDrawer(
                     NavigationDrawerItem(
                         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding),
                         label = {
-                            GfText(
+                            SeedText(
                                 text = item.title,
                                 style = typoScheme.body.mediumRegular,
                             )

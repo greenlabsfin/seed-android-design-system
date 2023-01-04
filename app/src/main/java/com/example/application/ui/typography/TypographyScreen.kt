@@ -22,12 +22,12 @@ import com.example.application.R
 import com.example.application.ui.theme.GFSampleTheme
 import com.example.application.util.LocaleHelper
 import com.example.application.util.ThemedPreview
-import com.greenlabsfin.design.component.GFButton
-import com.greenlabsfin.design.component.GFHeight
-import com.greenlabsfin.design.component.GfText
+import com.greenlabsfin.design.component.SeedButton
+import com.greenlabsfin.design.component.SeedButtonDefaults
+import com.greenlabsfin.design.component.SeedText
 import com.greenlabsfin.design.component.util.CatchScrollUp
 import com.greenlabsfin.design.component.util.DecorateBackground
-import com.greenlabsfin.design.core.GfTheme
+import com.greenlabsfin.design.core.SeedTheme
 
 @Composable
 fun TypographyScreen(
@@ -47,15 +47,15 @@ fun TypographyScreen(
         onScrollChange(isScrollUp)
     }
 
-    DecorateBackground(GfTheme.colorScheme.container.neutralTertiary) {
+    DecorateBackground(SeedTheme.colorScheme.container.neutralTertiary) {
         LazyColumn(
             modifier = Modifier.padding(horizontal = 20.dp),
             state = listState,
             content = {
                 item {
-                    GFButton(
-                        height = GFHeight.Medium,
-                        colors = GFButton.Style.containerPrimary,
+                    SeedButton(
+                        height = SeedButton.Height.Medium,
+                        colors = SeedButtonDefaults.Colors.containerPrimary(),
                         text = currentLocale.language,
                         onClick = {
                             isExpanded = !isExpanded
@@ -72,12 +72,12 @@ fun TypographyScreen(
                                     (context as? Activity)?.recreate()
                                 },
                                 text = {
-                                    GfText(
+                                    SeedText(
                                         text = locale.language,
-                                        style = GfTheme.typoScheme.body.mediumRegular,
+                                        style = SeedTheme.typoScheme.body.mediumRegular,
                                         color =
-                                        if (locale.language == currentLocale.language) GfTheme.colorScheme.contents.primary
-                                        else GfTheme.colorScheme.contents.neutralPrimary
+                                        if (locale.language == currentLocale.language) SeedTheme.colorScheme.contents.primary
+                                        else SeedTheme.colorScheme.contents.neutralPrimary
                                     )
                                 }
                             )
@@ -156,24 +156,24 @@ enum class TypographyCategories(
     val textStyle: TextStyle
         @Composable
         get() = when (this) {
-            HeadlineXLargeBold -> GfTheme.typoScheme.headline.xLargeBold
-            HeadlineLargeBold -> GfTheme.typoScheme.headline.largeBold
-            HeadlineMediumBold -> GfTheme.typoScheme.headline.mediumBold
-            HeadlineSmallBold -> GfTheme.typoScheme.headline.smallBold
-            HeadlineSmallRegular -> GfTheme.typoScheme.headline.smallRegular
-            BodyXLargeBold -> GfTheme.typoScheme.body.xLargeBold
-            BodyXLargeRegular -> GfTheme.typoScheme.body.xLargeRegular
-            BodyLargeBold -> GfTheme.typoScheme.body.largeBold
-            BodyLargeRegular -> GfTheme.typoScheme.body.largeRegular
-            BodyMediumBold -> GfTheme.typoScheme.body.mediumBold
-            BodyMediumMedium -> GfTheme.typoScheme.body.mediumMedium
-            BodyMediumRegular -> GfTheme.typoScheme.body.mediumRegular
-            BodySmallBold -> GfTheme.typoScheme.body.smallBold
-            BodySmallMedium -> GfTheme.typoScheme.body.smallMedium
-            BodySmallRegular -> GfTheme.typoScheme.body.smallRegular
-            CaptionXSmallRegular -> GfTheme.typoScheme.caption.xSmallRegular
-            CaptionXSmallBold -> GfTheme.typoScheme.caption.xSmallBold
-            CaptionXSmallMedium -> GfTheme.typoScheme.caption.xSmallMedium
+            HeadlineXLargeBold -> SeedTheme.typoScheme.headline.xLargeBold
+            HeadlineLargeBold -> SeedTheme.typoScheme.headline.largeBold
+            HeadlineMediumBold -> SeedTheme.typoScheme.headline.mediumBold
+            HeadlineSmallBold -> SeedTheme.typoScheme.headline.smallBold
+            HeadlineSmallRegular -> SeedTheme.typoScheme.headline.smallRegular
+            BodyXLargeBold -> SeedTheme.typoScheme.body.xLargeBold
+            BodyXLargeRegular -> SeedTheme.typoScheme.body.xLargeRegular
+            BodyLargeBold -> SeedTheme.typoScheme.body.largeBold
+            BodyLargeRegular -> SeedTheme.typoScheme.body.largeRegular
+            BodyMediumBold -> SeedTheme.typoScheme.body.mediumBold
+            BodyMediumMedium -> SeedTheme.typoScheme.body.mediumMedium
+            BodyMediumRegular -> SeedTheme.typoScheme.body.mediumRegular
+            BodySmallBold -> SeedTheme.typoScheme.body.smallBold
+            BodySmallMedium -> SeedTheme.typoScheme.body.smallMedium
+            BodySmallRegular -> SeedTheme.typoScheme.body.smallRegular
+            CaptionXSmallRegular -> SeedTheme.typoScheme.caption.xSmallRegular
+            CaptionXSmallBold -> SeedTheme.typoScheme.caption.xSmallBold
+            CaptionXSmallMedium -> SeedTheme.typoScheme.caption.xSmallMedium
         }
 }
 

@@ -10,11 +10,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.greenlabsfin.design.core.GfTheme
-
+import com.greenlabsfin.design.core.SeedTheme
 
 @Suppress("UNUSED")
-object GFDialogDefaults {
+object SeedDialogDefaults {
 
     private val buttonPaddingModifier =
         Modifier.padding(
@@ -36,14 +35,14 @@ object GFDialogDefaults {
         fun SinglePrimary(
             buttonText: String = "Primary",
             onPositiveButtonClicked: () -> Unit) {
-            GFButton(
+            SeedButton(
                 modifier = Modifier
                     .fillMaxWidth()
                     .then(
                         buttonPaddingModifier
                     ),
-                height = GFHeight.Medium,
-                colors = GFButton.Style.containerPrimary,
+                height = SeedButton.Height.Medium,
+                colors = SeedButtonDefaults.Colors.containerPrimary(),
                 text = buttonText,
                 onClick = onPositiveButtonClicked
             )
@@ -64,18 +63,18 @@ object GFDialogDefaults {
                     ),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                GFButton(
+                SeedButton(
                     modifier = Modifier.weight(1f),
-                    height = GFHeight.Medium,
-                    colors = GFButton.Style.tintNeutral,
+                    height = SeedButton.Height.Medium,
+                    colors = SeedButtonDefaults.Colors.tintNeutral(),
                     text = negativeText,
                     onClick = onNegativeButtonClicked
                 )
 
-                GFButton(
+                SeedButton(
                     modifier = Modifier.weight(2f),
-                    height = GFHeight.Medium,
-                    colors = GFButton.Style.containerPrimary,
+                    height = SeedButton.Height.Medium,
+                    colors = SeedButtonDefaults.Colors.containerPrimary(),
                     text = positiveText,
                     onClick = onPositiveButtonClicked
                 )
@@ -97,18 +96,18 @@ object GFDialogDefaults {
                     ),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                GFButton(
+                SeedButton(
                     modifier = Modifier.weight(1f),
-                    height = GFHeight.Medium,
-                    colors = GFButton.Style.tintNeutral,
+                    height = SeedButton.Height.Medium,
+                    colors = SeedButtonDefaults.Colors.tintNeutral(),
                     text = negativeText,
                     onClick = onNegativeButtonClicked
                 )
 
-                GFButton(
+                SeedButton(
                     modifier = Modifier.weight(2f),
-                    height = GFHeight.Medium,
-                    colors = GFButton.Style.containerPrimary,
+                    height = SeedButton.Height.Medium,
+                    colors = SeedButtonDefaults.Colors.containerPrimary(),
                     text = positiveText,
                     onClick = onPositiveButtonClicked
                 )
@@ -130,18 +129,18 @@ object GFDialogDefaults {
                     ),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                GFButton(
+                SeedButton(
                     modifier = Modifier.fillMaxWidth(),
-                    height = GFHeight.Medium,
-                    colors = GFButton.Style.tintNeutral,
+                    height = SeedButton.Height.Medium,
+                    colors = SeedButtonDefaults.Colors.tintNeutral(),
                     text = negativeText,
                     onClick = onNegativeButtonClicked
                 )
 
-                GFButton(
+                SeedButton(
                     modifier = Modifier.fillMaxWidth(),
-                    height = GFHeight.Medium,
-                    colors = GFButton.Style.containerPrimary,
+                    height = SeedButton.Height.Medium,
+                    colors = SeedButtonDefaults.Colors.containerPrimary(),
                     text = positiveText,
                     onClick = onPositiveButtonClicked
                 )
@@ -163,17 +162,17 @@ object GFDialogDefaults {
                     ),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                GFButton(
+                SeedButton(
                     modifier = Modifier.fillMaxWidth(),
-                    height = GFHeight.Medium,
-                    colors = GFButton.Style.tintNeutral,
+                    height = SeedButton.Height.Medium,
+                    colors = SeedButtonDefaults.Colors.tintNeutral(),
                     text = negativeText,
                     onClick = onNegativeButtonClicked
                 )
 
-                GfTextButton(
+                SeedTextButton(
                     modifier = Modifier.fillMaxWidth(),
-                    color = GfTheme.colorScheme.contents.primary,
+                    color = SeedTheme.colorScheme.contents.primary,
                     text = positiveText,
                     onClick = onPositiveButtonClicked
                 )
@@ -194,7 +193,7 @@ object GFDialogDefaults {
                     ),
                 contentAlignment = Alignment.TopStart
             ) {
-                GfText(text = title, style = GfTheme.typoScheme.headline.mediumBold)
+                SeedText(text = title, style = SeedTheme.typoScheme.headline.mediumBold)
             }
         }
 
@@ -211,15 +210,15 @@ object GFDialogDefaults {
                     ),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                GfText(
+                SeedText(
                     text = title,
-                    style = GfTheme.typoScheme.headline.mediumBold,
-                    color = GfTheme.colorScheme.contents.neutralPrimary
+                    style = SeedTheme.typoScheme.headline.mediumBold,
+                    color = SeedTheme.colorScheme.contents.neutralPrimary
                 )
-                GfText(
+                SeedText(
                     text = message,
-                    style = GfTheme.typoScheme.body.mediumRegular,
-                    color = GfTheme.colorScheme.contents.neutralSecondary
+                    style = SeedTheme.typoScheme.body.mediumRegular,
+                    color = SeedTheme.colorScheme.contents.neutralSecondary
                 )
             }
         }

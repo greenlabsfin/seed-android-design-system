@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 
 @Composable
-fun GFDialog(
+fun SeedDialog(
     modifier: Modifier = Modifier,
     itemVisible: Boolean,
     onDismissRequest: () -> Unit,

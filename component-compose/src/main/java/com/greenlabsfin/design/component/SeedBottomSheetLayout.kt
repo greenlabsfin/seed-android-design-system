@@ -25,30 +25,30 @@ import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.greenlabsfin.design.core.GfTheme
+import com.greenlabsfin.design.core.SeedTheme
 import com.greenlabsfin.design.core.color.black
 
-typealias GfBottomSheetState = ModalBottomSheetState
-typealias GfBottomSheetValue = ModalBottomSheetValue
+typealias SeedBottomSheetState = ModalBottomSheetState
+typealias SeedBottomSheetValue = ModalBottomSheetValue
 
 @Composable
-fun GfBottomSheetLayout(
+fun SeedBottomSheetLayout(
     modifier: Modifier = Modifier,
-    scrimColor: Color = GfBottomSheetDefaults.scrimColor,
-    sheetState: GfBottomSheetState = rememberGfBottomSheetState(initialValue = GfBottomSheetValue.Hidden),
+    scrimColor: Color = SeedBottomSheetDefaults.scrimColor,
+    sheetState: SeedBottomSheetState = rememberSeedBottomSheetState(initialValue = SeedBottomSheetValue.Hidden),
     isFixed: Boolean = false,
     sheetShape: Shape = RoundedCornerShape(
         topStart = 20.dp,
         topEnd = 20.dp,
     ),
-    sheetElevation: Dp = GfBottomSheetDefaults.Elevation,
-    sheetBackgroundColor: Color = GfTheme.colorScheme.container.background,
-    sheetContentColor: Color = GfTheme.colorScheme.contents.neutralPrimary,
+    sheetElevation: Dp = SeedBottomSheetDefaults.Elevation,
+    sheetBackgroundColor: Color = SeedTheme.colorScheme.container.background,
+    sheetContentColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
     sheetContent: @Composable ColumnScope.() -> Unit,
     content: @Composable () -> Unit,
 ) {
     if (isFixed) {
-        GfFixedBottomSheetLayout(
+        SeedFixedBottomSheetLayout(
             modifier = modifier,
             scrimColor = scrimColor,
             sheetState = sheetState,
@@ -74,7 +74,7 @@ fun GfBottomSheetLayout(
     }
 }
 
-object GfBottomSheetDefaults {
+object SeedBottomSheetDefaults {
     val Elevation = 16.dp
 
     val scrimColor: Color
@@ -83,19 +83,20 @@ object GfBottomSheetDefaults {
 }
 
 @Composable
-fun rememberGfBottomSheetState(
-    initialValue: GfBottomSheetValue,
+fun rememberSeedBottomSheetState(
+    initialValue: SeedBottomSheetValue,
     animationSpec: AnimationSpec<Float> = SwipeableDefaults.AnimationSpec,
-    confirmStateChange: (GfBottomSheetValue) -> Boolean = { true },
-): GfBottomSheetState {
+    confirmStateChange: (SeedBottomSheetValue) -> Boolean = { true },
+): SeedBottomSheetState {
     return rememberSaveable(
         animationSpec,
-        saver = GfBottomSheetState.Saver(
+        saver = SeedBottomSheetState.Saver(
             animationSpec = animationSpec,
+            skipHalfExpanded = true,
             confirmStateChange = confirmStateChange
         )
     ) {
-        GfBottomSheetState(
+        SeedBottomSheetState(
             initialValue = initialValue,
             animationSpec = animationSpec,
             confirmStateChange = confirmStateChange

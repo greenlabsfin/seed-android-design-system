@@ -1,5 +1,6 @@
 package com.greenlabsfin.design.component
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
@@ -11,12 +12,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
@@ -28,22 +29,57 @@ import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.greenlabsfin.design.component.icons.Icons
 import com.greenlabsfin.design.component.icons.filled.Delete
-import com.greenlabsfin.design.core.GfTheme
+import com.greenlabsfin.design.core.SeedTheme
+
+object SeedTextField {
+    enum class Style {
+        Outline,
+        Fill
+    }
+
+    enum class Height(val displayPixel: Dp) {
+        XLarge(64.dp),
+        Large(56.dp),
+        Medium(48.dp),
+        Small(40.dp),
+        XSmall(32.dp);
+
+        val typography: TextStyle
+            @Composable
+            get() = when (this) {
+                XLarge -> SeedTheme.typoScheme.body.xLargeBold
+                Large -> SeedTheme.typoScheme.body.largeBold
+                Medium -> SeedTheme.typoScheme.body.mediumMedium
+                else -> SeedTheme.typoScheme.body.smallMedium
+            }
+
+        val radius: Dp
+            get() = when (this) {
+                XLarge, Large -> 12.dp
+                Medium -> 10.dp
+                Small, XSmall -> 8.dp
+            }
+    }
+}
 
 @Composable
-fun GfLineTextField(
-    value: String,
+internal fun SeedBoxTextField(
     modifier: Modifier = Modifier,
-    colors: GfTextFieldColors = GfTextFieldDefaults.lineTextFieldColors(),
+    style: SeedTextField.Style,
+    height: SeedTextField.Height,
+    value: String,
+    colors: SeedTextFieldColors,
     label: String? = null,
-    textStyle: TextStyle = GfTheme.typoScheme.body.mediumRegular,
-    labelTextStyle: TextStyle = GfTheme.typoScheme.body.mediumBold,
+    textStyle: TextStyle = SeedTheme.typoScheme.body.mediumRegular,
+    labelTextStyle: TextStyle = SeedTheme.typoScheme.body.mediumBold,
     placeholder: String = "",
-    prefix: @Composable () -> Unit = {},
-    suffix: @Composable () -> Unit = {},
+    prefix: @Composable (() -> Unit)? = null,
+    suffix: @Composable (() -> Unit)? = null,
+    suffixTextStyle: TextStyle? = null,
     enabled: Boolean = true,
     readOnly: Boolean = false,
     isError: Boolean = false,
@@ -76,17 +112,22 @@ fun GfLineTextField(
         colors.textColor(enabled).value
     }
     val mergedTextStyle = textStyle.merge(TextStyle(color = textColor))
-    val indicatorColor = colors.indicatorColor(
+    val outlineColor = colors.indicatorColor(
         enabled = enabled,
         isError = isError,
         readOnly = readOnly,
         interactionSource = interactionSource
     )
-
     val backgroundColor = colors.backgroundColor(enabled = enabled, readOnly = readOnly)
+    val borderStroke = when (style) {
+        SeedTextField.Style.Outline -> BorderStroke(width = 1.dp, color = outlineColor.value)
+        SeedTextField.Style.Fill -> if (isError) BorderStroke(width = 1.dp,
+            color = outlineColor.value) else null
+    }
+
     Column(modifier = modifier) {
         label?.let {
-            GfText(
+            SeedText(
                 text = label,
                 modifier = modifier,
                 color = labelColor.value,
@@ -98,23 +139,29 @@ fun GfLineTextField(
         Surface(
             modifier = modifier
                 .defaultMinSize(
-                    minWidth = GfTextFieldDefaults.minWidth,
-                    minHeight = GfTextFieldDefaults.minHeight,
+                    minWidth = SeedTextFieldDefaults.minWidth,
+                    minHeight = SeedTextFieldDefaults.minHeight,
                 )
-                .wrapContentHeight(),
+                .height(height.displayPixel),
             color = backgroundColor.value,
+            border = borderStroke,
+            shape = RoundedCornerShape(height.radius)
         ) {
             Row(
-                modifier = modifier,
+                modifier = modifier.padding(horizontal = 20.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                Decoration(
-                    contentColor = colors.leadingIconColor(
-                        enabled = enabled,
-                        isError = isError
-                    ).value,
-                    content = prefix)
+                prefix?.let {
+                    Decoration(
+                        contentColor = colors.leadingIconColor(
+                            enabled = enabled,
+                            isError = isError
+                        ).value,
+                        content = prefix
+                    )
+                }
+
 
                 Box(modifier = modifier.weight(1f, false)) {
                     BasicTextField(
@@ -133,7 +180,7 @@ fun GfLineTextField(
                         cursorBrush = SolidColor(colors.cursorColor(isError).value)
                     )
                     if (value.isBlank()) {
-                        GfText(
+                        SeedText(
                             text = placeholder,
                             style = mergedTextStyle,
                             color = colors.placeholderColor(enabled = enabled).value
@@ -152,31 +199,29 @@ fun GfLineTextField(
                             },
                         imageVector = Icons.Filled.Delete,
                         contentDescription = "clear",
-                        tint = GfTheme.colorScheme.contents.neutralTertiary,
+                        tint = SeedTheme.colorScheme.contents.neutralTertiary,
                     )
                 }
-                Decoration(
-                    contentColor = colors.trailingIconColor(
-                        enabled = enabled,
-                        isError = isError
-                    ).value,
-                    content = suffix
-                )
+                suffix?.let {
+                    Decoration(
+                        contentColor = colors.trailingIconColor(
+                            enabled = enabled,
+                            isError = isError
+                        ).value,
+                        typography = suffixTextStyle,
+                        content = suffix
+                    )
+                }
             }
         }
-
-        Divider(
-            color = indicatorColor.value,
-            thickness = 2.dp
-        )
 
         errorText?.let {
             if (isError) {
                 Spacer(modifier = Modifier.height(4.dp))
-                GfText(
+                SeedText(
                     text = errorText,
-                    style = GfTheme.typoScheme.body.smallRegular,
-                    color = GfTheme.colorScheme.contents.error,
+                    style = SeedTheme.typoScheme.body.smallRegular,
+                    color = SeedTheme.colorScheme.contents.error,
                 )
             }
         }

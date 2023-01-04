@@ -21,16 +21,16 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
-import com.greenlabsfin.design.core.LocalGfContentColor
+import com.greenlabsfin.design.core.LocalSeedContainerColor
 
 @Composable
-fun GfIcon(
+fun SeedIcon(
     imageVector: ImageVector,
     contentDescription: String?,
     modifier: Modifier = Modifier,
-    tint: Color = LocalGfContentColor.current,
+    tint: Color = LocalSeedContainerColor.current,
 ) {
-    GfIcon(
+    SeedIcon(
         painter = rememberVectorPainter(imageVector),
         contentDescription = contentDescription,
         modifier = modifier,
@@ -39,14 +39,14 @@ fun GfIcon(
 }
 
 @Composable
-fun GfIcon(
+fun SeedIcon(
     bitmap: ImageBitmap,
     contentDescription: String?,
     modifier: Modifier = Modifier,
-    tint: Color = LocalGfContentColor.current,
+    tint: Color = LocalSeedContainerColor.current,
 ) {
     val painter = remember(bitmap) { BitmapPainter(bitmap) }
-    GfIcon(
+    SeedIcon(
         painter = painter,
         contentDescription = contentDescription,
         modifier = modifier,
@@ -55,11 +55,11 @@ fun GfIcon(
 }
 
 @Composable
-fun GfIcon(
+fun SeedIcon(
     painter: Painter,
     contentDescription: String?,
     modifier: Modifier = Modifier,
-    tint: Color = LocalGfContentColor.current,
+    tint: Color = LocalSeedContainerColor.current,
 ) {
     val colorFilter = if (tint == Color.Unspecified) null else ColorFilter.tint(tint)
     val semantics =

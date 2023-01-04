@@ -25,10 +25,10 @@ import androidx.compose.ui.window.PopupProperties
 import com.greenlabsfin.design.core.color.white
 
 @Composable
-fun GfDropDown(
+fun SeedDropdown(
     modifier: Modifier = Modifier,
     isExpanded: Boolean,
-    alignment: DropdownAlignment = DropdownAlignment.Start,
+    alignment: SeedDropdown.Alignment = SeedDropdown.Alignment.Start,
     placeholder: @Composable () -> Unit,
     items: @Composable ColumnScope.() -> Unit,
     fitPlaceholderWidth: Boolean = false,
@@ -52,8 +52,8 @@ fun GfDropDown(
                     onDismiss()
                 },
                 offset = IntOffset(when (alignment) {
-                    DropdownAlignment.Start -> 0
-                    DropdownAlignment.End -> offsetX
+                    SeedDropdown.Alignment.Start -> 0
+                    SeedDropdown.Alignment.End -> offsetX
                 }, 0),
                 properties = PopupProperties()
             ) {
@@ -89,6 +89,8 @@ fun GfDropDown(
     }
 }
 
-enum class DropdownAlignment {
-    Start, End
+object SeedDropdown {
+    enum class Alignment {
+        Start, End
+    }
 }

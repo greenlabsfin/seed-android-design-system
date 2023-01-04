@@ -24,28 +24,28 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEach
 import androidx.compose.ui.util.fastMap
 import androidx.compose.ui.util.fastMaxBy
-import com.greenlabsfin.design.core.GfTheme
-import com.greenlabsfin.design.core.LocalGfBackgroundColor
+import com.greenlabsfin.design.core.SeedTheme
+import com.greenlabsfin.design.core.LocalSeedBackgroundColor
 
 @Composable
-fun GfBottomSheetScaffold(
+fun SeedBottomSheetScaffold(
     modifier: Modifier = Modifier,
-    scrimColor: Color = GfBottomSheetDefaults.scrimColor,
-    sheetState: GfBottomSheetState = rememberGfBottomSheetState(initialValue = GfBottomSheetValue.Hidden),
+    scrimColor: Color = SeedBottomSheetDefaults.scrimColor,
+    sheetState: SeedBottomSheetState = rememberSeedBottomSheetState(initialValue = SeedBottomSheetValue.Hidden),
     isFixed: Boolean = false,
     sheetShape: Shape = RoundedCornerShape(
         topStart = 20.dp,
         topEnd = 20.dp,
     ),
-    sheetElevation: Dp = GfBottomSheetDefaults.Elevation,
-    sheetBackgroundColor: Color = GfTheme.colorScheme.container.background,
-    sheetContentColor: Color = GfTheme.colorScheme.contents.neutralPrimary,
+    sheetElevation: Dp = SeedBottomSheetDefaults.Elevation,
+    sheetBackgroundColor: Color = SeedTheme.colorScheme.container.background,
+    sheetContentColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
     sheetContent: @Composable ColumnScope.() -> Unit,
     topBar: @Composable () -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
-    GfBottomSheetLayout(
+    SeedBottomSheetLayout(
         modifier = modifier,
         scrimColor = scrimColor,
         sheetState = sheetState,
@@ -56,7 +56,7 @@ fun GfBottomSheetScaffold(
         sheetContentColor = sheetContentColor,
         sheetContent = sheetContent
     ) {
-        GfScaffold(
+        SeedScaffold(
             modifier = modifier,
             topBar = topBar,
             bottomBar = bottomBar,
@@ -66,7 +66,7 @@ fun GfBottomSheetScaffold(
 }
 
 @Composable
-fun GfScaffold(
+fun SeedScaffold(
     modifier: Modifier = Modifier,
     topBar: @Composable () -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
@@ -107,24 +107,24 @@ fun GfScaffold(
 }
 
 @Composable
-fun GfTopBarLayout(
+fun SeedTopBarLayout(
     modifier: Modifier = Modifier,
     title: String? = null,
-    titleStyle: TextStyle = GfTheme.typoScheme.headline.smallBold,
-    titleColor: Color = GfTheme.colorScheme.contents.neutralPrimary,
+    titleStyle: TextStyle = SeedTheme.typoScheme.headline.smallBold,
+    titleColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
     titleContent: @Composable (() -> Unit)? = null,
     titleAlignment: Alignment = Alignment.Center,
     trailingContent: @Composable (() -> Unit)? = null,
     navigationIcon: ImageVector? = null,
     onNavigationClick: () -> Unit = {},
     topBarPadding: PaddingValues = PaddingValues(),
-    color: Color = LocalGfBackgroundColor.current,
+    color: Color = LocalSeedBackgroundColor.current,
     showDivider: Boolean = false,
     bottomBar: @Composable (() -> Unit)? = null,
     content: @Composable () -> Unit,
 ) {
     Column(modifier = modifier.fillMaxSize()) {
-        GfTopBar(
+        SeedTopBar(
             modifier = modifier,
             title = title,
             titleStyle = titleStyle,
@@ -155,31 +155,31 @@ fun GfTopBarLayout(
 }
 
 @Composable
-fun GfBottomSheetTopBarLayout(
+fun SeedBottomSheetTopBarLayout(
     modifier: Modifier = Modifier,
     title: String? = null,
-    titleStyle: TextStyle = GfTheme.typoScheme.headline.smallBold,
-    titleColor: Color = GfTheme.colorScheme.contents.neutralPrimary,
+    titleStyle: TextStyle = SeedTheme.typoScheme.headline.smallBold,
+    titleColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
     titleContent: @Composable (() -> Unit)? = null,
     titleAlignment: Alignment = Alignment.Center,
     trailingContent: @Composable (() -> Unit)? = null,
     navigationIcon: ImageVector? = null,
     topBarPadding: PaddingValues = PaddingValues(),
     onNavigationClick: () -> Unit = {},
-    color: Color = LocalGfBackgroundColor.current,
+    color: Color = LocalSeedBackgroundColor.current,
     showDivider: Boolean = false,
-    sheetState: GfBottomSheetState = rememberGfBottomSheetState(initialValue = GfBottomSheetValue.Hidden),
+    sheetState: SeedBottomSheetState = rememberSeedBottomSheetState(initialValue = SeedBottomSheetValue.Hidden),
     isFixed: Boolean = true,
     bottomBar: @Composable () -> Unit = {},
     sheetContent: @Composable ColumnScope.() -> Unit,
     content: @Composable () -> Unit,
 ) {
-    GfBottomSheetLayout(
+    SeedBottomSheetLayout(
         sheetContent = sheetContent,
         isFixed = isFixed,
         sheetState = sheetState
     ) {
-        GfTopBarLayout(
+        SeedTopBarLayout(
             modifier = modifier,
             title = title,
             titleStyle = titleStyle,

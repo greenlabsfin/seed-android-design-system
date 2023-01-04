@@ -3,27 +3,26 @@ package com.greenlabsfin.design.component
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
-import com.greenlabsfin.design.core.GfTheme
+import com.greenlabsfin.design.core.SeedTheme
 
 @Composable
-fun GfOutlineTextField(
+fun SeedOutlineTextField(
     modifier: Modifier = Modifier,
-    height: GFHeight,
+    height: SeedTextField.Height,
     value: String,
     label: String? = null,
-    textStyle: TextStyle = GfTheme.typoScheme.body.mediumRegular,
-    labelTextStyle: TextStyle = GfTheme.typoScheme.body.mediumBold,
+    textStyle: TextStyle = SeedTheme.typoScheme.body.mediumRegular,
+    labelTextStyle: TextStyle = SeedTheme.typoScheme.body.mediumBold,
     placeholder: String = "",
     prefix: @Composable (() -> Unit)? = null,
     suffix: @Composable (() -> Unit)? = null,
-    suffixTextStyle: TextStyle? = GfTheme.typoScheme.body.smallRegular.merge(TextStyle(color = GfTheme.colorScheme.contents.neutralTertiary)),
-    colors: GfTextFieldColors = GfTextFieldDefaults.outlineTextFieldColors(),
+    suffixTextStyle: TextStyle? = SeedTheme.typoScheme.body.smallRegular.merge(TextStyle(color = SeedTheme.colorScheme.contents.neutralTertiary)),
+    colors: SeedTextFieldColors = SeedTextFieldDefaults.outlineTextFieldColors(),
     enabled: Boolean = true,
     readOnly: Boolean = false,
     isError: Boolean = false,
@@ -37,9 +36,9 @@ fun GfOutlineTextField(
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     onValueChange: (String) -> Unit,
 ) {
-    GfBoxTextField(
+    SeedBoxTextField(
         modifier = modifier,
-        style = GfBoxTextField.Style.Outline,
+        style = SeedTextField.Style.Outline,
         height = height,
         value = value,
         colors = colors,

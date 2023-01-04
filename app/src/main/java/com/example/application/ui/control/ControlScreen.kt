@@ -10,12 +10,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.greenlabsfin.design.component.GfText
-import com.greenlabsfin.design.component.control.GFCheckbox
-import com.greenlabsfin.design.component.control.GFRadioButton
-import com.greenlabsfin.design.component.control.GFSwitch
-import com.greenlabsfin.design.component.control.SwitchSize
-import com.greenlabsfin.design.core.GfTheme
+import com.greenlabsfin.design.component.SeedText
+import com.greenlabsfin.design.component.SeedCheckbox
+import com.greenlabsfin.design.component.SeedRadioButton
+import com.greenlabsfin.design.component.SeedSwitch
+import com.greenlabsfin.design.component.SwitchSize
+import com.greenlabsfin.design.core.SeedTheme
 
 @Composable
 fun ControlScreen() {
@@ -35,28 +35,28 @@ private fun SwitchComponents() {
     var selectedSmallSwitch by remember { mutableStateOf(false) }
 
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        GfText(text = "Switch", style = GfTheme.typoScheme.headline.largeBold)
-        GFSwitch(
+        SeedText(text = "Switch", style = SeedTheme.typoScheme.headline.largeBold)
+        SeedSwitch(
             checked = selectedBigSwitch,
             onCheckedChange = { selectedBigSwitch = selectedBigSwitch.not() },
             text = "Big Switch"
         )
 
-        GFSwitch(
+        SeedSwitch(
             checked = selectedSmallSwitch,
             onCheckedChange = { selectedSmallSwitch = selectedSmallSwitch.not() },
             switchSize = SwitchSize.Small,
             text = "Small Switch"
         )
 
-        GFSwitch(
+        SeedSwitch(
             checked = true,
             onCheckedChange = {},
             enabled = false,
             text = "Disabled Checked Switch"
         )
 
-        GFSwitch(
+        SeedSwitch(
             checked = false,
             onCheckedChange = {},
             enabled = false,
@@ -71,16 +71,16 @@ private fun RadioComponents() {
     var boldRadioItem by remember { mutableStateOf(false) }
 
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        GfText(text = "Radio Button", style = GfTheme.typoScheme.headline.largeBold)
-        GFRadioButton(
+        SeedText(text = "Radio Button", style = SeedTheme.typoScheme.headline.largeBold)
+        SeedRadioButton(
             selected = radioItem,
             text = "Default Radio Button"
         ) { radioItem = radioItem.not() }
 
-        GFRadioButton(
+        SeedRadioButton(
             selected = boldRadioItem,
             text = "Bold Radio Item",
-            textStyle = GfTheme.typoScheme.body.mediumBold
+            textStyle = SeedTheme.typoScheme.body.mediumBold
         ) {
             boldRadioItem = boldRadioItem.not()
         }
@@ -93,21 +93,21 @@ private fun CheckboxComponents() {
     var boldCheckboxItem by remember { mutableStateOf(false) }
 
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        GfText(text = "Checkbox", style = GfTheme.typoScheme.headline.largeBold)
-        GFCheckbox(
+        SeedText(text = "Checkbox", style = SeedTheme.typoScheme.headline.largeBold)
+        SeedCheckbox(
             checked = checkboxItem,
             onCheckedChange = { checkboxItem = it },
             text = "Default Checkbox"
         )
 
-        GFCheckbox(
+        SeedCheckbox(
             checked = boldCheckboxItem,
             onCheckedChange = { boldCheckboxItem = it },
             text = "Bold Default Checkbox",
-            textStyle = GfTheme.typoScheme.body.mediumBold
+            textStyle = SeedTheme.typoScheme.body.mediumBold
         )
 
-        GFCheckbox(
+        SeedCheckbox(
             checked = true,
             onCheckedChange = {},
             text = "Disabled Checkbox",

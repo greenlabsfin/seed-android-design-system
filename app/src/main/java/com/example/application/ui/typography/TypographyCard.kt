@@ -15,18 +15,18 @@ import androidx.compose.ui.unit.dp
 import com.example.application.R
 import com.example.application.ui.theme.GFSampleTheme
 import com.example.application.util.ThemedPreview
-import com.greenlabsfin.design.component.GfText
-import com.greenlabsfin.design.core.GfTheme
+import com.greenlabsfin.design.component.SeedText
+import com.greenlabsfin.design.core.SeedTheme
 
 @Composable
 fun TypographyCard(
     @StringRes resId: Int,
-    style: TextStyle = GfTheme.typoScheme.body.mediumMedium,
+    style: TextStyle = SeedTheme.typoScheme.body.mediumMedium,
 ) {
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
-        GfText(
+        SeedText(
             text = stringResource(id = resId),
             style = style
         )
@@ -68,14 +68,14 @@ fun ValuePanel(
     Column(
         modifier = modifier
     ) {
-        GfText(
+        SeedText(
             text = title,
-            style = GfTheme.typoScheme.body.smallBold
+            style = SeedTheme.typoScheme.body.smallBold
         )
 
-        GfText(
+        SeedText(
             text = value,
-            style = GfTheme.typoScheme.body.smallRegular
+            style = SeedTheme.typoScheme.body.smallRegular
         )
     }
 }
