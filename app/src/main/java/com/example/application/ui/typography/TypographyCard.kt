@@ -15,8 +15,8 @@ import androidx.compose.ui.unit.dp
 import com.example.application.R
 import com.example.application.ui.theme.SeedSampleTheme
 import com.example.application.util.ThemedPreview
-import com.greenlabsfin.design.component.SeedText
-import com.greenlabsfin.design.core.SeedTheme
+import co.seedglobal.design.component.SeedText
+import co.seedglobal.design.core.SeedTheme
 
 @Composable
 fun TypographyCard(

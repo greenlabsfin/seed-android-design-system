@@ -18,9 +18,9 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.example.application.ui.theme.SeedSampleTheme
 import com.example.application.util.ThemedPreview
-import com.greenlabsfin.design.component.SeedChip
-import com.greenlabsfin.design.component.SeedChipDefaults
-import com.greenlabsfin.design.core.SeedTheme
+import co.seedglobal.design.component.SeedChip
+import co.seedglobal.design.component.SeedChipDefaults
+import co.seedglobal.design.core.SeedTheme
 
 @Composable
 fun ChipScreen() {

@@ -9,15 +9,15 @@ import androidx.navigation.NavController
 import com.example.application.ui.icons.SampleIcons
 import com.example.application.ui.icons.filled.Cart
 import com.example.application.ui.icons.regular.Cart
-import com.greenlabsfin.design.component.SeedBarState
-import com.greenlabsfin.design.component.SeedBottomNavigation
-import com.greenlabsfin.design.component.SeedBottomNavigationItem
-import com.greenlabsfin.design.component.SeedText
-import com.greenlabsfin.design.component.icons.Icons
-import com.greenlabsfin.design.component.icons.filled.Delete
-import com.greenlabsfin.design.component.icons.regular.Delete
-import com.greenlabsfin.design.component.rememberSeedBarState
-import com.greenlabsfin.design.component.toPainter
+import co.seedglobal.design.component.SeedBarState
+import co.seedglobal.design.component.SeedBottomNavigation
+import co.seedglobal.design.component.SeedBottomNavigationItem
+import co.seedglobal.design.component.SeedText
+import co.seedglobal.design.component.icons.Icons
+import co.seedglobal.design.component.icons.filled.Delete
+import co.seedglobal.design.component.icons.regular.Delete
+import co.seedglobal.design.component.rememberSeedBarState
+import co.seedglobal.design.component.toPainter
 
 @Composable
 fun BottomNavigation(

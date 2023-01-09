@@ -33,12 +33,12 @@ import com.example.application.ui.textfield.TextFieldScreen
 import com.example.application.ui.theme.SeedSampleTheme
 import com.example.application.ui.typography.TypographyScreen
 import com.example.application.util.ThemedPreview
-import com.greenlabsfin.design.component.SeedBottomSheetScaffold
-import com.greenlabsfin.design.component.SeedBottomSheetValue
-import com.greenlabsfin.design.component.SeedTopBar
-import com.greenlabsfin.design.component.SeedTopBarDefaults
-import com.greenlabsfin.design.component.rememberSeedBarState
-import com.greenlabsfin.design.component.rememberSeedBottomSheetState
+import co.seedglobal.design.component.SeedBottomSheetScaffold
+import co.seedglobal.design.component.SeedBottomSheetValue
+import co.seedglobal.design.component.SeedTopBar
+import co.seedglobal.design.component.SeedTopBarDefaults
+import co.seedglobal.design.component.rememberSeedBarState
+import co.seedglobal.design.component.rememberSeedBottomSheetState
 import kotlinx.coroutines.launch
 
 @ExperimentalMaterial3Api

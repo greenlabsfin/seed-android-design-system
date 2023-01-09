@@ -15,12 +15,12 @@ import androidx.compose.ui.unit.dp
 import com.example.application.seed.benefit.Benefit1
 import com.example.application.seed.benefit.Benefit2
 import com.example.application.seed.benefit.Benefit3
-import com.greenlabsfin.design.component.SeedBottomSheetValue
-import com.greenlabsfin.design.component.SeedText
-import com.greenlabsfin.design.component.rememberSeedBottomSheetState
-import com.greenlabsfin.design.component.util.CatchScrollUp
-import com.greenlabsfin.design.component.util.DecorateBackground
-import com.greenlabsfin.design.core.SeedTheme
+import co.seedglobal.design.component.SeedBottomSheetValue
+import co.seedglobal.design.component.SeedText
+import co.seedglobal.design.component.rememberSeedBottomSheetState
+import co.seedglobal.design.component.util.CatchScrollUp
+import co.seedglobal.design.component.util.DecorateBackground
+import co.seedglobal.design.core.SeedTheme
 import kotlinx.coroutines.launch
 
 @Composable

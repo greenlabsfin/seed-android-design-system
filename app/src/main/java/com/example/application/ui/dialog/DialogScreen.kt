@@ -13,10 +13,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.greenlabsfin.design.component.SeedButton
-import com.greenlabsfin.design.component.SeedButtonDefaults
-import com.greenlabsfin.design.component.SeedDialog
-import com.greenlabsfin.design.component.SeedDialogDefaults
+import co.seedglobal.design.component.SeedButton
+import co.seedglobal.design.component.SeedButtonDefaults
+import co.seedglobal.design.component.SeedDialog
+import co.seedglobal.design.component.SeedDialogDefaults
 
 @Composable
 fun DialogScreen() {

@@ -23,14 +23,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.greenlabsfin.design.component.SeedButton
-import com.greenlabsfin.design.component.SeedButtonDefaults
-import com.greenlabsfin.design.component.SeedDropdown
-import com.greenlabsfin.design.component.SeedIcon
-import com.greenlabsfin.design.component.SeedText
-import com.greenlabsfin.design.component.SeedTextButton
-import com.greenlabsfin.design.component.toPainter
-import com.greenlabsfin.design.core.SeedTheme
+import co.seedglobal.design.component.SeedButton
+import co.seedglobal.design.component.SeedButtonDefaults
+import co.seedglobal.design.component.SeedDropdown
+import co.seedglobal.design.component.SeedIcon
+import co.seedglobal.design.component.SeedText
+import co.seedglobal.design.component.SeedTextButton
+import co.seedglobal.design.component.toPainter
+import co.seedglobal.design.core.SeedTheme
 
 @Composable
 fun DropdownScreen() {

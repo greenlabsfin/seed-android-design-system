@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import com.example.application.ui.home.HomeScreen
 import com.example.application.ui.theme.SeedSampleTheme
 import com.example.application.util.LocaleHelper
-import com.greenlabsfin.design.core.LocalSeedBackgroundColor
+import co.seedglobal.design.core.LocalSeedBackgroundColor
 
 @ExperimentalMaterial3Api
 class MainActivity : ComponentActivity() {
