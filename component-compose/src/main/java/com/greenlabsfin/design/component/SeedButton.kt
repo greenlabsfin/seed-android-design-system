@@ -2,13 +2,16 @@ package com.greenlabsfin.design.component
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -20,6 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.greenlabsfin.design.core.SeedTheme
@@ -47,7 +51,8 @@ fun SeedButton(
         ),
         border = BorderStroke(1.dp, colors.borderColor(enabled = enabled).value),
         contentPadding = PaddingValues(horizontal = 12.dp),
-        shape = RoundedCornerShape(height.radius)
+        shape = RoundedCornerShape(height.radius),
+        enabled = enabled
     ) {
         Row(horizontalArrangement = Arrangement.spacedBy(4.dp),
             verticalAlignment = Alignment.CenterVertically) {
@@ -234,5 +239,32 @@ private data class SeedButtonColors(
         rememberUpdatedState(if (enabled) borderColor else disabledBorderColor)
 }
 
+@Preview(widthDp = 250, heightDp = 470)
+@Composable
+fun DisabledButtonPreview() {
+    Surface {
+
+        Column(verticalArrangement = Arrangement.SpaceBetween) {
+            SeedButton(
+                text = "DISABLED",
+                height = SeedButton.Height.Large,
+                colors = SeedButtonDefaults.Colors.containerPrimary(),
+                enabled = false,
+                modifier = Modifier.fillMaxWidth()
+            ) {}
+
+            SeedButton(
+                text = "ENABLED",
+                height = SeedButton.Height.Large,
+                colors = SeedButtonDefaults.Colors.containerPrimary(),
+                enabled = true,
+                modifier = Modifier.fillMaxWidth()
+            ) {}
+        }
+
+
+
+    }
+}
 
 
