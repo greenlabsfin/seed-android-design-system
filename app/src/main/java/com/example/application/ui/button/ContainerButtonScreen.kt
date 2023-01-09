@@ -15,13 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.application.ui.theme.SeedSampleTheme
 import com.example.application.util.ThemedPreview
-import com.greenlabsfin.design.component.SeedButton
-import com.greenlabsfin.design.component.SeedButtonDefaults
-import com.greenlabsfin.design.component.SeedCountDefaults
-import com.greenlabsfin.design.component.SeedText
-import com.greenlabsfin.design.core.SeedTheme
-import com.greenlabsfin.design.core.color.gray60
-import com.greenlabsfin.design.core.color.red80
+import co.seedglobal.design.component.SeedButton
+import co.seedglobal.design.component.SeedButtonDefaults
+import co.seedglobal.design.component.SeedCountDefaults
+import co.seedglobal.design.component.SeedText
+import co.seedglobal.design.core.SeedTheme
+import co.seedglobal.design.core.color.gray60
+import co.seedglobal.design.core.color.red80
 
 @Composable
 fun ContainerButtonScreen() {

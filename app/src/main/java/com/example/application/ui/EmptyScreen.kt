@@ -8,8 +8,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.example.application.ui.theme.SeedSampleTheme
 import com.example.application.util.ThemedPreview
-import com.greenlabsfin.design.core.SeedTheme
-import com.greenlabsfin.design.core.typo.SeedTypoScheme
+import co.seedglobal.design.core.SeedTheme
+import co.seedglobal.design.core.typo.SeedTypoScheme
 
 @Composable
 fun EmptyScreen(

@@ -10,12 +10,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.greenlabsfin.design.component.SeedText
-import com.greenlabsfin.design.component.SeedCheckbox
-import com.greenlabsfin.design.component.SeedRadioButton
-import com.greenlabsfin.design.component.SeedSwitch
-import com.greenlabsfin.design.component.SwitchSize
-import com.greenlabsfin.design.core.SeedTheme
+import co.seedglobal.design.component.SeedText
+import co.seedglobal.design.component.SeedCheckbox
+import co.seedglobal.design.component.SeedRadioButton
+import co.seedglobal.design.component.SeedSwitch
+import co.seedglobal.design.component.SwitchSize
+import co.seedglobal.design.core.SeedTheme
 
 @Composable
 fun ControlScreen() {

@@ -27,15 +27,15 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.navigation
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
-import com.greenlabsfin.design.component.SeedBottomNavigation
-import com.greenlabsfin.design.component.SeedBottomNavigationItem
-import com.greenlabsfin.design.component.SeedBottomSheetScaffold
-import com.greenlabsfin.design.component.SeedBottomSheetValue
-import com.greenlabsfin.design.component.SeedIcon
-import com.greenlabsfin.design.component.SeedText
-import com.greenlabsfin.design.component.SeedTopBar
-import com.greenlabsfin.design.component.rememberSeedBottomSheetState
-import com.greenlabsfin.design.core.SeedTheme
+import co.seedglobal.design.component.SeedBottomNavigation
+import co.seedglobal.design.component.SeedBottomNavigationItem
+import co.seedglobal.design.component.SeedBottomSheetScaffold
+import co.seedglobal.design.component.SeedBottomSheetValue
+import co.seedglobal.design.component.SeedIcon
+import co.seedglobal.design.component.SeedText
+import co.seedglobal.design.component.SeedTopBar
+import co.seedglobal.design.component.rememberSeedBottomSheetState
+import co.seedglobal.design.core.SeedTheme
 import kotlinx.coroutines.launch
 
 @Composable

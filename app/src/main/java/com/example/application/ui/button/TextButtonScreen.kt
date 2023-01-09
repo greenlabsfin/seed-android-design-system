@@ -12,10 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.application.ui.theme.SeedSampleTheme
 import com.example.application.util.ThemedPreview
-import com.greenlabsfin.design.component.SeedTextButton
-import com.greenlabsfin.design.component.SeedTextButtonDefaults
-import com.greenlabsfin.design.component.toPainter
-import com.greenlabsfin.design.core.SeedTheme
+import co.seedglobal.design.component.SeedTextButton
+import co.seedglobal.design.component.SeedTextButtonDefaults
+import co.seedglobal.design.component.toPainter
+import co.seedglobal.design.core.SeedTheme
 
 @Composable
 fun TextButtonScreen() {

@@ -22,12 +22,12 @@ import com.example.application.R
 import com.example.application.ui.theme.SeedSampleTheme
 import com.example.application.util.LocaleHelper
 import com.example.application.util.ThemedPreview
-import com.greenlabsfin.design.component.SeedButton
-import com.greenlabsfin.design.component.SeedButtonDefaults
-import com.greenlabsfin.design.component.SeedText
-import com.greenlabsfin.design.component.util.CatchScrollUp
-import com.greenlabsfin.design.component.util.DecorateBackground
-import com.greenlabsfin.design.core.SeedTheme
+import co.seedglobal.design.component.SeedButton
+import co.seedglobal.design.component.SeedButtonDefaults
+import co.seedglobal.design.component.SeedText
+import co.seedglobal.design.component.util.CatchScrollUp
+import co.seedglobal.design.component.util.DecorateBackground
+import co.seedglobal.design.core.SeedTheme
 
 @Composable
 fun TypographyScreen(
