@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace "com.greenlabsfin.design.core"
+    namespace "co.seedglobal.design.core"
     compileSdk rootProject.ext.compileSdkVersion
 
     defaultConfig {

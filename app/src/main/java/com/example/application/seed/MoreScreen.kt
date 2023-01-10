@@ -2,7 +2,7 @@ package com.example.application.seed
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import com.greenlabsfin.design.component.util.DecorateBackground
+import co.seedglobal.design.component.util.DecorateBackground
 
 @Composable
 fun MoreScreen() {

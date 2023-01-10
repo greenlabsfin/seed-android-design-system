@@ -16,10 +16,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.greenlabsfin.design.component.SeedText
-import com.greenlabsfin.design.core.SeedTheme
-import com.greenlabsfin.design.core.color.SeedColorScheme
-import com.greenlabsfin.design.core.typo.SeedTypoScheme
+import co.seedglobal.design.component.SeedText
+import co.seedglobal.design.core.SeedTheme
+import co.seedglobal.design.core.color.SeedColorScheme
+import co.seedglobal.design.core.typo.SeedTypoScheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 

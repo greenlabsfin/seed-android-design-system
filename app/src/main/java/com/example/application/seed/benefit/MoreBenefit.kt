@@ -9,9 +9,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.greenlabsfin.design.component.SeedText
-import com.greenlabsfin.design.component.SeedTopBarLayout
-import com.greenlabsfin.design.core.SeedTheme
+import co.seedglobal.design.component.SeedText
+import co.seedglobal.design.component.SeedTopBarLayout
+import co.seedglobal.design.core.SeedTheme
 
 @Composable
 fun MoreBenefitScreen(

@@ -22,10 +22,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.application.ui.theme.SeedSampleTheme
 import com.example.application.util.ThemedPreview
-import com.greenlabsfin.design.component.SeedIcon
-import com.greenlabsfin.design.component.SeedText
-import com.greenlabsfin.design.component.SeedTextField
-import com.greenlabsfin.design.core.SeedTheme
+import co.seedglobal.design.component.SeedIcon
+import co.seedglobal.design.component.SeedText
+import co.seedglobal.design.component.SeedTextField
+import co.seedglobal.design.core.SeedTheme
 
 @Composable
 fun TextFieldScreen() {

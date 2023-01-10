@@ -4,9 +4,9 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.ViewCompat
-import com.greenlabsfin.design.component.util.ChangeStatusBarColor
-import com.greenlabsfin.design.core.SeedTheme
-import com.greenlabsfin.design.core.color.SeedColorScheme
+import co.seedglobal.design.component.util.ChangeStatusBarColor
+import co.seedglobal.design.core.SeedTheme
+import co.seedglobal.design.core.color.SeedColorScheme
 
 
 @Composable
