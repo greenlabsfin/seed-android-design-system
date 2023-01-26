@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.LayoutDirection
@@ -53,6 +54,7 @@ fun SeedText(
     color: Color = Color.Unspecified,
     overflow: TextOverflow = TextOverflow.Clip,
     softWrap: Boolean = true,
+    textAlign: TextAlign? = null,
     maxLines: Int = Int.MAX_VALUE,
     onTextLayout: (TextLayoutResult) -> Unit = {},
     style: TextStyle = LocalSeedTextStyle.current,
@@ -139,6 +141,7 @@ fun SeedText(
                         color = textColor,
                         style = style,
                         onTextLayout = onTextLayout,
+                        textAlign = textAlign,
                         overflow = overflow,
                         softWrap = softWrap,
                         maxLines = maxLines,
