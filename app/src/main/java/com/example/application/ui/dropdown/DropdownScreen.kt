@@ -146,7 +146,6 @@ fun ListComponent(
         modifier = Modifier
             .padding(16.dp)
             .clickable {
-                Log.d("####", "Icon Selected")
                 itemSelected()
             },
         horizontalArrangement = Arrangement.spacedBy(8.dp)
