@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.TextStyle
 import co.seedglobal.design.core.LocalSeedBackgroundColor
 import co.seedglobal.design.core.SeedTheme
@@ -24,7 +24,7 @@ fun SeedTopBarLayout(
     titleContent: @Composable (() -> Unit)? = null,
     titleAlignment: Alignment = Alignment.Center,
     trailingContent: @Composable (() -> Unit)? = null,
-    navigationIcon: ImageVector? = null,
+    navigationIcon: Painter? = null,
     onNavigationClick: () -> Unit = {},
     topBarPadding: PaddingValues = PaddingValues(),
     color: Color = LocalSeedBackgroundColor.current,
@@ -47,9 +47,11 @@ fun SeedTopBarLayout(
             color = color,
             forceShowDivider = showDivider,
         )
-        Box(modifier = Modifier
-            .fillMaxWidth()
-            .weight(1f, true)) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(1f, true)
+        ) {
             content()
         }
         bottomBar?.let {
@@ -72,7 +74,7 @@ fun SeedBottomSheetTopBarLayout(
     titleContent: @Composable (() -> Unit)? = null,
     titleAlignment: Alignment = Alignment.Center,
     trailingContent: @Composable (() -> Unit)? = null,
-    navigationIcon: ImageVector? = null,
+    navigationIcon: Painter? = null,
     topBarPadding: PaddingValues = PaddingValues(),
     onNavigationClick: () -> Unit = {},
     color: Color = LocalSeedBackgroundColor.current,
