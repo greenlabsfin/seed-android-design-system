@@ -49,6 +49,54 @@ typealias SeedBottomSheetState = ModalBottomSheetState
 typealias SeedBottomSheetValue = ModalBottomSheetValue
 
 @Composable
+fun SeedFixedBottomSheet(
+    modifier: Modifier = Modifier,
+    scrimColor: Color = SeedBottomSheetDefaults.scrimColor,
+    sheetState: SeedBottomSheetState = rememberSeedBottomSheetState(initialValue = SeedBottomSheetValue.Hidden),
+    sheetShape: Shape = RoundedCornerShape(
+        topStart = 20.dp,
+        topEnd = 20.dp,
+    ),
+    sheetElevation: Dp = SeedBottomSheetDefaults.elevation,
+    sheetBackgroundColor: Color = SeedTheme.colorScheme.container.background,
+    sheetContentColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
+    onDismiss: () -> Unit = {},
+    sheetContent: @Composable ColumnScope.() -> Unit,
+) {
+    val scope = rememberCoroutineScope()
+    BoxWithConstraints(modifier) {
+        val fullHeight = constraints.maxHeight.toFloat()
+        val sheetHeightState = remember { mutableStateOf<Float?>(null) }
+        Box(modifier = Modifier.fillMaxSize()) {
+            Scrim(
+                color = scrimColor,
+                onDismiss = onDismiss,
+                visible = sheetState.targetValue != SeedBottomSheetValue.Hidden
+            )
+        }
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .offset {
+                    val y = sheetState.offset.value.roundToInt()
+                    IntOffset(0, y)
+                }
+                .bottomSheetFixedSwipeable(sheetState, fullHeight, sheetHeightState)
+                .onGloballyPositioned {
+                    sheetHeightState.value = it.size.height.toFloat()
+                },
+            shape = sheetShape,
+            elevation = sheetElevation,
+            color = sheetBackgroundColor,
+            contentColor = sheetContentColor
+        ) {
+            Column(content = sheetContent)
+        }
+    }
+
+}
+
+@Composable
 fun SeedBottomSheetLayout(
     modifier: Modifier = Modifier,
     scrimColor: Color = SeedBottomSheetDefaults.scrimColor,
@@ -202,7 +250,7 @@ private fun Modifier.bottomSheetFixedSwipeable(
 
 
 @Composable
-private fun Scrim(
+fun Scrim(
     color: Color,
     onDismiss: () -> Unit,
     visible: Boolean,
