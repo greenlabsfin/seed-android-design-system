@@ -23,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -60,7 +61,7 @@ fun SeedTopBar(
     titleContent: @Composable (() -> Unit)? = null,
     titleAlignment: Alignment = Alignment.Center,
     trailingContent: @Composable (() -> Unit)? = null,
-    navigationIcon: ImageVector? = null,
+    navigationIcon: Painter? = null,
     onNavigationClick: () -> Unit = {},
     topBarPadding: PaddingValues = PaddingValues(),
     color: Color = LocalSeedBackgroundColor.current,
@@ -119,7 +120,7 @@ fun SeedTopBar(
                                 interactionSource = MutableInteractionSource(),
                                 indication = null,
                             ),
-                        imageVector = it,
+                        painter = it,
                         contentDescription = "navigation"
                     )
                 }

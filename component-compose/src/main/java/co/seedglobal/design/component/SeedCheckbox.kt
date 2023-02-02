@@ -3,6 +3,7 @@ package co.seedglobal.design.component
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -85,10 +86,7 @@ fun SeedCheckbox(
                     enabled = enabled,
                     role = Role.Checkbox,
                     interactionSource = interactionSource,
-                    indication = rememberRipple(
-                        bounded = false,
-                        radius = 24.dp
-                    ),
+                    indication = null,
                     onClick = { onCheckedChange(checked.not()) })
                 .background(
                     color = backgroundAnimation.value,

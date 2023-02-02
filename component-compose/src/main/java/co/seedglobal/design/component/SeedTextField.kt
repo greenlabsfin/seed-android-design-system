@@ -62,6 +62,7 @@ fun SeedTextField(
     modifier: Modifier = Modifier,
     height: SeedTextField.Size? = null,
     label: String? = null,
+    labelSpace: Dp = 2.dp,
     textStyle: TextStyle = SeedTheme.typoScheme.body.mediumRegular,
     labelTextStyle: TextStyle = SeedTheme.typoScheme.body.mediumBold,
     placeholder: String = "",
@@ -88,6 +89,7 @@ fun SeedTextField(
             value = value,
             colors = colors,
             label = label,
+            labelSpace = labelSpace,
             textStyle = textStyle,
             labelTextStyle = labelTextStyle,
             placeholder = placeholder,
@@ -114,6 +116,7 @@ fun SeedTextField(
             value = value,
             colors = colors,
             label = label,
+            labelSpace = labelSpace,
             textStyle = textStyle,
             labelTextStyle = labelTextStyle,
             placeholder = placeholder,
@@ -140,6 +143,7 @@ private fun SeedLineTextField(
     value: String,
     modifier: Modifier = Modifier,
     label: String? = null,
+    labelSpace: Dp = 2.dp,
     textStyle: TextStyle = SeedTheme.typoScheme.body.mediumRegular,
     labelTextStyle: TextStyle = SeedTheme.typoScheme.body.mediumBold,
     placeholder: String = "",
@@ -197,7 +201,7 @@ private fun SeedLineTextField(
                 color = labelColor.value,
                 style = labelTextStyle,
             )
-            Spacer(modifier = Modifier.height(2.dp))
+            Spacer(modifier = Modifier.height(labelSpace))
         }
 
         Surface(
@@ -219,7 +223,8 @@ private fun SeedLineTextField(
                         enabled = enabled,
                         isError = isError
                     ).value,
-                    content = prefix)
+                    content = prefix
+                )
 
                 Box(modifier = modifier.weight(1f, false)) {
                     BasicTextField(
@@ -279,6 +284,8 @@ private fun SeedLineTextField(
                 )
             }
         }
+
+        Spacer(modifier = Modifier.height(8.dp))
 
         Divider(
             color = indicatorColor.value,
@@ -663,7 +670,11 @@ internal fun Decoration(
         CompositionLocalProvider(LocalSeedContentColor provides contentColor, content = content)
     }
 
-    typography?.let { ProvideSeedTextStyle(it, colorAndEmphasis) } ?: colorAndEmphasis()
+    if (typography == null) {
+        colorAndEmphasis()
+    } else {
+        ProvideSeedTextStyle(typography, colorAndEmphasis)
+    }
 }
 
 @Composable
@@ -674,6 +685,7 @@ private fun SeedBoxTextField(
     value: String,
     colors: SeedTextFieldColors,
     label: String? = null,
+    labelSpace: Dp = 2.dp,
     textStyle: TextStyle = SeedTheme.typoScheme.body.mediumRegular,
     labelTextStyle: TextStyle = SeedTheme.typoScheme.body.mediumBold,
     placeholder: String = "",
@@ -736,7 +748,7 @@ private fun SeedBoxTextField(
                 color = labelColor.value,
                 style = labelTextStyle,
             )
-            Spacer(modifier = Modifier.height(2.dp))
+            Spacer(modifier = Modifier.height(labelSpace))
         }
 
         Surface(
