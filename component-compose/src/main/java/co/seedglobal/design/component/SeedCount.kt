@@ -28,6 +28,8 @@ import androidx.compose.ui.unit.sp
 import co.seedglobal.design.component.util.SeedPreview
 import co.seedglobal.design.core.SeedTheme
 import co.seedglobal.design.core.color.SeedColorScheme
+import co.seedglobal.design.core.color.gray90
+import co.seedglobal.design.core.color.white
 import co.seedglobal.design.core.typo.SeedTypoScheme
 
 object SeedCountDefaults {
@@ -120,11 +122,11 @@ private data class DefaultSeedCountColors(
 ) : SeedCountColors {
     @Composable
     override fun backgroundColor(enabled: Boolean): State<Color> =
-        rememberUpdatedState(if (enabled) backgroundColor else backgroundColor.copy(alpha = .6f))
+        rememberUpdatedState(if (enabled) backgroundColor else gray90.copy(.3f))
 
     @Composable
     override fun textColor(enabled: Boolean): State<Color> =
-        rememberUpdatedState(if (enabled) textColor else textColor.copy(alpha = .3f))
+        rememberUpdatedState(if (enabled) textColor else white)
 
     @Composable
     override fun textStyle(textStyle: TextStyle, enabled: Boolean): State<TextStyle> =

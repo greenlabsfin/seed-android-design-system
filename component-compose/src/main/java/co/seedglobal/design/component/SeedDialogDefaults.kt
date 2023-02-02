@@ -41,7 +41,7 @@ object SeedDialogDefaults {
                     .then(
                         buttonPaddingModifier
                     ),
-                height = SeedButton.Height.Medium,
+                size = SeedButton.Size.Medium,
                 colors = SeedButtonDefaults.Colors.containerPrimary(),
                 text = buttonText,
                 onClick = onPositiveButtonClicked
@@ -65,7 +65,7 @@ object SeedDialogDefaults {
             ) {
                 SeedButton(
                     modifier = Modifier.weight(1f),
-                    height = SeedButton.Height.Medium,
+                    size = SeedButton.Size.Medium,
                     colors = SeedButtonDefaults.Colors.tintNeutral(),
                     text = negativeText,
                     onClick = onNegativeButtonClicked
@@ -73,7 +73,7 @@ object SeedDialogDefaults {
 
                 SeedButton(
                     modifier = Modifier.weight(2f),
-                    height = SeedButton.Height.Medium,
+                    size = SeedButton.Size.Medium,
                     colors = SeedButtonDefaults.Colors.containerPrimary(),
                     text = positiveText,
                     onClick = onPositiveButtonClicked
@@ -98,7 +98,7 @@ object SeedDialogDefaults {
             ) {
                 SeedButton(
                     modifier = Modifier.weight(1f),
-                    height = SeedButton.Height.Medium,
+                    size = SeedButton.Size.Medium,
                     colors = SeedButtonDefaults.Colors.tintNeutral(),
                     text = negativeText,
                     onClick = onNegativeButtonClicked
@@ -106,7 +106,7 @@ object SeedDialogDefaults {
 
                 SeedButton(
                     modifier = Modifier.weight(2f),
-                    height = SeedButton.Height.Medium,
+                    size = SeedButton.Size.Medium,
                     colors = SeedButtonDefaults.Colors.containerPrimary(),
                     text = positiveText,
                     onClick = onPositiveButtonClicked
@@ -131,7 +131,7 @@ object SeedDialogDefaults {
             ) {
                 SeedButton(
                     modifier = Modifier.fillMaxWidth(),
-                    height = SeedButton.Height.Medium,
+                    size = SeedButton.Size.Medium,
                     colors = SeedButtonDefaults.Colors.tintNeutral(),
                     text = negativeText,
                     onClick = onNegativeButtonClicked
@@ -139,7 +139,7 @@ object SeedDialogDefaults {
 
                 SeedButton(
                     modifier = Modifier.fillMaxWidth(),
-                    height = SeedButton.Height.Medium,
+                    size = SeedButton.Size.Medium,
                     colors = SeedButtonDefaults.Colors.containerPrimary(),
                     text = positiveText,
                     onClick = onPositiveButtonClicked
@@ -164,7 +164,7 @@ object SeedDialogDefaults {
             ) {
                 SeedButton(
                     modifier = Modifier.fillMaxWidth(),
-                    height = SeedButton.Height.Medium,
+                    size = SeedButton.Size.Medium,
                     colors = SeedButtonDefaults.Colors.tintNeutral(),
                     text = negativeText,
                     onClick = onNegativeButtonClicked

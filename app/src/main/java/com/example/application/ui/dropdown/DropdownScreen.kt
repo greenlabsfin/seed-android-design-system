@@ -1,6 +1,5 @@
 package com.example.application.ui.dropdown
 
-import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -58,9 +57,9 @@ fun DropdownScreen() {
             placeholder = {
                 SeedButton(
                     modifier = Modifier.fillMaxWidth(),
-                    height = SeedButton.Height.Large,
+                    size = SeedButton.Size.Large,
                     colors = SeedButtonDefaults.Colors.outlineNeutral(),
-                    rightIcon = Icons.Filled.ArrowDropDown,
+                    rightIcon = Icons.Filled.ArrowDropDown.toPainter(),
                     text = selectedDropdownItem
                 ) {
                     dropdownExpanded = dropdownExpanded.not()

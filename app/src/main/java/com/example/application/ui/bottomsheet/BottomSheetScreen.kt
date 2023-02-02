@@ -226,7 +226,7 @@ private fun SheetContentLayout(
         }
         SeedButton(
 //            modifier = Modifier.fillMaxWidth(),
-            height = SeedButton.Height.Large,
+            size = SeedButton.Size.Large,
             colors = SeedButtonDefaults.Colors.containerPrimary(),
             text = "동의하고 시작하기"
         ) {
@@ -283,7 +283,7 @@ fun PlccBannerContent(
 
             SeedButton(
                 modifier = Modifier.weight(.2f, true),
-                height = SeedButton.Height.Large,
+                size = SeedButton.Size.Large,
                 colors = SeedButtonDefaults.Colors.tintNeutral(),
                 text = "알아보기",
             ) {
