@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.ButtonElevation
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -40,6 +41,7 @@ fun SeedButton(
     rightIcon: ImageVector? = null,
     count: Int? = null,
     countColors: SeedCountColors? = null,
+    elevation: ButtonElevation? = null,
     onClick: () -> Unit,
 ) {
     Button(
@@ -52,7 +54,8 @@ fun SeedButton(
         border = BorderStroke(1.dp, colors.borderColor(enabled = enabled).value),
         contentPadding = PaddingValues(horizontal = 12.dp),
         shape = RoundedCornerShape(height.radius),
-        enabled = enabled
+        enabled = enabled,
+        elevation = elevation
     ) {
         Row(horizontalArrangement = Arrangement.spacedBy(4.dp),
             verticalAlignment = Alignment.CenterVertically) {
