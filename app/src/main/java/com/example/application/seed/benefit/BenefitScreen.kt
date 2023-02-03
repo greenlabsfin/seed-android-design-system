@@ -98,7 +98,7 @@ fun Benefit1() {
             text = "나에게 맞는 \n보조금, 지원사업은?", style = SeedTheme.typoScheme.body.mediumBold)
         SeedButton(
             text = "검색",
-            height = SeedButton.Height.XSmall,
+            size = SeedButton.Size.XSmall,
             colors = SeedButtonDefaults.Colors.tintNeutral(),
             onClick = {
 
@@ -137,7 +137,7 @@ fun Benefit3(
                 modifier = Modifier.fillMaxWidth(),
                 text = "공고보기",
                 colors = SeedButtonDefaults.Colors.tintPrimary(),
-                height = SeedButton.Height.Small,
+                size = SeedButton.Size.Small,
                 onClick = onClick
             )
             Spacer(modifier = Modifier.height(20.dp))
@@ -235,7 +235,7 @@ fun SeedBenefitContent(
 
             SeedButton(
                 modifier = Modifier.weight(.2f, true),
-                height = SeedButton.Height.Large,
+                size = SeedButton.Size.Large,
                 colors = SeedButtonDefaults.Colors.tintNeutral(),
                 text = "알아보기",
             ) {

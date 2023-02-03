@@ -33,7 +33,7 @@ fun DialogScreen() {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             SeedButton(
-                height = SeedButton.Height.Medium,
+                size = SeedButton.Size.Medium,
                 colors = SeedButtonDefaults.Colors.containerPrimary(),
                 text = "기본 다이얼로그"
             ) {
@@ -41,7 +41,7 @@ fun DialogScreen() {
             }
 
             SeedButton(
-                height = SeedButton.Height.Medium,
+                size = SeedButton.Size.Medium,
                 colors = SeedButtonDefaults.Colors.containerPrimary(),
                 text = "기본 버튼 다이얼로그"
             ) {
@@ -49,7 +49,7 @@ fun DialogScreen() {
             }
 
             SeedButton(
-                height = SeedButton.Height.Medium,
+                size = SeedButton.Size.Medium,
                 colors = SeedButtonDefaults.Colors.containerPrimary(),
                 text = "기본 버튼 다이얼로그 with Negative"
             ) {

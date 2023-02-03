@@ -1,89 +1,198 @@
 package co.seedglobal.design.component
 
+import androidx.compose.animation.Animatable
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsHoveredAsState
+import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ButtonElevation
-import androidx.compose.material.Icon
+import androidx.compose.material.ProvideTextStyle
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import co.seedglobal.design.core.SeedTheme
 import co.seedglobal.design.core.color.SeedColorScheme
+import co.seedglobal.design.core.color.gray90
 
 @Composable
 fun SeedButton(
     modifier: Modifier = Modifier,
-    height: SeedButton.Height,
+    size: SeedButton.Size,
     colors: SeedButton.Colors,
     enabled: Boolean = true,
     text: String? = null,
-    leftIcon: ImageVector? = null,
-    rightIcon: ImageVector? = null,
+    leftIcon: Painter? = null,
+    rightIcon: Painter? = null,
     count: Int? = null,
     countColors: SeedCountColors? = null,
     elevation: ButtonElevation? = null,
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     onClick: () -> Unit,
 ) {
-    Button(
-        onClick = onClick,
-        modifier = modifier.height(height.displayPixel),
-        colors = ButtonDefaults.buttonColors(
-            backgroundColor = colors.backgroundColor(enabled = enabled).value,
-            contentColor = colors.contentColor(enabled = enabled).value
-        ),
-        border = BorderStroke(1.dp, colors.borderColor(enabled = enabled).value),
-        contentPadding = PaddingValues(horizontal = 12.dp),
-        shape = RoundedCornerShape(height.radius),
-        enabled = enabled,
-        elevation = elevation
-    ) {
-        Row(horizontalArrangement = Arrangement.spacedBy(4.dp),
-            verticalAlignment = Alignment.CenterVertically) {
-            leftIcon?.let {
-                Icon(imageVector = it, contentDescription = "SeedButton LeftIcon")
+
+    val contentColor by colors.contentColor(enabled = enabled)
+    val contentPaddingModifier: Modifier = text?.let {
+        modifier.padding(size.textContentPadding)
+    } ?: modifier.padding(size.iconContentPadding)
+
+    val surfaceColor = remember { Animatable(Color.Transparent) }
+    val isHovered = interactionSource.collectIsHoveredAsState()
+    val isPressed = interactionSource.collectIsPressedAsState()
+
+    val localDensity = LocalDensity.current
+    var estimatedSize by remember {
+        mutableStateOf(IntSize(0, 0))
+    }
+
+    val localDensitySizeModifier = with(localDensity) {
+        Modifier.size(
+            width = estimatedSize.width.toDp(),
+            height = estimatedSize.height.toDp()
+        )
+    }
+
+    when {
+        isPressed.value -> {
+            LaunchedEffect(Unit) {
+                surfaceColor.animateTo(gray90.copy(.24f))
             }
-            text?.let {
-                Text(text = it, style = height.typography, overflow = TextOverflow.Ellipsis)
+        }
+        isHovered.value -> {
+            LaunchedEffect(Unit) {
+                surfaceColor.animateTo(gray90.copy(.12f))
             }
-            count?.let {
-                countColors?.let {
-                    SeedCount(
-                        count = count,
-                        colors = countColors,
-                        enabled = enabled,
-                    )
-                }
-            }
-            rightIcon?.let {
-                Icon(imageVector = it, contentDescription = "SeedButton RightIcon")
+        }
+        else -> {
+            LaunchedEffect(Unit) {
+                surfaceColor.animateTo(Color.Transparent)
             }
         }
     }
+
+    Surface(
+        modifier = Modifier
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null,
+                enabled = enabled,
+                role = Role.Button,
+                onClick = onClick
+            )
+            .defaultMinSize(
+                minWidth = text?.let {
+                    size.minimumWidth
+                } ?: 0.dp
+            )
+            .height(size.displayPixel)
+            .onGloballyPositioned {
+                estimatedSize = IntSize(
+                    width = it.size.width,
+                    height = it.size.height
+                )
+            },
+        shape = RoundedCornerShape(size.radius),
+        color = colors.backgroundColor(enabled = enabled).value,
+        border = BorderStroke(1.dp, colors.borderColor(enabled = enabled).value),
+        elevation = elevation?.elevation(enabled = enabled, interactionSource = interactionSource)?.value ?: 0.dp,
+    ) {
+        ProvideTextStyle(value = size.typography) {
+            Row(
+                modifier = Modifier
+                    .then(
+                        contentPaddingModifier
+                    ),
+                horizontalArrangement = Arrangement.spacedBy(
+                    space = 4.dp,
+                    alignment = Alignment.CenterHorizontally
+                ),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                leftIcon?.let {
+                    SeedIcon(
+                        modifier = modifier.size(
+                            size = text?.let {
+                                size.textIconSize
+                            } ?: size.onlyIconSize
+                        ),
+                        painter = it,
+                        contentDescription = "SeedButton LeftIcon",
+                        tint = contentColor
+                    )
+                }
+                text?.let {
+                    SeedText(
+                        text = it,
+                        overflow = TextOverflow.Ellipsis,
+                        color = contentColor
+                    )
+                }
+                count?.let {
+                    countColors?.let {
+                        SeedCount(
+                            count = count,
+                            colors = countColors,
+                            enabled = enabled
+                        )
+                    }
+                }
+                rightIcon?.let {
+                    SeedIcon(
+                        modifier = modifier.size(
+                            size = text?.let {
+                                size.textIconSize
+                            } ?: size.onlyIconSize
+                        ),
+                        painter = it,
+                        contentDescription = "SeedButton RightIcon",
+                        tint = contentColor
+                    )
+                }
+            }
+        }
+
+        Surface(
+            modifier = Modifier.then(
+                localDensitySizeModifier
+            ),
+            color = surfaceColor.value,
+            shape = RoundedCornerShape(size.radius)
+        ) {}
+    }
 }
 
-
 object SeedButton {
-    enum class Height(val displayPixel: Dp) {
+    enum class Size(val displayPixel: Dp) {
         XLarge(64.dp),
         Large(56.dp),
         Medium(48.dp),
@@ -104,6 +213,58 @@ object SeedButton {
                 XLarge, Large -> 12.dp
                 Medium -> 10.dp
                 Small, XSmall -> 8.dp
+            }
+
+        internal val textContentPadding: PaddingValues
+            @Composable
+            get() = PaddingValues(
+                horizontal = 12.dp,
+                vertical = when (this) {
+                    XLarge -> 15.5.dp
+                    Large -> 13.5.dp
+                    Medium -> 11.dp
+                    Small -> 8.5.dp
+                    XSmall -> 4.5.dp
+                }
+            )
+
+        internal val iconContentPadding: PaddingValues
+            @Composable
+            get() = PaddingValues(
+                when (this) {
+                    XLarge -> 16.dp
+                    Large -> 14.dp
+                    Medium -> 12.dp
+                    Small -> 10.dp
+                    XSmall -> 8.dp
+                }
+            )
+
+        internal val textIconSize: Dp
+            @Composable
+            get() = when (this) {
+                XLarge, Large -> 24.dp
+                Medium, Small -> 20.dp
+                XSmall -> 16.dp
+            }
+
+        internal val onlyIconSize: Dp
+            @Composable
+            get() = when (this) {
+                XLarge -> 32.dp
+                Large -> 28.dp
+                Medium -> 24.dp
+                Small -> 20.dp
+                XSmall -> 16.dp
+            }
+
+        internal val minimumWidth: Dp
+            @Composable
+            get() = when (this) {
+                XLarge -> 88.dp
+                Large -> 81.dp
+                Medium -> 76.dp
+                Small, XSmall -> 62.dp
             }
     }
 
@@ -250,7 +411,7 @@ fun DisabledButtonPreview() {
         Column(verticalArrangement = Arrangement.SpaceBetween) {
             SeedButton(
                 text = "DISABLED",
-                height = SeedButton.Height.Large,
+                size = SeedButton.Size.Large,
                 colors = SeedButtonDefaults.Colors.containerPrimary(),
                 enabled = false,
                 modifier = Modifier.fillMaxWidth()
@@ -258,16 +419,13 @@ fun DisabledButtonPreview() {
 
             SeedButton(
                 text = "ENABLED",
-                height = SeedButton.Height.Large,
+                size = SeedButton.Size.Large,
                 colors = SeedButtonDefaults.Colors.containerPrimary(),
                 enabled = true,
                 modifier = Modifier.fillMaxWidth()
             ) {}
         }
 
-
-
     }
 }
-
 

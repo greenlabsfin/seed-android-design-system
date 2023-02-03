@@ -54,7 +54,7 @@ fun TypographyScreen(
             content = {
                 item {
                     SeedButton(
-                        height = SeedButton.Height.Medium,
+                        size = SeedButton.Size.Medium,
                         colors = SeedButtonDefaults.Colors.containerPrimary(),
                         text = currentLocale.language,
                         onClick = {

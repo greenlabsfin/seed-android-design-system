@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import co.seedglobal.design.component.SeedText
 import co.seedglobal.design.component.SeedTopBarLayout
+import co.seedglobal.design.component.toPainter
 import co.seedglobal.design.core.SeedTheme
 
 @Composable
@@ -20,7 +21,7 @@ fun MoreBenefitScreen(
     Surface(color = SeedTheme.colorScheme.container.background) {
         SeedTopBarLayout(
             title = "More Benefit",
-            navigationIcon = Icons.Default.ArrowBack,
+            navigationIcon = Icons.Default.ArrowBack.toPainter(),
             onNavigationClick = {
                 navController.navigateUp()
             }
