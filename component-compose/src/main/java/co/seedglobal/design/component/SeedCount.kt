@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -197,7 +196,7 @@ internal fun SeedCount(
 @Composable
 fun SeedCountPreview() {
     SeedTheme(colorScheme = SeedColorScheme.default(isSystemInDarkTheme())) {
-        Surface(color = SeedTheme.colorScheme.container.background) {
+        SeedSurface(color = SeedTheme.colorScheme.container.background) {
             Column(modifier = Modifier, verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 SeedCount(count = 3, colors = SeedCountDefaults.primaryColors())
                 SeedCount(count = 33, colors = SeedCountDefaults.secondaryColors())

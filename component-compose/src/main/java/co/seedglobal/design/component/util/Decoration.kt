@@ -1,13 +1,13 @@
 package co.seedglobal.design.component.util
 
 import android.app.Activity
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
+import co.seedglobal.design.component.SeedSurface
 import co.seedglobal.design.core.LocalSeedBackgroundColor
 
 @Composable
@@ -18,7 +18,7 @@ fun DecorateBackground(
     CompositionLocalProvider(
         LocalSeedBackgroundColor provides color,
         content = {
-            Surface(
+            SeedSurface(
                 color = color,
                 content = content,
             )

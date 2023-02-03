@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.Badge
 import androidx.compose.material.BadgedBox
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
@@ -180,7 +179,7 @@ fun SeedTextPreview() {
         CompositionLocalProvider(
             LocalLayoutDirection provides LayoutDirection.Ltr
         ) {
-            Surface(
+            SeedSurface(
                 color = SeedTheme.colorScheme.container.background
             ) {
                 SeedText(

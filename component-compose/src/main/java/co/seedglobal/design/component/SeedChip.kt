@@ -17,7 +17,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
@@ -97,7 +96,7 @@ fun SeedChip(
     }
 
 
-    Surface(
+    SeedSurface(
         modifier = modifier
             .defaultMinSize(
                 minHeight = size.height,

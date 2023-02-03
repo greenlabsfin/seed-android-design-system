@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonElevation
 import androidx.compose.material.ProvideTextStyle
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
@@ -100,7 +99,7 @@ fun SeedButton(
         }
     }
 
-    Surface(
+    SeedSurface(
         modifier = Modifier
             .clickable(
                 interactionSource = interactionSource,
@@ -124,7 +123,10 @@ fun SeedButton(
         shape = RoundedCornerShape(size.radius),
         color = colors.backgroundColor(enabled = enabled).value,
         border = BorderStroke(1.dp, colors.borderColor(enabled = enabled).value),
-        elevation = elevation?.elevation(enabled = enabled, interactionSource = interactionSource)?.value ?: 0.dp,
+        elevation = elevation?.elevation(
+            enabled = enabled,
+            interactionSource = interactionSource
+        )?.value ?: 0.dp,
     ) {
         ProvideTextStyle(value = size.typography) {
             Row(
@@ -181,7 +183,7 @@ fun SeedButton(
             }
         }
 
-        Surface(
+        SeedSurface(
             modifier = Modifier.then(
                 localDensitySizeModifier
             ),
@@ -285,7 +287,7 @@ object SeedButtonDefaults {
         @Composable
         fun containerPrimary(
             backgroundColor: Color = SeedTheme.colorScheme.container.primary,
-            contentColor: Color = SeedTheme.colorScheme.contents.onPrimary
+            contentColor: Color = SeedTheme.colorScheme.contents.onPrimary,
         ): SeedButton.Colors = SeedButtonColors(
             backgroundColor = backgroundColor,
             contentColor = contentColor
@@ -298,7 +300,7 @@ object SeedButtonDefaults {
             borderColor: Color = SeedTheme.colorScheme.container.primary,
             disabledBorderColor: Color = SeedTheme.colorScheme.container.neutralTertiary.copy(
                 alpha = 0.6f
-            )
+            ),
         ): SeedButton.Colors = SeedButtonColors(
             backgroundColor = backgroundColor,
             contentColor = contentColor,
@@ -309,7 +311,7 @@ object SeedButtonDefaults {
         @Composable
         fun tintPrimary(
             backgroundColor: Color = SeedTheme.colorScheme.container.secondary,
-            contentColor: Color = SeedTheme.colorScheme.container.primary
+            contentColor: Color = SeedTheme.colorScheme.container.primary,
         ): SeedButton.Colors = SeedButtonColors(
             backgroundColor = backgroundColor,
             contentColor = contentColor
@@ -322,7 +324,7 @@ object SeedButtonDefaults {
             borderColor: Color = SeedTheme.colorScheme.container.outline,
             disabledBorderColor: Color = SeedTheme.colorScheme.contents.neutralTertiary.copy(
                 alpha = 0.6f
-            )
+            ),
         ): SeedButton.Colors = SeedButtonColors(
             backgroundColor = backgroundColor,
             contentColor = contentColor,
@@ -333,7 +335,7 @@ object SeedButtonDefaults {
         @Composable
         fun tintNeutral(
             backgroundColor: Color = SeedTheme.colorScheme.contents.neutralSecondary,
-            contentColor: Color = SeedTheme.colorScheme.contents.neutralPrimary
+            contentColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
         ): SeedButton.Colors = SeedButtonColors(
             backgroundColor = backgroundColor,
             contentColor = contentColor
@@ -342,7 +344,7 @@ object SeedButtonDefaults {
         @Composable
         fun containerNegative(
             backgroundColor: Color = SeedTheme.colorScheme.container.error,
-            contentColor: Color = SeedTheme.colorScheme.contents.onPrimary
+            contentColor: Color = SeedTheme.colorScheme.contents.onPrimary,
         ): SeedButton.Colors = SeedButtonColors(
             backgroundColor = backgroundColor,
             contentColor = contentColor
@@ -351,7 +353,7 @@ object SeedButtonDefaults {
         @Composable
         fun tintNegative(
             backgroundColor: Color = SeedTheme.colorScheme.container.error,
-            contentColor: Color = SeedTheme.colorScheme.contents.error
+            contentColor: Color = SeedTheme.colorScheme.contents.error,
         ): SeedButton.Colors = SeedButtonColors(
             backgroundColor = backgroundColor,
             contentColor = contentColor
@@ -406,8 +408,7 @@ private data class SeedButtonColors(
 @Preview(widthDp = 250, heightDp = 470)
 @Composable
 fun DisabledButtonPreview() {
-    Surface {
-
+    SeedSurface {
         Column(verticalArrangement = Arrangement.SpaceBetween) {
             SeedButton(
                 text = "DISABLED",
