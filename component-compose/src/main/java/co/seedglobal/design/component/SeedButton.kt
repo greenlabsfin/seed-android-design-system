@@ -85,12 +85,12 @@ fun SeedButton(
     when {
         isPressed.value -> {
             LaunchedEffect(Unit) {
-                surfaceColor.animateTo(gray90.copy(.12f))
+                surfaceColor.animateTo(gray90.copy(.24f))
             }
         }
         isHovered.value -> {
             LaunchedEffect(Unit) {
-                surfaceColor.animateTo(gray90.copy(.24f))
+                surfaceColor.animateTo(gray90.copy(.12f))
             }
         }
         else -> {
