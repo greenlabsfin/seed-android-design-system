@@ -26,7 +26,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
-import androidx.compose.material.Surface
 import androidx.compose.material.TextFieldColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -43,6 +42,8 @@ import androidx.compose.ui.focus.onFocusEvent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.takeOrElse
+import androidx.compose.ui.input.key.KeyEvent
+import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.Dp
@@ -81,6 +82,7 @@ fun SeedTextField(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     maxLines: Int = Int.MAX_VALUE,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    onKeyEvent: (KeyEvent) -> Boolean = { false },
     onValueChange: (String) -> Unit,
 ) {
     when (style) {
@@ -107,6 +109,7 @@ fun SeedTextField(
             keyboardActions = keyboardActions,
             maxLines = maxLines,
             interactionSource = interactionSource,
+            onKeyEvent = onKeyEvent,
             onValueChange = onValueChange,
         )
         else -> SeedBoxTextField(
@@ -133,6 +136,7 @@ fun SeedTextField(
             keyboardActions = keyboardActions,
             maxLines = maxLines,
             interactionSource = interactionSource,
+            onKeyEvent = onKeyEvent,
             onValueChange = onValueChange,
         )
     }
@@ -162,6 +166,7 @@ private fun SeedLineTextField(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     maxLines: Int = Int.MAX_VALUE,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    onKeyEvent: (KeyEvent) -> Boolean = { false },
     onValueChange: (String) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
@@ -204,7 +209,7 @@ private fun SeedLineTextField(
             Spacer(modifier = Modifier.height(labelSpace))
         }
 
-        Surface(
+        SeedSurface(
             modifier = modifier
                 .defaultMinSize(
                     minWidth = SeedTextFieldDefaults.minWidth,
@@ -239,7 +244,8 @@ private fun SeedLineTextField(
                                         bringIntoViewRequester.bringIntoView()
                                     }
                                 }
-                            },
+                            }
+                            .onKeyEvent { onKeyEvent(it) },
                         enabled = enabled,
                         readOnly = readOnly,
                         textStyle = mergedTextStyle,
@@ -703,6 +709,7 @@ private fun SeedBoxTextField(
     keyboardActions: KeyboardActions = KeyboardActions.Default,
     maxLines: Int = Int.MAX_VALUE,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    onKeyEvent: (KeyEvent) -> Boolean = { false },
     onValueChange: (String) -> Unit,
 ) {
     val scope = rememberCoroutineScope()
@@ -751,7 +758,7 @@ private fun SeedBoxTextField(
             Spacer(modifier = Modifier.height(labelSpace))
         }
 
-        Surface(
+        SeedSurface(
             modifier = modifier
                 .defaultMinSize(
                     minWidth = SeedTextFieldDefaults.minWidth,
@@ -791,7 +798,8 @@ private fun SeedBoxTextField(
                                         bringIntoViewRequester.bringIntoView()
                                     }
                                 }
-                            },
+                            }
+                            .onKeyEvent { onKeyEvent(it) },
                         enabled = enabled,
                         readOnly = readOnly,
                         textStyle = mergedTextStyle,

@@ -2,7 +2,6 @@ package co.seedglobal.design.component
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,7 +21,7 @@ fun SeedScaffold(
     bottomBar: @Composable () -> Unit = {},
     content: @Composable () -> Unit,
 ) {
-    Surface(modifier = modifier) {
+    SeedSurface(modifier = modifier) {
         SubcomposeLayout { constraints ->
             val layoutWidth = constraints.maxWidth
             val layoutHeight = constraints.maxHeight

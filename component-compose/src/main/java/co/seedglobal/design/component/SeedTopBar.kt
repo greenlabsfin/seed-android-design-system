@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Divider
-import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -24,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.TextStyle
@@ -80,7 +78,7 @@ fun SeedTopBar(
         animationSpec = defaultBarVisibilityAnimationSpec()
     )
 
-    Surface(
+    SeedSurface(
         modifier = Modifier.then(
             if (state.animated) Modifier.graphicsLayer { translationY = yPosition }
             else Modifier.offset(
@@ -112,8 +110,7 @@ fun SeedTopBar(
                 navigationIcon?.let {
                     SeedIcon(
                         modifier = Modifier
-                            .size(48.dp)
-                            .padding(12.dp)
+                            .size(24.dp)
                             .align(Alignment.CenterStart)
                             .clickable(
                                 onClick = onNavigationClick,

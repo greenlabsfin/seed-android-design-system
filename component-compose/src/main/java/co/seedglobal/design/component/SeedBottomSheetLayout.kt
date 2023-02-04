@@ -17,7 +17,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.Surface
 import androidx.compose.material.SwipeableDefaults
 import androidx.compose.material.swipeable
 import androidx.compose.runtime.Composable
@@ -63,7 +62,6 @@ fun SeedFixedBottomSheet(
     onDismiss: () -> Unit = {},
     sheetContent: @Composable ColumnScope.() -> Unit,
 ) {
-    val scope = rememberCoroutineScope()
     BoxWithConstraints(modifier) {
         val fullHeight = constraints.maxHeight.toFloat()
         val sheetHeightState = remember { mutableStateOf<Float?>(null) }
@@ -74,7 +72,7 @@ fun SeedFixedBottomSheet(
                 visible = sheetState.targetValue != SeedBottomSheetValue.Hidden
             )
         }
-        Surface(
+        SeedSurface(
             modifier = Modifier
                 .fillMaxWidth()
                 .offset {
@@ -193,7 +191,7 @@ private fun SeedFixedBottomSheetLayout(
                 visible = sheetState.targetValue != SeedBottomSheetValue.Hidden
             )
         }
-        Surface(
+        SeedSurface(
             modifier = Modifier
                 .fillMaxWidth()
                 .offset {
