@@ -155,6 +155,7 @@ fun SeedButton(
                 text?.let {
                     SeedText(
                         text = it,
+                        style = size.typography,
                         overflow = TextOverflow.Ellipsis,
                         color = contentColor
                     )

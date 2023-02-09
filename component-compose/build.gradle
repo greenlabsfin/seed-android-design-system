@@ -30,6 +30,7 @@ android {
                 "-opt-in=kotlin.RequiresOptIn",
                 "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
                 "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+                "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
         ]
     }
     buildFeatures {
