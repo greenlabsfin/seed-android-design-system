@@ -26,28 +26,13 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import co.seedglobal.design.core.LocalSeedBackgroundColor
 import co.seedglobal.design.core.SeedTheme
 
 object SeedTopBarDefaults {
     val height = 56.dp
-    val horizontalPadding = 4.dp
-
-    fun paddingOf(
-        start: Dp = 0.dp,
-        end: Dp = 0.dp,
-    ) = PaddingValues(
-        start = maxOf(0.dp, start.minus(horizontalPadding)),
-        end = maxOf(0.dp, end.minus(horizontalPadding)),
-    )
-
-    fun paddingOf(
-        horizontal: Dp = 0.dp,
-    ) = PaddingValues(
-        horizontal = maxOf(0.dp, horizontal.minus(horizontalPadding)),
-    )
+    val padding = PaddingValues(horizontal = 16.dp)
 }
 
 @Composable
@@ -61,7 +46,7 @@ fun SeedTopBar(
     trailingContent: @Composable (() -> Unit)? = null,
     navigationIcon: Painter? = null,
     onNavigationClick: () -> Unit = {},
-    topBarPadding: PaddingValues = PaddingValues(),
+    topBarPadding: PaddingValues = SeedTopBarDefaults.padding,
     color: Color = LocalSeedBackgroundColor.current,
     state: SeedBarState = rememberSeedBarState(),
     hideWhileScrollUp: Boolean = false,
@@ -105,7 +90,7 @@ fun SeedTopBar(
                 modifier = Modifier
                     .fillMaxWidth()
                     .weight(.9f)
-                    .padding(topBarPadding.merge(other = PaddingValues(horizontal = SeedTopBarDefaults.horizontalPadding))),
+                    .padding(topBarPadding),
             ) {
                 navigationIcon?.let {
                     SeedIcon(
@@ -156,8 +141,11 @@ fun SeedTopBar(
 private fun PaddingValues.merge(other: PaddingValues): PaddingValues {
     val layoutDirection = LocalLayoutDirection.current
     return PaddingValues(
-        start = calculateStartPadding(layoutDirection).plus(other.calculateStartPadding(
-            layoutDirection)),
+        start = calculateStartPadding(layoutDirection).plus(
+            other.calculateStartPadding(
+                layoutDirection
+            )
+        ),
         top = calculateTopPadding().plus(other.calculateTopPadding()),
         bottom = calculateBottomPadding().plus(other.calculateBottomPadding()),
         end = calculateEndPadding(layoutDirection).plus(other.calculateEndPadding(layoutDirection))

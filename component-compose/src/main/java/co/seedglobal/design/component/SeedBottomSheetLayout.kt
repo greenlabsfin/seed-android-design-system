@@ -1,6 +1,5 @@
 package co.seedglobal.design.component
 
-import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Canvas
@@ -17,7 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.SwipeableDefaults
 import androidx.compose.material.swipeable
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -25,13 +23,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.isSpecified
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.dismiss
 import androidx.compose.ui.semantics.onClick
@@ -44,7 +46,6 @@ import co.seedglobal.design.core.color.black
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
-typealias SeedBottomSheetState = ModalBottomSheetState
 typealias SeedBottomSheetValue = ModalBottomSheetValue
 
 @Composable
@@ -126,7 +127,7 @@ fun SeedBottomSheetLayout(
         ModalBottomSheetLayout(
             modifier = modifier,
             scrimColor = scrimColor,
-            sheetState = sheetState,
+            sheetState = sheetState.state,
             sheetShape = sheetShape,
             sheetElevation = sheetElevation,
             sheetBackgroundColor = sheetBackgroundColor,
@@ -143,28 +144,6 @@ object SeedBottomSheetDefaults {
     val scrimColor: Color
         @Composable
         get() = black.copy(alpha = .4f)
-}
-
-@Composable
-fun rememberSeedBottomSheetState(
-    initialValue: SeedBottomSheetValue,
-    animationSpec: AnimationSpec<Float> = SwipeableDefaults.AnimationSpec,
-    confirmStateChange: (SeedBottomSheetValue) -> Boolean = { true },
-): SeedBottomSheetState {
-    return rememberSaveable(
-        animationSpec,
-        saver = SeedBottomSheetState.Saver(
-            animationSpec = animationSpec,
-            skipHalfExpanded = false,
-            confirmStateChange = confirmStateChange
-        )
-    ) {
-        SeedBottomSheetState(
-            initialValue = initialValue,
-            animationSpec = animationSpec,
-            confirmStateChange = confirmStateChange
-        )
-    }
 }
 
 @Composable
@@ -226,14 +205,13 @@ private fun Modifier.bottomSheetFixedSwipeable(
     sheetHeightState: State<Float?>,
 ): Modifier {
     val sheetHeight = sheetHeightState.value
-    // TODO sheetHeight > 0f <- 요놈 ModalBottomSheetLayout 에 적용 안되어 있음, ModalBottomSheet 도 따로 맹글어야 할수도..
     val modifier = if (sheetHeight != null && sheetHeight > 0f) {
         val anchors = mapOf(
             fullHeight to SeedBottomSheetValue.Hidden,
             fullHeight - sheetHeight to SeedBottomSheetValue.Expanded
         )
         Modifier.swipeable(
-            state = sheetState,
+            state = sheetState.state,
             anchors = anchors,
             orientation = Orientation.Vertical,
             enabled = false,
@@ -281,3 +259,71 @@ fun Scrim(
     }
 }
 
+class SeedBottomSheetState(
+    initialValue: SeedBottomSheetValue,
+    val keyboardController: SoftwareKeyboardController?,
+    confirmStateChange: (SeedBottomSheetValue) -> Boolean = { true },
+) {
+    val state = ModalBottomSheetState(
+        initialValue = initialValue,
+        confirmStateChange = confirmStateChange
+    )
+
+    val isVisible: Boolean
+        get() = state.isVisible
+
+    val offset: State<Float>
+        get() = state.offset
+
+    val targetValue: SeedBottomSheetValue
+        get() = state.targetValue
+
+    suspend fun show(hideKeyboard: Boolean = true) {
+        if (hideKeyboard) {
+            keyboardController?.hide()
+        }
+        state.show()
+    }
+
+    suspend fun hide() {
+        state.hide()
+    }
+
+    companion object {
+        fun Saver(
+            keyboardController: SoftwareKeyboardController?,
+            confirmStateChange: (SeedBottomSheetValue) -> Boolean,
+        ): Saver<SeedBottomSheetState, *> = Saver(
+            save = { it.state.currentValue },
+            restore = {
+                SeedBottomSheetState(
+                    initialValue = it,
+                    keyboardController = keyboardController,
+                    confirmStateChange = confirmStateChange,
+                )
+            }
+        )
+    }
+}
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+fun rememberSeedBottomSheetState(
+    initialValue: SeedBottomSheetValue,
+    confirmStateChange: (ModalBottomSheetValue) -> Boolean = { true },
+): SeedBottomSheetState {
+    val keyboardController = LocalSoftwareKeyboardController.current
+    return rememberSaveable(
+        initialValue, keyboardController, confirmStateChange,
+        saver = SeedBottomSheetState.Saver(
+            keyboardController = keyboardController,
+            confirmStateChange = confirmStateChange
+        )
+    ) {
+        SeedBottomSheetState(
+            initialValue = initialValue,
+            keyboardController = keyboardController,
+            confirmStateChange = confirmStateChange
+        )
+    }
+}
