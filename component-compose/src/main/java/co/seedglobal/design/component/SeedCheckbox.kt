@@ -129,8 +129,9 @@ object SeedCheckbox {
 }
 
 object SeedCheckboxDefaults {
+    @Composable
     fun primary(
-        checkedBackgroundColor: Color = SeedColorScheme().container.primary,
+        checkedBackgroundColor: Color = SeedTheme.colorScheme.container.primary,
         uncheckedBackgroundColor: Color = white,
         checkedContentColor: Color = white,
         uncheckedContentColor: Color = gray30,
@@ -146,8 +147,9 @@ object SeedCheckboxDefaults {
             disabledUncheckedContentColor = disabledUncheckedContentColor
         )
 
+    @Composable
     fun custom(
-        checkedBackgroundColor: Color = SeedColorScheme().container.primary,
+        checkedBackgroundColor: Color = SeedTheme.colorScheme.container.primary,
         uncheckedBackgroundColor: Color = white,
         checkedContentColor: Color = white,
         uncheckedContentColor: Color = gray30,
