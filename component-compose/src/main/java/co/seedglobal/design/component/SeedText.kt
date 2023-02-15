@@ -29,6 +29,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import co.seedglobal.design.core.LocalSeedColorScheme
@@ -43,8 +44,10 @@ fun SeedText(
     leadingIcon: Painter? = null,
     leadingIconContentDescription: String? = null,
     leadingIconColor: Color = Color.Unspecified,
+    leadingIconSize: Dp = 16.dp,
     trailingIcon: Painter? = null,
     trailingIconContentDescription: String? = null,
+    trailingIconSize: Dp = 16.dp,
     trailingIconColor: Color = Color.Unspecified,
     iconAlignment: Alignment.Vertical = Alignment.CenterVertically,
     count: Int? = null,
@@ -86,16 +89,46 @@ fun SeedText(
                 else takenTrailingIconColor.copy(alpha = .3f)
             )
 
-    val leadingContent: Pair<Painter, String?>?
-    val trailingContent: Pair<Painter, String?>?
+    data class IconData(
+        val painter: Painter,
+        val description: String?,
+        val size: Dp,
+    )
+
+    val leadingContent: IconData?
+    val trailingContent: IconData?
     when (LocalLayoutDirection.current) {
         LayoutDirection.Ltr -> {
-            leadingContent = leadingIcon?.let { it to leadingIconContentDescription }
-            trailingContent = trailingIcon?.let { it to trailingIconContentDescription }
+            leadingContent = leadingIcon?.let {
+                IconData(
+                    painter = it,
+                    description = leadingIconContentDescription,
+                    size = leadingIconSize
+                )
+            }
+            trailingContent = trailingIcon?.let {
+                IconData(
+                    painter = it,
+                    description = trailingIconContentDescription,
+                    size = trailingIconSize
+                )
+            }
         }
         LayoutDirection.Rtl -> {
-            leadingContent = trailingIcon?.let { it to trailingIconContentDescription }
-            trailingContent = leadingIcon?.let { it to leadingIconContentDescription }
+            leadingContent = trailingIcon?.let {
+                IconData(
+                    painter = it,
+                    description = trailingIconContentDescription,
+                    size = trailingIconSize
+                )
+            }
+            trailingContent = leadingIcon?.let {
+                IconData(
+                    painter = it,
+                    description = leadingIconContentDescription,
+                    size = leadingIconSize
+                )
+            }
         }
     }
 
@@ -104,15 +137,14 @@ fun SeedText(
         horizontalArrangement = Arrangement.spacedBy(4.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        leadingContent?.let {
-            val painter = it.first
-            val contentDescription = it.second
+        leadingContent?.let { iconData ->
             SeedIcon(
                 modifier = Modifier
+                    .size(iconData.size)
                     .weight(1f, false)
                     .align(iconAlignment),
-                painter = painter,
-                contentDescription = contentDescription,
+                painter = iconData.painter,
+                contentDescription = iconData.description,
                 tint = leadingColor
             )
         }
@@ -157,15 +189,14 @@ fun SeedText(
                 }
             }
         }
-        trailingContent?.let {
-            val painter = it.first
-            val contentDescription = it.second
+        trailingContent?.let { iconData ->
             SeedIcon(
                 modifier = Modifier
+                    .size(iconData.size)
                     .weight(1f, false)
                     .align(iconAlignment),
-                painter = painter,
-                contentDescription = contentDescription,
+                painter = iconData.painter,
+                contentDescription = iconData.description,
                 tint = trailingColor
             )
         }
