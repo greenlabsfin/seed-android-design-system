@@ -7,7 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.window.Dialog
 import co.seedglobal.design.core.SeedTheme
 
@@ -15,6 +15,7 @@ import co.seedglobal.design.core.SeedTheme
 fun SeedDialog(
     modifier: Modifier = Modifier,
     color: Color = SeedTheme.colorScheme.container.background,
+    shape: Shape = RoundedCornerShape(SeedDialogDefaults.defaultRadius),
     itemVisible: Boolean,
     onDismissRequest: () -> Unit,
     buttonContent: @Composable (() -> Unit) = {},
@@ -25,7 +26,7 @@ fun SeedDialog(
             SeedSurface(
                 modifier = modifier.fillMaxWidth(),
                 color = color,
-                shape = RoundedCornerShape(16.dp),
+                shape = shape,
             ) {
                 Column {
                     content()
