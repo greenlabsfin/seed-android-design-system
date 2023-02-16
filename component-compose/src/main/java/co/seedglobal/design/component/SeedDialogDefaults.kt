@@ -40,7 +40,7 @@ object SeedDialogDefaults {
     object Buttons {
         @Composable
         fun Vertical(
-            vararg buttons: @Composable ColumnScope.() -> Unit,
+            buttonContent: @Composable ColumnScope.() -> Unit,
         ) {
             Column(
                 modifier = Modifier
@@ -51,9 +51,7 @@ object SeedDialogDefaults {
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                buttons.forEach {
-                    it()
-                }
+                buttonContent()
             }
         }
 

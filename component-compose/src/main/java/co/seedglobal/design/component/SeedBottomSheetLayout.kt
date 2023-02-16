@@ -49,7 +49,7 @@ import kotlin.math.roundToInt
 typealias SeedBottomSheetValue = ModalBottomSheetValue
 
 @Composable
-fun SeedFixedBottomSheet(
+fun SeedBottomSheet(
     modifier: Modifier = Modifier,
     scrimColor: Color = SeedBottomSheetDefaults.scrimColor,
     sheetState: SeedBottomSheetState = rememberSeedBottomSheetState(initialValue = SeedBottomSheetValue.Hidden),
@@ -60,39 +60,54 @@ fun SeedFixedBottomSheet(
     sheetElevation: Dp = SeedBottomSheetDefaults.elevation,
     sheetBackgroundColor: Color = SeedTheme.colorScheme.container.background,
     sheetContentColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
+    fixed: Boolean = true,
     onDismiss: () -> Unit = {},
     sheetContent: @Composable ColumnScope.() -> Unit,
 ) {
-    BoxWithConstraints(modifier) {
-        val fullHeight = constraints.maxHeight.toFloat()
-        val sheetHeightState = remember { mutableStateOf<Float?>(null) }
-        Box(modifier = Modifier.fillMaxSize()) {
-            Scrim(
-                color = scrimColor,
-                onDismiss = onDismiss,
-                visible = sheetState.targetValue != SeedBottomSheetValue.Hidden
-            )
+    if (fixed) {
+        BoxWithConstraints(modifier) {
+            val fullHeight = constraints.maxHeight.toFloat()
+            val sheetHeightState = remember { mutableStateOf<Float?>(null) }
+            Box(modifier = Modifier.fillMaxSize()) {
+                Scrim(
+                    color = scrimColor,
+                    onDismiss = onDismiss,
+                    visible = sheetState.targetValue != SeedBottomSheetValue.Hidden
+                )
+            }
+            SeedSurface(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .offset {
+                        val y = sheetState.offset.value.roundToInt()
+                        IntOffset(0, y)
+                    }
+                    .bottomSheetFixedSwipeable(sheetState, fullHeight, sheetHeightState)
+                    .onGloballyPositioned {
+                        sheetHeightState.value = it.size.height.toFloat()
+                    },
+                shape = sheetShape,
+                elevation = sheetElevation,
+                color = sheetBackgroundColor,
+                contentColor = sheetContentColor
+            ) {
+                Column(content = sheetContent)
+            }
         }
-        SeedSurface(
-            modifier = Modifier
-                .fillMaxWidth()
-                .offset {
-                    val y = sheetState.offset.value.roundToInt()
-                    IntOffset(0, y)
-                }
-                .bottomSheetFixedSwipeable(sheetState, fullHeight, sheetHeightState)
-                .onGloballyPositioned {
-                    sheetHeightState.value = it.size.height.toFloat()
-                },
-            shape = sheetShape,
-            elevation = sheetElevation,
-            color = sheetBackgroundColor,
-            contentColor = sheetContentColor
+    } else {
+        ModalBottomSheetLayout(
+            sheetContent = sheetContent,
+            modifier = modifier,
+            sheetState = sheetState.state,
+            sheetShape = sheetShape,
+            sheetElevation = sheetElevation,
+            sheetBackgroundColor = sheetBackgroundColor,
+            sheetContentColor = sheetContentColor,
+            scrimColor = scrimColor,
         ) {
-            Column(content = sheetContent)
+
         }
     }
-
 }
 
 @Composable
