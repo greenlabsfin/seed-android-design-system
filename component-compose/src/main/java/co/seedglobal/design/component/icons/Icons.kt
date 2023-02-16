@@ -10,5 +10,5 @@ object Icons {
 
     object OutlinedBold
 
-    val default = Filled
+    val default = OutlinedRegular
 }

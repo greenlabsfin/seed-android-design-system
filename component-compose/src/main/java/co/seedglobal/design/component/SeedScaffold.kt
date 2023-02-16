@@ -19,6 +19,8 @@ fun SeedScaffold(
     modifier: Modifier = Modifier,
     topBar: @Composable () -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
+    snackbarState: SeedSnackbarHostState = rememberSeedSnackbarState(),
+    snackbarHost: @Composable (SeedSnackbarHostState) -> Unit = { SeedSnackbarHost(it) },
     content: @Composable () -> Unit,
 ) {
     SeedSurface(modifier = modifier) {
@@ -33,9 +35,22 @@ fun SeedScaffold(
                 }
                 val topBarHeight = topBarPlaceable.fastMaxBy { it.height }?.height ?: 0
 
+                val snackbarPlaceables =
+                    subcompose("snackbar") { snackbarHost(snackbarState) }.fastMap {
+                        it.measure(looseConstraints)
+                    }
+
+                val snackbarHeight = snackbarPlaceables.fastMaxBy { it.height }?.height ?: 0
+
                 val bottomBarPlaceable = subcompose("bottomBar", bottomBar)
                     .fastMap { it.measure(looseConstraints) }
                 val bottomBarHeight = bottomBarPlaceable.fastMaxBy { it.height }?.height ?: 0
+
+                val snackbarOffsetFromBottom = if (snackbarHeight != 0) {
+                    snackbarHeight + bottomBarHeight
+                } else {
+                    0
+                }
 
                 val bodyContentHeight = layoutHeight - topBarHeight - bottomBarHeight
                 val bodyContentPlaceables = subcompose("body", content)
@@ -46,6 +61,9 @@ fun SeedScaffold(
                 }
                 topBarPlaceable.fastForEach {
                     it.place(0, 0)
+                }
+                snackbarPlaceables.fastForEach {
+                    it.place(0, layoutHeight - snackbarOffsetFromBottom)
                 }
                 bottomBarPlaceable.fastForEach {
                     it.place(0, layoutHeight - bottomBarHeight)

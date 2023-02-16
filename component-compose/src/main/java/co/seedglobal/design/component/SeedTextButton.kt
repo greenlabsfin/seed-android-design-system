@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import co.seedglobal.design.core.SeedTheme
 
@@ -24,8 +25,10 @@ fun SeedTextButton(
     text: String,
     leadingIcon: Painter? = null,
     leadingIconContentDescription: String? = null,
+    leadingIconSize: Dp = 16.dp,
     trailingIcon: Painter? = null,
     trailingIconContentDescription: String? = null,
+    trailingIconSize: Dp = 16.dp,
     count: Int? = null,
     countColors: SeedCountColors? = null,
     badge: Boolean = false,
