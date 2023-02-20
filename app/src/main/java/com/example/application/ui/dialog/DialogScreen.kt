@@ -74,7 +74,7 @@ fun DialogScreen() {
             buttonDialogVisibility = buttonDialogVisibility.not()
         },
         content = {
-            SeedDialogDefaults.Contents.OnlyTitle(title = "버튼 타이틀")
+            SeedDialogDefaults.Contents.DefaultText(title = "버튼 타이틀")
         },
         buttonContent = {
             SeedDialogDefaults.Buttons.SinglePrimary {
@@ -92,15 +92,14 @@ fun DialogScreen() {
             SeedDialogDefaults.Contents.DefaultText(title = "버튼 타이틀", message = "Negative")
         },
         buttonContent = {
-            SeedDialogDefaults.Buttons.DoubleHorizontalPrimary(
-                onNegativeButtonClicked = {
+            SeedDialogDefaults.Buttons.DoubleHorizontal(
+                onSecondaryClick = {
                     negativeVisibility = false
                 },
-                onPositiveButtonClicked = {
+                onPrimaryClick = {
                     negativeVisibility = false
-                }
+                },
             )
-
-        }
+        },
     )
 }
