@@ -335,7 +335,7 @@ object SeedButtonDefaults {
 
         @Composable
         fun tintNeutral(
-            backgroundColor: Color = SeedTheme.colorScheme.contents.neutralSecondary,
+            backgroundColor: Color = SeedTheme.colorScheme.container.neutralSecondary,
             contentColor: Color = SeedTheme.colorScheme.contents.neutralPrimary,
         ): SeedButton.Colors = SeedButtonColors(
             backgroundColor = backgroundColor,

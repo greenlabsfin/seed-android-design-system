@@ -88,7 +88,6 @@ fun HomeScreen() {
                         titleAlignment = Alignment.CenterStart,
                         onNavigationClick = { scope.launch { drawerState.open() } },
                         hideWhileScrollUp = true,
-                        topBarPadding = SeedTopBarDefaults.paddingOf(horizontal = 20.dp),
                         state = topBarState,
                     )
                 },

@@ -39,7 +39,6 @@ fun SeedSnackbar(
     actionColor: Color = SeedSnackbarDefaults.primaryActionColor,
     elevation: Dp = 6.dp,
 ) {
-    Log.d("###", "snackbar composition")
     val actionLabel = snackbarData.actionLabel
     val actionComposable: (@Composable () -> Unit)? = if (actionLabel != null) {
         @Composable {
