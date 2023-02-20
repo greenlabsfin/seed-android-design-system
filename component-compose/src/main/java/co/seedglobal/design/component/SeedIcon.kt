@@ -95,6 +95,9 @@ fun SeedIcon(
     )
 }
 
+fun Int.toIconResource(): SeedIconResource = SeedIconResource(idRes = this)
+fun ImageBitmap.toIconResource(): SeedIconResource = SeedIconResource(bitmap = this)
+fun ImageVector.toIconResource(): SeedIconResource = SeedIconResource(imageVector = this)
 data class SeedIconResource(
     @DrawableRes
     val idRes: Int? = null,
