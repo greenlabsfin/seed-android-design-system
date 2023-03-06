@@ -100,7 +100,7 @@ fun SeedButton(
     }
 
     SeedSurface(
-        modifier = Modifier
+        modifier = modifier
             .clickable(
                 interactionSource = interactionSource,
                 indication = null,
