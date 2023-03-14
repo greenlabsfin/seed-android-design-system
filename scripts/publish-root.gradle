@@ -22,14 +22,14 @@ if (secretPropsFile.exists()) {
 
 /* Information for publish */
 ext {
-    PUBLISH_GROUP_ID = "com.greenlabsfin.design"
-    PUBLISH_URL = "https://github.com/greenlabsfin/gf-android-design-system"
+    PUBLISH_GROUP_ID = "co.seedglobal.design"
+    PUBLISH_URL = "https://github.com/greenlabsfin/seed-android-design-system"
     PUBLISH_LICENSE_NAME = "Apache License"
-    PUBLISH_LICENSE_URL = "https://github.com/greenlabsfin/gf-android-design-system/blob/main/LICENSE"
-    PUBLISH_DEVELOPER_ID = "greenlabsfin"
-    PUBLISH_DEVELOPER_NAME = "Greenlabs Financial"
-    PUBLISH_DEVELOPER_EMAIL = "developer@greenlabsfin.com"
-    PUBLISH_SCM_CONNECTION = "scm:git:github.com/greenlabsfin/gf-android-design-system.git"
-    PUBLISH_SCM_DEVELOPER_CONNECTION = "scm:git:ssh://github.com/greenlabsfin/gf-android-design-system.git"
-    PUBLISH_SCM_URL = "https://github.com/greenlabsfin/gf-android-design-system.git"
+    PUBLISH_LICENSE_URL = "https://github.com/greenlabsfin/seed-android-design-system/blob/main/LICENSE"
+    PUBLISH_DEVELOPER_ID = "seed"
+    PUBLISH_DEVELOPER_NAME = "Seed"
+    PUBLISH_DEVELOPER_EMAIL = "developer@seedglobal.co"
+    PUBLISH_SCM_CONNECTION = "scm:git:github.com/greenlabsfin/seed-android-design-system.git"
+    PUBLISH_SCM_DEVELOPER_CONNECTION = "scm:git:ssh://github.com/greenlabsfin/seed-android-design-system.git"
+    PUBLISH_SCM_URL = "https://github.com/greenlabsfin/seed-android-design-system.git"
 }
