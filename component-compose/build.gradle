@@ -46,7 +46,7 @@ dependencies {
         implementation project(":core-compose")
     } else {
         def designLibraryVersion = PUBLISH_VERSION
-        implementation "com.greenlabsfin.design:core-compose:$designLibraryVersion"
+        implementation "co.seedglobal.design:core-compose:$designLibraryVersion"
     }
 
     implementation platform("androidx.compose:compose-bom:$composeBomVersion")

@@ -1,7 +1,7 @@
 # Greenlabs Financial Design System
 
 [![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
-[![Maven Central](https://img.shields.io/maven-central/v/com.greenlabsfin.design/core-compose.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.greenlabsfin.design%22)
+[![Maven Central](https://img.shields.io/maven-central/v/co.seedglobal.design/core-compose.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.greenlabsfin.design%22)
 
 그린랩스 파이낸셜의 디자인 시스템 입니다.
 

@@ -14,7 +14,7 @@ dependencyResolutionManagement {
         maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
     }
 }
-rootProject.name = "GF Design System"
+rootProject.name = "Seed Design System"
 include ":app"
 include ":core-compose"
 include ":component-compose"

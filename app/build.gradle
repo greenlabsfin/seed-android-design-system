@@ -57,8 +57,8 @@ dependencies {
         implementation project(":component-compose")
     } else {
         def designLibraryVersion = PUBLISH_VERSION
-        implementation "com.greenlabsfin.design:core-compose:$designLibraryVersion"
-        implementation "com.greenlabsfin.design:component-compose:$designLibraryVersion"
+        implementation "co.seedglobal.design:core-compose:$designLibraryVersion"
+        implementation "co.seedglobal.design:component-compose:$designLibraryVersion"
     }
 
     // compose
