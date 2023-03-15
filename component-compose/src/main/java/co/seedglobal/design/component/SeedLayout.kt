@@ -133,10 +133,14 @@ fun SeedBottomSheetTopBarLayout(
 fun SeedLoadingLayout(
     modifier: Modifier = Modifier,
     isLoading: Boolean = false,
+    showContentWhileLoading: Boolean = true,
     content: @Composable () -> Unit,
 ) {
     Box(modifier = modifier.fillMaxSize()) {
-        content()
+        if (showContentWhileLoading || isLoading.not()) {
+            content()
+        }
+
         if (isLoading) {
             Box(
                 modifier = modifier
