@@ -1,12 +1,9 @@
 package co.seedglobal.design.component
 
-import androidx.compose.animation.Animatable
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.interaction.collectIsHoveredAsState
-import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,7 +16,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.remember
@@ -28,11 +24,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.graphics.isUnspecified
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -46,6 +42,7 @@ fun SeedChip(
     colors: SeedChipColors,
     modifier: Modifier = Modifier,
     text: String? = null,
+    textAlign: TextAlign = TextAlign.Start,
     textStyle: TextStyle = SeedTheme.typoScheme.body.mediumMedium,
     leadingImagePainter: Painter? = null,
     leadingIcon: ImageVector? = null,
@@ -74,36 +71,15 @@ fun SeedChip(
 
     val interactionSource = remember { MutableInteractionSource() }
     val backgroundColor = colors.backgroundColor(enabled = enabled).value
-    val isPressed = interactionSource.collectIsPressedAsState()
-    val isHovered = interactionSource.collectIsHoveredAsState()
-    val surfaceColor = remember { Animatable(colors.pressedColor) }
-    when {
-        isHovered.value -> {
-            LaunchedEffect(Unit) {
-                surfaceColor.animateTo(colors.pressedColor.compositeOver(backgroundColor))
-            }
-        }
-        isPressed.value -> {
-            LaunchedEffect(Unit) {
-                surfaceColor.animateTo(colors.pressedColor.compositeOver(backgroundColor))
-            }
-        }
-        else -> {
-            LaunchedEffect(Unit) {
-                surfaceColor.animateTo(backgroundColor)
-            }
-        }
-    }
-
 
     SeedSurface(
         modifier = modifier
             .defaultMinSize(
                 minHeight = size.height,
-                minWidth = if (shape == CircleShape) size.height else SeedChipDefaults.minWidth
+                minWidth = if (shape == CircleShape) size.height else 0.dp
             )
             .height(size.height),
-        color = surfaceColor.value,
+        color = backgroundColor,
         shape = shape,
         border = borderStroke
     ) {
@@ -126,9 +102,11 @@ fun SeedChip(
                 )
         ) {
             leadingImagePainter?.let {
-                Box(modifier = Modifier
-                    .size(size.imageSize)
-                    .clip(CircleShape)) {
+                Box(
+                    modifier = Modifier
+                        .size(size.imageSize)
+                        .clip(CircleShape)
+                ) {
                     Image(
                         modifier = modifier.size(40.dp),
                         painter = it,
@@ -152,6 +130,7 @@ fun SeedChip(
                 Box(modifier = modifier.weight(1f, false)) {
                     SeedText(
                         text = it,
+                        textAlign = textAlign,
                         style = textStyle,
                         color = colors.textColor(enabled = enabled).value,
                         overflow = TextOverflow.Ellipsis,
@@ -165,7 +144,8 @@ fun SeedChip(
                     SeedCount(
                         modifier = Modifier.size(20.dp),
                         count = it,
-                        colors = colors.countColors)
+                        colors = colors.countColors
+                    )
                 } else {
                     SeedText(
                         text = it.toString(),
@@ -275,7 +255,7 @@ object SeedChipDefaults {
         trailingIconColor: Color = Color.Unspecified,
         disabledTrailingIconColor: Color = Color.Unspecified,
         pressedColor: Color = Color.Unspecified,
-        countColors: SeedCountColors,
+        countColors: SeedCountColors = SeedCountDefaults.countColors(),
         countTextColor: Color = Color.Unspecified,
         disabledCountTextColor: Color = Color.Unspecified,
     ): SeedChipColors = DefaultSeedChipColors(
