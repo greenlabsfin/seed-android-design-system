@@ -117,6 +117,10 @@ data class BodyTypoScheme(
         sizeType = SeedTypoScheme.SizeType.Large,
         weight = FontWeight.Bold
     ),
+    val largeMedium: TextStyle = default(
+        sizeType = SeedTypoScheme.SizeType.Large,
+        weight = FontWeight.Medium
+    ),
     val largeRegular: TextStyle = default(
         sizeType = SeedTypoScheme.SizeType.Large,
         weight = FontWeight.Regular

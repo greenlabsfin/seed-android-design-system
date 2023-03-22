@@ -160,6 +160,35 @@ object SeedDialogDefaults {
 
     object Contents {
         @Composable
+        fun SingleText(
+            text: String,
+            showClose: Boolean = false,
+            onCloseClick: () -> Unit = {},
+        ) {
+            Row(modifier = Modifier.fillMaxWidth()) {
+                SeedText(
+                    text = text,
+                    style = SeedTheme.typoScheme.body.largeMedium,
+                    color = SeedTheme.colorScheme.contents.neutralPrimary
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                if (showClose) {
+                    SeedIcon(
+                        modifier = Modifier
+                            .size(24.dp)
+                            .clickable(
+                                interactionSource = MutableInteractionSource(),
+                                indication = null,
+                                onClick = onCloseClick
+                            ),
+                        imageVector = Icons.default.Close,
+                        contentDescription = "close"
+                    )
+                }
+            }
+        }
+
+        @Composable
         fun DefaultText(
             title: String? = null,
             message: String? = null,
