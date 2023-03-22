@@ -22,3 +22,9 @@ plugins {
 }
 
 apply from: "${rootDir}/scripts/publish-root.gradle"
+
+allprojects {
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor(0, "seconds")
+    }
+}
