@@ -1,0 +1,20 @@
+<resources>
+    <string name="typography_title_headline_xlarge_bold">ヘッドライン エクスラージ ボールド</string>
+    <string name="typography_title_headline_large_bold">ヘッドライン ラージ ボールド</string>
+    <string name="typography_title_headline_medium_bold">ヘッドライン ミディアム ボールド</string>
+    <string name="typography_title_headline_small_bold">ヘッドライン スモール ボールド</string>
+    <string name="typography_title_headline_small_regular">ヘッドライン スモール レギュラー</string>
+    <string name="typography_title_body_xlarge_bold">ボディ エクスラージ ボールド</string>
+    <string name="typography_title_body_xlarge_regular">ボディ エクスラージ  レギュラー</string>
+    <string name="typography_title_body_large_bold">ボディ ラージ ボールド</string>
+    <string name="typography_title_body_large_regular">ボディ ラージ  レギュラー</string>
+    <string name="typography_title_body_medium_bold">ボディ ミディアム ボールド</string>
+    <string name="typography_title_body_medium_medium">ボディ ミディアム ミディアム</string>
+    <string name="typography_title_body_medium_regular">ボディ ミディアム レギュラー</string>
+    <string name="typography_title_body_small_bold">ボディ スモール ボールド</string>
+    <string name="typography_title_body_small_medium">ボディ スモール ミディアム </string>
+    <string name="typography_title_body_small_regular">ボディ スモール レギュラー</string>
+    <string name="typography_title_caption_xsmall_regular">キャプション エクススモール レギュラー</string>
+    <string name="typography_title_caption_xsmall_bold">キャプション エクススモール ボールド</string>
+    <string name="typography_title_caption_xsmall_medium">キャプション エクススモール ミディアム</string>
+</resources>
